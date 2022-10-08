@@ -25,20 +25,20 @@ $cnt = 1;
                 //! ---------------
                 //! FOR breadcrumb
                 //! ---------------
-                $pagetype = $_GET['type'];
-                $sql = "SELECT type,detail,PageName from tblpages where type=:pagetype";
+                // $pagetype = $_GET['type'];
+                // $sql = "SELECT type,detail,PageName from tblpages where type=:pagetype";
+                // $query = $dbh->prepare($sql);
+                // $query->bindParam(':pagetype', $pagetype, PDO::PARAM_STR);
+                // $query->execute();
+                // $results = $query->fetchAll(PDO::FETCH_OBJ);
+                // $cnt = 1;
+                $hidden  = 0;
+                $sql = "SELECT title,date,location,organizer,details from announcement WHERE is_hidden = :hidden";
                 $query = $dbh->prepare($sql);
-                $query->bindParam(':pagetype', $pagetype, PDO::PARAM_STR);
+                $query->bindParam(':hidden',$hidden,PDO::PARAM_STR);
                 $query->execute();
                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                 $cnt = 1;
-
-                $sql = "SELECT title,date,location,organizer from announcement";
-                $query = $dbh->prepare($sql);
-                $query->execute();
-                $results = $query->fetchAll(PDO::FETCH_OBJ);
-                $cnt = 1;
-
 
                 if ($query->rowCount() > 0) {
                     foreach ($results as $result) { ?>
@@ -46,17 +46,16 @@ $cnt = 1;
                         <div class="card text-center mb-4">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $result->title; ?></h5>
-                                <p class="card-text border-bottom">
-                                    <?php
-                                    $date = date_create($result->date);
-                                    ?>
-                                  <div class="text-left">
-                                    <strong>Date: </strong><span><?=date_format($date,"M-d-Y H:iA");?></span><br>
-                                    <strong>Location: </strong><span><?=$result->location?></span><br>
-                                    <strong>Organizer: </strong><span><?=$result->organizer?></span><br>
-                                  </div>
-
-                                    
+                                    <p class="card-text border-bottom">
+                                        <?php
+                                        $date = date_create($result->date);
+                                        ?>
+                                    <div class="text-left">
+                                        <strong>Date: </strong><span><?=date_format($date,"M-d-Y H:iA");?></span><br>
+                                        <strong>Location: </strong><span><?=$result->location?></span><br>
+                                        <?=isset($result->organizer) ? '<strong>Organizer: </strong><span>'.$result->organizer.'</span><br>': '';?>
+                                        <?=isset($result->details) ? '<strong>Details: </strong><span>'.$result->details.'</span><br>': '';?>
+                                    </div
                                 </p>
                                 <a href="#" class="btn btn-danger">Donate Now!</a>
                             </div>

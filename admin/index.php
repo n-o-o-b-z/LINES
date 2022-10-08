@@ -1,6 +1,9 @@
 <?php
 session_start();
 include('includes/config.php');
+if(isset($_SESSION['alogin'])){
+	header('LOCATION: dashboard2.php');
+}
 if(isset($_POST['login']))
 {
 $email=$_POST['email'];
