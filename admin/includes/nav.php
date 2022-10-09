@@ -127,11 +127,19 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+      <!-- <form action="" method="post"> -->
+        <li class="nav-item" onclick="logout();">
+          <a class="nav-link" data-widget="control-sidebar" role="button">
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li>
+      <!-- </form> -->
     </ul>
   </nav>
+
+  <script>
+    function logout(){
+      window.location.href = "././logout.php";
+    }
+  </script>
   <!-- /.navbar -->

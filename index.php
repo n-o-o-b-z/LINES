@@ -7,7 +7,6 @@ include('includes/config.php');
 
     <?php include('includes/header.php'); ?>
 
-
 <body>
 
     <!-- Navigation -->

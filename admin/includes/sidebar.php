@@ -22,7 +22,7 @@ if(!isset($_POST['alogin'])){
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div> -->
             <div class="info">
-                <a href="#" class="d-block"><?=$_SESSION['alogin'];?></a>
+                <a href="#" class="d-block"><?=$_SESSION['full_name'];?> <span class="badge badge-primary"><?=$_SESSION['role'];?></span></a>
             </div>
         </div>
 
@@ -83,7 +83,7 @@ if(!isset($_POST['alogin'])){
                 </li> -->
 
                 <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
+                    <a href="manage-donors.php" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
                         <p>
                             Donors List
@@ -118,14 +118,17 @@ if(!isset($_POST['alogin'])){
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <!-- //! FOR ADMIN ONLY -->
+                <?php if($_SESSION['role'] == 'Admin'){?>
+                    <li class="nav-item">
                     <a href="manage-accounts.php" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
                         <p>
                             Manage Accounts
                         </p>
                     </a>
-                </li>
+                    </li>
+                <?php } ?>
 
 
                 <li class="nav-item">

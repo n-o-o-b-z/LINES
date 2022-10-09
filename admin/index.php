@@ -8,19 +8,40 @@ if(isset($_POST['login']))
 {
 $email=$_POST['email'];
 $password=md5($_POST['password']);
-$sql ="SELECT Email,Password FROM admin WHERE Email=:email and Password=:password";
+// $status = 0;
+// $sql ="SELECT Email,Password FROM admin WHERE Email=:email and Password=:password";
+$sql ="SELECT a.Full_name,a.Email,a.Password,a.role_id,b.id,b.name,a.status FROM admin AS a LEFT JOIN roles AS b ON a.role_id = b.id WHERE Email=:email and Password=:password";
 $query= $dbh -> prepare($sql);
 $query-> bindParam(':email', $email, PDO::PARAM_STR);
 $query-> bindParam(':password', $password, PDO::PARAM_STR);
+// $query-> bindParam(':status', $status, PDO::PARAM_STR);
 $query-> execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 if($query->rowCount() > 0)
 {
-$_SESSION['alogin']=$_POST['email'];
-echo "<script type='text/javascript'> document.location = 'change-password.php'; </script>";
+
+	if($results[0]->status == 1 || $results[0]->status == 2 ){
+		if($results[0]->status == 1){
+			echo "<script>alert('Inactived Account!');</script>";
+		}elseif($results[0]->status == 2){
+			echo "<script>alert('Banned Account!');</script>";
+		}
+	}else{
+		$_SESSION['alogin'] = $_POST['email'];
+		$_SESSION['role']   = $results[0]->name;
+		$_SESSION['full_name'] = $results[0]->Full_name;
+		// echo "<script type='text/javascript'> document.location = 'change-password.php'; </script>";
+		echo "<script type='text/javascript'> document.location = 'dashboard2.php'; </script>";
+	}
+	
+	
+	
 } else{
-  
-  echo "<script>alert('Invalid Details');</script>";
+	
+	echo "<script>alert('Invalid Details');</script>";
+
+	
+//   echo "<script>alert('Invalid Details');</script>";
 
 }
 

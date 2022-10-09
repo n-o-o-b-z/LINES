@@ -2,67 +2,18 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-
 if (strlen($_SESSION['alogin']) == 0 || $_SESSION['role'] !== 'Admin') {
 	header('location:index.php');
 }
 if(isset($_GET['del']))
 {
 	$id=$_GET['del'];
-	$sql = "DELETE FROM admin  WHERE id=:id";
+	$sql = "delete from tblblooddonars  WHERE id=:id";
 	$query = $dbh->prepare($sql);
 	$query -> bindParam(':id',$id, PDO::PARAM_STR);
 	$query -> execute();
-	$msg="Data Deleted successfully";
-    header("Refresh:0");
-}
-
-if(isset($_POST['ban']))
-{
-    $id = $_POST['ban'];
-    $status = 2;
-    $sql = "UPDATE admin SET status = :status WHERE id=:id";
-    $query= $dbh -> prepare($sql);
-    $query-> bindParam(':id', $id, PDO::PARAM_STR);
-    $query-> bindParam(':status', $status, PDO::PARAM_STR);
-    $query -> execute();
-    $msg="Data Deleted successfully";
-    // header("Refresh:0");
-}
-
-if(isset($_POST['mark-unban']) || isset($_POST['mark-active']))
-{
-    $the_value = '';
-    if(isset($_POST['mark-unban'])){
-        $the_value = $_POST['mark-unban'];
-    }
-    if(isset($_POST['mark-active'])){
-        $the_value = $_POST['mark-active'];
-    }
-
-    $id = $the_value;
-    $status = 0;
-    $sql = "UPDATE admin SET status = :status WHERE id=:id";
-    $query= $dbh -> prepare($sql);
-    $query-> bindParam(':id', $id, PDO::PARAM_STR);
-    $query-> bindParam(':status', $status, PDO::PARAM_STR);
-    $query -> execute();
-    $msg="Data Deleted successfully";
-    // header("Refresh:0");
-}
-
-if(isset($_POST['mark-inactive']))
-{
-    $id = $_POST['mark-inactive'];
-    $status = 1;
-    $sql = "UPDATE admin SET status = :status WHERE id=:id";
-    $query= $dbh -> prepare($sql);
-    $query-> bindParam(':id', $id, PDO::PARAM_STR);
-    $query-> bindParam(':status', $status, PDO::PARAM_STR);
-    $query -> execute();
-    $msg="Data Deleted successfully";
-    // header("Refresh:0");
-}
+	$msg="Data Deleted successfully";   
+}  
 
 ?>
 
@@ -81,7 +32,7 @@ if(isset($_POST['mark-inactive']))
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Accounts</h1>
+            <h1 class="m-0">Donors List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -90,7 +41,7 @@ if(isset($_POST['mark-inactive']))
                 <!-- <span>Manage Blood Groups</span> -->
                 <!-- <button type="button" class="btn btn-primary" id="addBtn" data-toggle="modal" data-target="#modal-lg2">ADD BLOOD GROUP</button> -->
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-sm">
-					ADD ACCOUNT
+					ADD DONORS
 				</button>  
 			</li>
             </ol>
@@ -109,15 +60,19 @@ if(isset($_POST['mark-inactive']))
 						<tr>
 							<th>#</th>
 							<th>Full Name</th>
+							<th>Contact No.</th>
 							<th>Email</th>
-							<th>ROLE</th>
-							<th>STATUS</th>
+							<th>Gender</th>
+							<th>Age</th>
+							<th>BLOOD TYPE</th>
+							<th>LOCATION</th>
+                            <th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody id="test">
 					
-                    <?php $sql = "SELECT admin.*, roles.name from  admin LEFT JOIN roles ON admin.role_id = roles.id ";
+                    <?php $sql = "SELECT * from  tblblooddonars ";
                         $query = $dbh->prepare($sql);
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -126,14 +81,18 @@ if(isset($_POST['mark-inactive']))
                             foreach ($results as $key => $result) { ?>
                                 <tr>
                                     <td><?=++$key?></td>
-                                    <td><?php echo htmlentities($result->Full_name); ?></td>
-                                    <td><?php echo htmlentities($result->Email); ?></td>
-                                    <td><?php echo htmlentities($result->name); ?></td>
-                                    <!-- <td><?php echo htmlentities($result->status); ?></td> -->
+                                    <td><?php echo htmlentities($result->FullName); ?></td>
+                                    <td><?php echo htmlentities($result->MobileNumber); ?></td>
+                                    <td><?php echo htmlentities($result->EmailId); ?></td>
+                                    <td><?php echo htmlentities($result->Gender); ?></td>
+                                    <td><?php echo htmlentities($result->age); ?></td>
+                                    <td><?php echo htmlentities($result->BloodGroup); ?></td>
+                                    <td><?php echo htmlentities($result->Purok).' '.$result->Barangay;?></td>
+                                  
                                     <td>
-                                        <?php if($result->status == 0):?>
+                                        <?php if($result->is_hidden == 0):?>
                                                 <span class="badge badge-success">Active</span>
-                                            <?php elseif($result->status == 1):?>
+                                            <?php elseif($result->is_hidden == 1):?>
                                                 <span class="badge badge-dark">INACTIVE</span>
                                             <?php else:?>
                                                 <span class="badge badge-danger">BANNED</span>
@@ -153,29 +112,22 @@ if(isset($_POST['mark-inactive']))
                                                 <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">EDIT</button>
                                                 
                                                 <div class="dropdown-divider"></div>
-                                                    <form action="" method="POST">
-                                                        <?php if($result->status == 0):?>
-                                                            <!-- <button type="button" class="btn btn-default dropdown-item" data-id="<?=$result->id; ?>" id="ban">
-                                                                        BAN
-                                                            </button> -->
-
-                                                            <button type="submit" class="btn btn-default dropdown-item" data-id="<?=$result->id; ?>" name="ban" value="<?=$result->id; ?>">
-                                                                        BAN
+                                                    <?php if($result->is_hidden == 0):?>
+                                                        <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
+                                                                    BAN
+                                                        </button>
+                                                        <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
+                                                                    MARK INACTIVE
+                                                        </button>
+                                                        <?php elseif($result->is_hidden == 1):?>
+                                                            <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
+                                                                    MARK ACTIVE
                                                             </button>
-
-                                                            <button type="submit" class="btn btn-default dropdown-item" data-id="<?=$result->id; ?>" name="mark-inactive" value="<?=$result->id; ?>">
-                                                                        MARK INACTIVE
+                                                        <?php else:?>
+                                                            <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
+                                                                    UNBAN
                                                             </button>
-                                                            <?php elseif($result->status == 1):?>
-                                                                <button type="submit" class="btn btn-default dropdown-item" data-id="<?=$result->id; ?>" name="mark-active" value="<?=$result->id; ?>">
-                                                                        MARK ACTIVE
-                                                                </button>
-                                                            <?php else:?>
-                                                                <button type="submit" class="btn btn-default dropdown-item" data-id="<?=$result->id; ?>" name="mark-unban" value="<?=$result->id; ?>">
-                                                                        UNBAN
-                                                                </button>
-                                                        <?php endif ?>
-                                                    </form>
+                                                    <?php endif ?>
                                                 </div>
                                         </div>
 
@@ -199,7 +151,7 @@ if(isset($_POST['mark-inactive']))
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">ADD ACCOUNT</h4>
+					<h4 class="modal-title">ADD DONORS</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
@@ -214,19 +166,19 @@ if(isset($_POST['mark-inactive']))
 
                         <div class="form-group">
                             <label for="username">Email</label>
-                            <input type="text" name="email" id="email" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label for="username">Password</label>
-                            <input type="text" name="pass" id="pass" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label for="username">Role</label>
                             <select name="role" id="role" class="form-control">
                                 <?php 
-                                    $sql = "SELECT * FROM roles ";
+                                    $sql = "SELECT * from  roles ";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
                                     $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -235,14 +187,15 @@ if(isset($_POST['mark-inactive']))
                                         foreach ($results as $key => $result) { ?>
                                         <option value="<?=$result->id?>"><?php echo $result->name ?></option>
                                     <?php }} ?>
+
+                                       
                             </select>
                         </div>
-
 					</form>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="AddAccount">Save</button>
+					<button type="button" class="btn btn-primary" id="AddAnnouncement">Save</button>
 				</div>
 			</div>
 		</div>
@@ -253,48 +206,39 @@ if(isset($_POST['mark-inactive']))
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Edit Account</h4>
+					<h4 class="modal-title">Edit Announcement</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">
-                    <form action="#" method="POST">
-                        <div class="form-group">
-                            <label for="username">Full Name</label>
-                            <input type="text" name="name" id="name-edit" class="form-control">
+                    <form action="#">
+						<div class="form-group">
+							<label for="bGroup">Title</label>
+							<input type="text" class="form-control" id="announcement-title-edit" name="title" required />
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <!-- input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5"/> -->
+                                    <label for="inputState">Date</label>
+                                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker15" data-toggle="datetimepicker" data-target="#datetimepicker15"  autocomplete="off">   
+
+                                    <!-- <input type="text" class="form-control datetimepicker-input dtp-edit" id="datetimepicker52" data-toggle="datetimepicker" data-target="#datetimepicker5">    -->
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Location</label>
+                                    <input type="text" class="form-control" id="inputLoc-edit" name="location">
+                                </div>
+                            </div>
+                            <label for="bGroup">Organizer</label>
+                            <input type="text" class="form-control" id="organizer-edit" name="organizer" required />
+                            <input type="hidden" name="id" id="bgId">
                         </div>
 
                         <div class="form-group">
-                            <label for="username">Email</label>
-                            <input type="text" name="email" id="email-edit" class="form-control">
+                            <label for="bGroup">Details</label>
+                            <textarea class="form-control" name="details" id="details-edit"></textarea>
                         </div>
-
-                        <div class="form-group">
-                            <label for="username">Role</label>
-                            <select name="role" id="role-edit" class="form-control">
-                                <?php 
-                                    $sql = "SELECT * FROM roles ";
-                                    $query = $dbh->prepare($sql);
-                                    $query->execute();
-                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                    $cnt = 1;
-                                
-                                    foreach ( $results as $result ):
-                                        // $selected = "";
-                                        // if ( $result == $user_country )
-                                        //     $selected = "selected";
-                                    ?>
-                                    <!-- <option value="<?php echo $country; ?>" 
-                                            selected="<?php echo $selected; ?>">
-                                            <?php echo $country; ?>
-                                    </option> -->
-                                    <option value="<?=$result->id?>"><?php echo $result->name ?></option>
-                                    <?php endforeach; ?>
-                            </select>
-                            <input type="hidden" name="catch" id="uId">
-                        </div>
-                      
 					</form>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -313,24 +257,24 @@ if(isset($_POST['mark-inactive']))
   <script>
    
    $(document).ready(function () {
-
-
-		$('#AddAccount').click(function (e) { 
+		$('#AddAnnouncement').click(function (e) { 
             e.preventDefault();
-            var fname = $('#name').val();
-            var email  = $('#email').val();
-            var password = $('#pass').val();
-            var role = $('#role').val();
+            var title = $('#announcement-title').val();
+            var date  = $('#datetimepicker5').val();
+            var location = $('#inputLoc').val();
+            var organizer = $('#organizer').val();
+            var details = $('#details').val();
 
-            var url = 'xhr/add-accounts.php';
+            var url = 'xhr/add-announcement.php';
             $.ajax({
                 type: "GET",
                 url: url,
                 data: {
-                    fname:fname,
-                    email:email,
-                    password:password,
-                    role:role
+                    title:title,
+                    date:date,
+                    location:location,
+                    organizer:organizer,
+                    details:details
                 },
                 dataType: "JSON",
                 success: function (response) {
@@ -341,20 +285,24 @@ if(isset($_POST['mark-inactive']))
         });
 
 
+		// $('#editBtn').click(function (e) { 
         $('#example').on('click','#editBtn', function () {
             var ids = $(this).data('id')
             // var bg = $('#names').val();
-            var url = 'xhr/edit-accounts.php';
+            var url = 'xhr/edit-announcement.php';
             $.ajax({
                 type: "GET",
                 url: url,
                 data: {id: ids},
                 dataType: "json",
                 success: function (response) {
-                    $('#uId').val(response[0].id);
-                    $('#name-edit').val(response[0].Full_name);
-                    $('#email-edit').val(response[0].Email);
-                    $('#role-edit').val(response[0].role_id);
+                    $('#bgId').val(response[0].id);
+                    $('#announcement-title-edit').val(response[0].title);
+                    $('#datetimepicker15').val(response[0].date);
+                    $('#inputLoc-edit').val(response[0].location);
+                    $('#organizer-edit').val(response[0].organizer);
+                    $('#details-edit').val(response[0].details);
+
                 },
                 
             });
@@ -362,22 +310,24 @@ if(isset($_POST['mark-inactive']))
 
 		$('#btnSubmit').click(function (e) { 
 			e.preventDefault();
-      		var url = 'xhr/update-accounts.php';
-            var id = $('#uId').val();
-            var name_edit = $('#name-edit').val();
-            var email_edit = $('#email-edit').val();
-            var role_edit = $('#role-edit').val();
+      		var url = 'xhr/update-announcement.php';
+            var id = $('#bgId').val();
+            var title = $('#announcement-title-edit').val();
+            var date =    $('#datetimepicker15').val();
+            var location =   $('#inputLoc-edit').val();
+            var organizer =   $('#organizer-edit').val();
+            var details =   $('#details-edit').val();
 			$.ajax({
 				type: "GET",
 				url: url,
-				data: {id:id,fname:name_edit,email:email_edit,role:role_edit},
-				dataType: "json",
+				data: {id:id,title:title,date:date,location:location,organizer:organizer,details:details},
+				dataType: "html",
 				success: function (response) {
                     window.location.reload(true);
 				},
+				
 			});
-		});    
-        
+		});
    });
   </script>
   <script>

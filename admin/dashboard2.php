@@ -162,5 +162,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     </section>
     <!-- /.content -->
   </div>
+  <?php include('includes/footer.php'); ?>
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
