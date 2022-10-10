@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-if (strlen($_SESSION['alogin']) == 0 || $_SESSION['role'] !== 'Admin') {
+if (strlen($_SESSION['alogin']) == 0) {
 	header('location:index.php');
 }
 if(isset($_GET['del']))
@@ -72,7 +72,7 @@ if(isset($_GET['del']))
 					</thead>
 					<tbody id="test">
 					
-                    <?php $sql = "SELECT * from  tblblooddonars ";
+                    <?php $sql = "SELECT * FROM tblblooddonars ";
                         $query = $dbh->prepare($sql);
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -90,9 +90,9 @@ if(isset($_GET['del']))
                                     <td><?php echo htmlentities($result->Purok).' '.$result->Barangay;?></td>
                                   
                                     <td>
-                                        <?php if($result->is_hidden == 0):?>
+                                        <?php if($result->status == 0):?>
                                                 <span class="badge badge-success">Active</span>
-                                            <?php elseif($result->is_hidden == 1):?>
+                                            <?php elseif($result->status == 1):?>
                                                 <span class="badge badge-dark">INACTIVE</span>
                                             <?php else:?>
                                                 <span class="badge badge-danger">BANNED</span>
@@ -110,16 +110,16 @@ if(isset($_GET['del']))
                                                 <a class="dropdown-item" href="manage-accounts.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">DELETE</a>
                                                 
                                                 <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">EDIT</button>
-                                                
+                                                <button type="button" class="btn btn-primary dropdown-item" id="viewBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">DONATIONS</button>
                                                 <div class="dropdown-divider"></div>
-                                                    <?php if($result->is_hidden == 0):?>
+                                                    <?php if($result->status == 0):?>
                                                         <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
                                                                     BAN
                                                         </button>
                                                         <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
                                                                     MARK INACTIVE
                                                         </button>
-                                                        <?php elseif($result->is_hidden == 1):?>
+                                                        <?php elseif($result->status == 1):?>
                                                             <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
                                                                     MARK ACTIVE
                                                             </button>
@@ -157,45 +157,93 @@ if(isset($_GET['del']))
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="#">
-
+					<form action="#" method="post">
                         <div class="form-group">
                             <label for="username">Full Name</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="fname" id="fname" class="form-control" required>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="username">Email</label>
+                                <input type="text" name="email" id="email" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="username">Mobile No.</label>
+                                <input type="text" name="mobile" id="mobile" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-4">
+                                <label for="username">Birthday</label>
+                                <!-- <input type="text" name="name" id="name" class="form-control"> -->
+                                <input type="date" name="bday" class="form-control" id="bDay" required>
+                            </div>
+
+                            <div class="form-group col-lg-2">
+                                <label for="username">Age</label>
+                                <input type="text" name="age" id="age" class="form-control" readonly required>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="username">Gender</label>
+                                <select class="form-control" name="gender" id="gender" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="username">Blood Type</label>
+                                <select class="form-control" name="btype" id="btype" required>
+                                    <?php 
+                                        $sql = "SELECT * from  tblbloodgroup ";
+                                        $query = $dbh->prepare($sql);
+                                        $query->execute();
+                                        $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                        $cnt = 1;
+                                        if ($query->rowCount() > 0) {
+                                            foreach ($results as $result) {?>
+                                                <option value="<?php echo htmlentities($result->BloodGroup); ?>"><?php echo htmlentities($result->BloodGroup); ?></option>
+                                        <?php }} ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="username">Purok</label>
+                                <input type="text" name="purok" id="purok" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="username">Barangay</label>
+                                <input type="text" name="bgry" id="barangay" class="form-control" required>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="username">Email</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <label for="username">Message</label>
+                            <textarea class="form-control" name="message" id="message" cols="30" rows="2"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="username">Password</label>
-                            <input type="text" name="name" id="name" class="form-control">
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="username">Password</label>
+                                <input type="password" name="password" id="password" class="form-control" required>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="username">Role</label>
-                            <select name="role" id="role" class="form-control">
-                                <?php 
-                                    $sql = "SELECT * from  roles ";
-                                    $query = $dbh->prepare($sql);
-                                    $query->execute();
-                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                    $cnt = 1;
-                                    if ($query->rowCount() > 0) {
-                                        foreach ($results as $key => $result) { ?>
-                                        <option value="<?=$result->id?>"><?php echo $result->name ?></option>
-                                    <?php }} ?>
-
-                                       
-                            </select>
+                            <div class="form-group col-lg-6">
+                                <label for="username">Confirm Password</label>
+                                <input type="password" name="cpassword" id="confirm-password" class="form-control">
+                            </div>
                         </div>
-					</form>
+                    </form>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="AddAnnouncement">Save</button>
+					<button type="button" class="btn btn-primary" id="AddDonors">Save</button>
 				</div>
 			</div>
 		</div>
@@ -257,31 +305,48 @@ if(isset($_GET['del']))
   <script>
    
    $(document).ready(function () {
-		$('#AddAnnouncement').click(function (e) { 
+		$('#AddDonors').click(function (e) { 
             e.preventDefault();
-            var title = $('#announcement-title').val();
-            var date  = $('#datetimepicker5').val();
-            var location = $('#inputLoc').val();
-            var organizer = $('#organizer').val();
-            var details = $('#details').val();
+            var fname = $('#fname').val();
+            var email  = $('#email').val();
+            var mobile = $('#mobile').val();
+            var bday = $('#bDay').val();
+            var age = $('#age').val();
+            var gender = $('#gender').val();
+            var bloodtype  = $('#btype').val();
+            var purok = $('#purok').val();
+            var barangay = $('#barangay').val();
+            var message = $('#message').val();
+            var password = $('#password').val();
+            var confirm = $('#confirm-password').val();
+            var url = 'xhr/add-donors.php';
 
-            var url = 'xhr/add-announcement.php';
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: {
-                    title:title,
-                    date:date,
-                    location:location,
-                    organizer:organizer,
-                    details:details
-                },
-                dataType: "JSON",
-                success: function (response) {
-                    window.location.reload(true);
-                }
-            });
-            
+            if(password !== confirm){
+                alert('Password doesnt match');
+            }else{
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        fname:fname,
+                        email:email,
+                        mobile:mobile,
+                        bday:bday,
+                        age:age,
+                        gender:gender,
+                        bloodtype:bloodtype,
+                        purok:purok,
+                        barangay:barangay,
+                        message:message,
+                        password:password,
+                        confirm:confirm
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        window.location.reload(true);
+                    }
+                });
+            }
         });
 
 
@@ -289,7 +354,7 @@ if(isset($_GET['del']))
         $('#example').on('click','#editBtn', function () {
             var ids = $(this).data('id')
             // var bg = $('#names').val();
-            var url = 'xhr/edit-announcement.php';
+            var url = 'xhr/edit-donors.php';
             $.ajax({
                 type: "GET",
                 url: url,
@@ -355,7 +420,14 @@ if(isset($_GET['del']))
             
     } );
 
-    
+        $('#bDay').change(function (e) { 
+            e.preventDefault();
+            var now = new Date();
+            var bday = new Date(this.value)
+            var d1 = bday.getYear()+1900;
+            var d2 = now.getYear()+1900;
+            $('#age').val(d2-d1);
+        });
 
   </script>
 

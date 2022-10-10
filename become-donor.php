@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
         if ($lastInsertId) {
             $msg = "Your info submitted successfully";
         } else {
-            $error = "Something went wrong. Please try again";
+            $error = "EMAIL ALREADY TAKEN!";
         }
         }
     }
@@ -208,10 +208,7 @@ if (isset($_POST['submit'])) {
                     <div><input type="submit" name="submit" class="btn btn-primary" value="submit" style="cursor:pointer"></div>
                 </div>
 
-
-
             </div>
-
 
 
             <!-- /.row -->

@@ -29,7 +29,7 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="#" method="POST">
+  <form action="" method="POST">
   <input type="text" name="something">
   <input type="submit" name="submit" value="submit">
   </form>

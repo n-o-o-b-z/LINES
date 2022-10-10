@@ -17,7 +17,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 		$purok = $_POST['purok'];
 		$barangay = $_POST['barangay'];
 		$message = $_POST['message'];
-		$status = 1;
+		$status = 0;
 		$sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,BirthDay,Age,Gender,BloodGroup,Purok,Barangay,Message,status) VALUES(:fullname,:mobile,:email,:bday,:age,:gender,:blodgroup,:purok,:barangay,:message,:status)";
 		$query = $dbh->prepare($sql);
 		$query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
