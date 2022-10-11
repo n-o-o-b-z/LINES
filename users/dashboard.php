@@ -2,14 +2,40 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-// if (strlen($_SESSION['user_login']) == 0) {
-// 	header('location:index.php');
-// } else {
+if (strlen($_SESSION['alogin']) == 0) {
+	header('location:index.php');
+} else {
 ?>
 	<!doctype html>
 	<html lang="en" class="no-js">
 
-	<?php include('includes/header.php'); ?>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="theme-color" content="#3e454c">
+
+		<title>BBDMS | Admin Dashboard</title>
+		<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon" />
+		<!-- Font awesome -->
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<!-- Sandstone Bootstrap CSS -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<!-- Bootstrap Datatables -->
+		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+		<!-- Bootstrap social button library -->
+		<link rel="stylesheet" href="css/bootstrap-social.css">
+		<!-- Bootstrap select -->
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+		<!-- Bootstrap file input -->
+		<link rel="stylesheet" href="css/fileinput.min.css">
+		<!-- Awesome Bootstrap checkbox -->
+		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+		<!-- Admin Stye -->
+		<link rel="stylesheet" href="css/style.css">
+	</head>
 
 	<body>
 		<?php include('includes/header.php'); ?>
@@ -29,7 +55,7 @@ include('includes/config.php');
 									<div class="row">
 										<div class="col-md-3">
 											<div class="panel panel-default">
-												<div class="panel-body bk-primary" style="color: white;">
+												<div class="panel-body bk-primary text-light">
 													<div class="stat-panel text-center">
 														<?php
 														$sql = "SELECT id from tblbloodgroup ";
@@ -42,7 +68,7 @@ include('includes/config.php');
 														<div class="stat-panel-title text-uppercase">Listed Blood Groups</div>
 													</div>
 												</div>
-												<button class="block-anchor panel-footer"  data-toggle="modal" data-target="#exampleModal">Full Detail <i class="fa fa-arrow-right"></i></button>
+												<a href="manage-bloodgroup.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
 											</div>
 										</div>
 										<div class="col-md-3">
@@ -87,42 +113,6 @@ include('includes/config.php');
 							</div>
 						</div>
 					</div>
-					
-					<!-- <div class="row">
-						<div class="col-lg-12">
-							<div class="col-lg-6">
-								<div class="card">
-									<div class="card-header">
-										<h5>TESE</h5>
-									</div>
-									<div class="card-body">
-										<table id="example" class="display" style="width:100%">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>LOCATION</th>
-													<th>Age</th>
-													<th>DATE</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Edinburgh</td>
-													<td>61</td>
-													<td>2011-04-25</td>
-													<td>$320,800</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-lg-6">
-								
-							</div>
-						</div>
-					</div> -->
 
 
 
@@ -139,57 +129,6 @@ include('includes/config.php');
 			</div>
 		</div>
 
-
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title" id="exampleModalLabel">List of Saved lives</h1>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-							<div class="row">
-						<div class="col-lg-12">
-							
-								<div class="card">
-									<div class="card-header">
-										<h5>TESE</h5>
-									</div>
-									<div class="card-body">
-										<table id="example" class="display" style="width:100%">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Unit of Blood donated</th>
-													<th>LOCATION</th>
-													<th>Age</th>
-													<th>DATE</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Edinburgh</td>
-													<td>1000cc</td>
-													<td>61</td>
-													<td>2011-04-25</td>
-													<td>$320,800</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-				</div>
-			</div>
-		</div>
 		<!-- Loading Scripts -->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap-select.min.js"></script>
@@ -227,12 +166,7 @@ include('includes/config.php');
 
 			}
 		</script>
-
-		<script>
-			$(document).ready(function () {
-				$('#example').DataTable();
-			});
-		</script>
 	</body>
 
 	</html>
+<?php } ?>
