@@ -9,19 +9,19 @@
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `role_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `updationDate` timestamp NOT NULL,
   `Full_name` varchar(50) NOT NULL DEFAULT 'NULL',
-  `status` int NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `announcement`;
 CREATE TABLE `announcement` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `date` datetime NOT NULL,
   `banner` varchar(225) DEFAULT NULL,
@@ -31,86 +31,86 @@ CREATE TABLE `announcement` (
   `is_hidden` int(1) unsigned zerofill NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `codes`;
 CREATE TABLE `codes` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `code` varchar(5) NOT NULL,
-  `expire` int NOT NULL,
+  `expire` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `code` (`code`),
   KEY `expire` (`expire`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `donate_request`;
 CREATE TABLE `donate_request` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT NULL,
-  `volume_request` int DEFAULT NULL,
-  `status` int DEFAULT '0',
-  `request_to` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `volume_request` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `request_to` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `donation_history`;
 CREATE TABLE `donation_history` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `blood_type_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `blood_type_id` int(11) NOT NULL,
   `donation_date` timestamp NOT NULL,
-  `status` int NOT NULL,
+  `status` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `event_donors`;
 CREATE TABLE `event_donors` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `announcement_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `status` int NOT NULL,
-  `donated_volume` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `donated_volume` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `permission_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permission_id` int(11) DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `tblblooddonars`;
 CREATE TABLE `tblblooddonars` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FullName` varchar(100) DEFAULT NULL,
   `MobileNumber` char(11) DEFAULT NULL,
   `EmailId` varchar(100) NOT NULL,
   `password` varchar(250) NOT NULL DEFAULT '',
   `Gender` varchar(20) DEFAULT NULL,
   `BirthDay` date DEFAULT NULL,
-  `age` int DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
   `BloodGroup` varchar(20) DEFAULT NULL,
   `Purok` varchar(10) NOT NULL,
   `Barangay` varchar(255) DEFAULT NULL,
   `Message` mediumtext,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `EmailId` (`EmailId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblbloodgroup`;
 CREATE TABLE `tblbloodgroup` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `BloodGroup` varchar(20) NOT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -118,7 +118,7 @@ CREATE TABLE `tblbloodgroup` (
 
 DROP TABLE IF EXISTS `tblcontactusinfo`;
 CREATE TABLE `tblcontactusinfo` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Address` tinytext,
   `EmailId` varchar(255) DEFAULT NULL,
   `ContactNo` char(11) DEFAULT NULL,
@@ -127,19 +127,19 @@ CREATE TABLE `tblcontactusinfo` (
 
 DROP TABLE IF EXISTS `tblcontactusquery`;
 CREATE TABLE `tblcontactusquery` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `EmailId` varchar(120) DEFAULT NULL,
   `ContactNumber` char(11) DEFAULT NULL,
   `Message` longtext,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblpages`;
 CREATE TABLE `tblpages` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `PageName` varchar(255) DEFAULT NULL,
   `type` varchar(255) NOT NULL DEFAULT '',
   `detail` longtext NOT NULL,
@@ -189,6 +189,8 @@ INSERT INTO `codes` (`id`, `email`, `code`, `expire`) VALUES
 
 INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
 (66, 51, NULL, 0, 43, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
+(67, 51, NULL, 0, 41, NULL);
 
 
 
@@ -210,14 +212,14 @@ INSERT INTO `roles` (`id`, `permission_id`, `name`) VALUES
 (4, NULL, 'Hospital');
 
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`) VALUES
-(36, 'Charles P. Bernadez', '19512659595', 'charles.bernadez2001@gmail.com', '', 'Male', '2001-01-01', NULL, 'O+', 'P-1', 'Bakiad', 'donor', '2022-09-12 18:17:34', 1);
+(36, 'Charles P. Bernadez', '19512659595', 'charles.bernadez2001@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', NULL, 'O+', 'P-1', 'Bakiad', 'donor', '2022-09-12 18:17:34', 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`) VALUES
-(40, 'Dexter Macabangon', '12312', 'dex@example.com', '', 'Male', '2000-01-01', 22, 'A-', 'wqeqwe`qw', 'qweqwe`', 'waedasdasdas', '2022-10-05 23:16:26', 0);
+(40, 'Dexter Macabangon', '12312', 'dex@example.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2000-01-01', 22, 'A-', 'wqeqwe`qw', 'qweqwe`', 'waedasdasdas', '2022-10-05 23:16:26', 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`) VALUES
-(41, 'John Doe', '23423', 'johndoe@admin.com', '', 'Male', '2001-06-05', 21, 'A-', 'p-3', 'cabusay', '12312321', '2022-10-10 12:43:10', 1);
+(41, 'John Doe', '23423', 'johndoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-06-05', 21, 'A-', 'p-3', 'cabusay', '12312321', '2022-10-10 12:43:10', 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`) VALUES
-(43, 'Jane Doe', 'asdasdas', 'jdoe@admin.com', '', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdas', '2022-10-10 13:41:57', 1),
-(50, 'Julian Felipe', 'asdasdas', 'jfelipe@admin.com', '098f6bcd4621d373cade4e832627b4f6', 'Male', '2001-01-01', 21, 'A+', 'qwdas', 'dasdsad', 'aqweqew', '2022-10-10 15:19:06', 0),
+(43, 'Jane Doe', 'asdasdas', 'jdoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdas', '2022-10-10 13:41:57', 0),
+(50, 'Julian Felipe', 'asdasdas', 'jfelipe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A+', 'qwdas', 'dasdsad', 'aqweqew', '2022-10-10 15:19:06', 0),
 (51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0);
 
 INSERT INTO `tblbloodgroup` (`id`, `BloodGroup`, `PostingDate`) VALUES

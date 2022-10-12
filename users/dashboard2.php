@@ -185,16 +185,16 @@ if (strlen($_SESSION['user_login']) == 0) {
             //     imageAlt: 'Custom image',
             //     })
             const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Requesting for Blood?',
-                text: data['message'],
+                title: data['message'],
+                // text: data['message'],
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Accept',
