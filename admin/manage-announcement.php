@@ -231,7 +231,18 @@ if(isset($_GET['del']))
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">List of Attending Donors <span id="counter"></span></h4>
+					<h4 class="modal-title">List of Attending Donors 
+                        <span id="counter">
+                            <?php
+                            $sql1="SELECT COUNT(id) as cntr FROM event_donors";
+                            $query1 = $dbh->prepare($sql1);
+                            $query1->execute();
+                            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+                                foreach($results1 as $result1){
+                                    echo $result1->cntr;
+                                }
+                            ?>
+                        </span></h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
@@ -246,9 +257,8 @@ if(isset($_GET['del']))
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody id="test">
-					
-                   
+					<tbody id="tester">
+                        
 					</tbody>
 				</table>
 				</div>
@@ -304,15 +314,12 @@ if(isset($_GET['del']))
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    // if (data == "invalid") {
-                    //     // invalid file format.
-                    //     $("#err").html("Invalid File !").fadeIn();
-                    // } else {
-                    //     // view uploaded file.
-                    //     $("#preview").html(data).fadeIn();
-                    //     $("#form")[0].reset();
-                    // }
-                    console.log(data);
+                    if (data == "invalid") {
+                        $("#err").html("Invalid File !").fadeIn();
+                    } else {
+                        $("#form")[0].reset();
+                        window.location.reload(true);
+                    }
                 },
                
             });
@@ -364,24 +371,52 @@ if(isset($_GET['del']))
 				},
 				
 			});
+        });
+        
+        $(document).on('click','#viewDonors', function () {
+            var ids = $(this).data('id');
+            var xhr = $.ajax({
+                type: "GET",
+                url: 'xhr/event_donor.php',
+                data: {id:ids},
+                dataType: "JSON",
+                cache: false,
+                success: function (response) {
 
-            $('#btnDonorsList').click(function (e) { 
-			    e.preventDefault();
-                var ids = $(this).data('id');
-                $.ajax({
-                    type: "GET",
-                    url: 'xhr/event_donor.php',
-                    data: {id:ids},
-                    dataType: "html",
-                    success: function (response) {
-                        // window.location.reload(true);
-                    },
+                 
+
+                    var dataArray = response;
+                    for (var i = 0; i < dataArray.length; i++){
+                        var fullname = dataArray[i].FullName;
+                        var status = dataArray[i].status;
+
+                        var holder;
+                        if(status == 0){
+                            holder = 'Not Donated!';
+                        }else {
+                            holder = 'Donated';
+                        }
                     
-                });
-		});
+                        console.log(response[i]['FullName']);
+                        var html = '';
+                            html += "<tr>";
+                            html += "<td>"+(i+1)+"</td>";
+                            html += "<td>"+fullname+"</td>";
+                            html += "<td>"+ holder +"</td>";
+                            html += "</tr>";
+
+                        $('#tester').append(html);
+                    }
+
+                },
+                
+            });
+        });
+        
    });
-  </script>
-  <script>
+   </script>
+
+   <script>
     $(document).ready( function () {
 		$('#example').DataTable();
 
@@ -404,23 +439,27 @@ if(isset($_GET['del']))
         });
 
         function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      $('#previewHolder').attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-  } else {
-    alert('select a file to see preview');
-    $('#previewHolder').attr('src', '');
-  }
-}
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $('#previewHolder').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                alert('select a file to see preview');
+                $('#previewHolder').attr('src', '');
+            }
+        }
 
-$("#uploadImage").change(function() {
-  readURL(this);
-});
-        
+        $("#uploadImage").change(function() {
+        readURL(this);
+        });
+                    
     } );
+
+    $('#modalDonors').on('hide.bs.modal', function (e) {
+        $('#tester').html('');
+    })
 
     
 

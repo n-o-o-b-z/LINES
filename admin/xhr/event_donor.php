@@ -6,21 +6,20 @@ if (strlen($_SESSION['alogin']) == 0 || $_SESSION['role'] !== 'Admin') {
     header('location:index.php');
 }
 
-$id = $_GET['ids'];
+$id = $_GET['id'];
 
-$sql="SELECT * FROM event_donors WHERE id=:id";
+
+
+$sql="SELECT a.*,b.FullName FROM event_donors AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id WHERE announcement_id=:id";
 $query = $dbh->prepare($sql);
 $query->bindParam(':id',$id,PDO::PARAM_STR);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_OBJ);
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-    echo $msg="true";
-}
-else 
-{
-    echo $error="Something went wrong. Please try again";
+if($query->rowCount() > 0){
+    $data =  json_encode($results);
+    echo $data;
+}else{
+    echo 'wala';
 }
 
 ?>
