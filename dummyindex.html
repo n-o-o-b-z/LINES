@@ -23,6 +23,7 @@
   </p>
 </body>
 <script>
+  playSound(data['message']);
   function playSound(data) {
     if (!window.Notification) {
     console.log('Browser does not support notifications.')

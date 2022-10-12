@@ -15,9 +15,6 @@ include('includes/config.php');
 
     <!-- Page Content -->
     <div class="container">
-    <button class="show-example-btn" aria-label="Try me! Example: passing a parameter, you can execute something else for 'Cancel'" onclick="executeExample('handleDismiss')">
-          Try me!
-        </button>
         <h1 class="my-4">Maligayang Pagdating Sa LIFELINE Blood Seeker Website</h1>
 
         <!-- Marketing Icons Section -->

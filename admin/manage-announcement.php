@@ -84,7 +84,7 @@ if(isset($_GET['del']))
                                     <td><?php echo htmlentities($result->location); ?></td>
                                     <td><?php echo htmlentities($result->organizer); ?></td>
                                     <td><?php echo htmlentities($result->details); ?></td>
-                                    <td><?=$result->is_hidden == 0 ? '<span class="badge badge-success">Success</span>':'<span class="badge badge-danger">hidden</span>'?></td>
+                                    <td><?=$result->is_hidden == 0 ? '<span class="badge badge-success">Active</span>':'<span class="badge badge-danger">hidden</span>'?></td>
 
 
                                     <td>
@@ -103,11 +103,19 @@ if(isset($_GET['del']))
                                                 </button>';
                                             }
                                         ?>
+
+                                        <form action="" method="POST">
+                                            <button type="button" class="btn btn-primary" id="viewDonors" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modalDonors">View Donors</button>
+                                        </form>
+                                        
+                                        
                                     </td>
                                 </tr>
                         <?php $cnt = $cnt + 1;
                             }
                         } ?>
+
+                      
 					</tbody>
 				</table>
 			</div>
@@ -125,38 +133,48 @@ if(isset($_GET['del']))
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form action="#">
-						<div class="form-group">
-							<label for="bGroup">Title</label>
-							<input type="text" class="form-control" id="announcement-title" name="title" required />
+                <form id="form" action="#" method="post" enctype="multipart/form-data">
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">Date</label>
-                                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" autocomplete="off">   
+                    <div class="modal-body">
+                        <!-- <form action="#"  enctype="multipart/form-data"> -->
+                            <div class="form-group">
+                                <label for="bGroup">Title</label>
+                                <input type="text" class="form-control" id="announcement-title" name="title" required />
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Date</label>
+                                        <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" autocomplete="off">   
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Location</label>
+                                        <input type="text" class="form-control" id="inputLoc" name="location">
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="inputState">Location</label>
-                                    <input type="text" class="form-control" id="inputLoc" name="location">
-                                </div>
+                                <label for="bGroup">Organizer</label>
+                                <input type="text" class="form-control" id="organizer" name="organizer" required />
                             </div>
 
-                            <label for="bGroup">Organizer</label>
-							<input type="text" class="form-control" id="organizer" name="organizer" required />
-						</div>
+                            <div class="form-group">
+                                <label for="bGroup">Details</label>
+                                <textarea class="form-control" name="details" id="details"></textarea>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="bGroup">Details</label>
-                            <textarea class="form-control" name="details" id="details"></textarea>
-                        </div>
-					</form>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="AddAnnouncement">Save</button>
-				</div>
+                            <div class="form-group">
+                                <label for="bGroup">Upload Banner</label>
+                                <input type="file" value="" id="uploadImage" class="required borrowerImageFile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
+                                <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:3px;border:5px solid red;"/>
+                            </div>
+
+                        
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="AddAnnouncement">Save</button>
+                    </div>
+                </form>
 			</div>
 		</div>
 	</div>
@@ -209,6 +227,39 @@ if(isset($_GET['del']))
 		</div>
 	</div>
 
+    <div class="modal fade" id="modalDonors" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">List of Attending Donors <span id="counter"></span></h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+                <table id="example" class="display" style="width:100%">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Full Name</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="test">
+					
+                   
+					</tbody>
+				</table>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="btnDonorsList">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 
 </body>
@@ -217,32 +268,58 @@ if(isset($_GET['del']))
   <script>
    
    $(document).ready(function () {
-		$('#AddAnnouncement').click(function (e) { 
-            e.preventDefault();
-            var title = $('#announcement-title').val();
-            var date  = $('#datetimepicker5').val();
-            var location = $('#inputLoc').val();
-            var organizer = $('#organizer').val();
-            var details = $('#details').val();
+		// $('#AddAnnouncement').click(function (e) { 
+        //     e.preventDefault();
+        //     var title = $('#announcement-title').val();
+        //     var date  = $('#datetimepicker5').val();
+        //     var location = $('#inputLoc').val();
+        //     var organizer = $('#organizer').val();
+        //     var details = $('#details').val();
 
-            var url = 'xhr/add-announcement.php';
+        //     var url = 'xhr/add-announcement.php';
+        //     $.ajax({
+        //         type: "GET",
+        //         url: url,
+        //         data: {
+        //             title:title,
+        //             date:date,
+        //             location:location,
+        //             organizer:organizer,
+        //             details:details
+        //         },
+        //         dataType: "JSON",
+        //         success: function (response) {
+        //             window.location.reload(true);
+        //         }
+        //     });
+
+    
+        $("#form").on("submit", function (e) {
+            e.preventDefault();
             $.ajax({
-                type: "GET",
-                url: url,
-                data: {
-                    title:title,
-                    date:date,
-                    location:location,
-                    organizer:organizer,
-                    details:details
+                url: "xhr/add-announcement.php",
+                type: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    // if (data == "invalid") {
+                    //     // invalid file format.
+                    //     $("#err").html("Invalid File !").fadeIn();
+                    // } else {
+                    //     // view uploaded file.
+                    //     $("#preview").html(data).fadeIn();
+                    //     $("#form")[0].reset();
+                    // }
+                    console.log(data);
                 },
-                dataType: "JSON",
-                success: function (response) {
-                    window.location.reload(true);
-                }
+               
             });
-            
         });
+
+            
+ 
 
 
 		// $('#editBtn').click(function (e) { 
@@ -287,6 +364,20 @@ if(isset($_GET['del']))
 				},
 				
 			});
+
+            $('#btnDonorsList').click(function (e) { 
+			    e.preventDefault();
+                var ids = $(this).data('id');
+                $.ajax({
+                    type: "GET",
+                    url: 'xhr/event_donor.php',
+                    data: {id:ids},
+                    dataType: "html",
+                    success: function (response) {
+                        // window.location.reload(true);
+                    },
+                    
+                });
 		});
    });
   </script>
@@ -312,7 +403,23 @@ if(isset($_GET['del']))
             }
         });
 
-            
+        function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#previewHolder').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    alert('select a file to see preview');
+    $('#previewHolder').attr('src', '');
+  }
+}
+
+$("#uploadImage").change(function() {
+  readURL(this);
+});
+        
     } );
 
     

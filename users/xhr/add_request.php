@@ -41,7 +41,14 @@ if($query->rowCount() > 0){
     if($lastInsertId)
     {
         echo $msg="ok";
-        $data['message'] = 'Want to request blood';
+        $ids = $_GET['userid'];
+        $sql2="SELECT FullName FROM tblblooddonars WHERE id=:id";
+        $query = $dbh->prepare($sql2);
+        $query->bindParam(':id',$ids,PDO::PARAM_STR);
+        $query->execute();
+        $results=$query->fetchAll(PDO::FETCH_OBJ);
+
+        $data['message'] = $results[0]->FullName.' Want to request blood';
         $pusher->trigger('my-channel', 'my-event', $data);
     }
     else 

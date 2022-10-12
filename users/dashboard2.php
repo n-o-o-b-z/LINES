@@ -11,6 +11,8 @@ if (strlen($_SESSION['user_login']) == 0) {
 <html lang="en">
     <head>
         <?php include('includes/new-header.php'); ?>
+        <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
     </head>
     <body>
         <?php include('includes/nav.php'); ?>
@@ -156,5 +158,73 @@ if (strlen($_SESSION['user_login']) == 0) {
         </div>
         <?php include('includes/footer.php'); ?>
         <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script>
+
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('9026a8fb79691852de9d', {
+            cluster: 'ap1'
+            });
+
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function(data) {
+            // playSound(data['message']);
+            //     var content = '<tr>';
+            //     content += '<td>';
+            //     content +=  data['message'];
+            //     content += '<td>';
+            //     content += '<tr>';
+            // $('#appended').append(content);
+            // Swal.fire({
+            //     title: 'Requesting for Blood Donation',
+            //     text:  data['message'],
+            //     imageUrl: 'https://unsplash.it/400/200',
+            //     imageWidth: 400,
+            //     imageHeight: 200,
+            //     imageAlt: 'Custom image',
+            //     })
+            const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+                swalWithBootstrapButtons.fire({
+                title: 'Requesting for Blood?',
+                text: data['message'],
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Accept',
+                cancelButtonText: 'Deny',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                    )
+                }
+                })
+
+
+
+
+
+            });
+
+        </script>
     </body>
 </html>
