@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
     <!-- <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,9 +51,12 @@
                     <a class="nav-link" href="page.php?type=announcement">Announcement</a>
                 </li>
 
+                <?php if(!isset($_SESSION['user_login'])){ ?>
                 <li class="nav-item">
                     <a class="nav-link" href="become-donor.php">Become a Donor</a>
                 </li>
+                <?php }else{}?>
+
 
                 <li class="nav-item">
                     <a class="nav-link" href="search-donor.php">Search Donor</a>
@@ -63,6 +69,13 @@
                     <a class="nav-link" href="contact.php">Contact us</a>
                 </li>
 
+                <?php if(!$_SESSION['user_login']):?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./users/">Login</a>
+                    </li>
+                <?php endif; ?>
+                
+                    
                 <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown link
@@ -74,7 +87,13 @@
           </ul>
         </li> -->
             </ul>
+
         </div>
+        <?php if($_SESSION['user_login']):?>
+            <a href="./users/profile.php" rel="noopener noreferrer">
+                <img src="./images/uploads/375457demon-slayer-nezuko-pfp-2.jpg" height="40" size="40" alt="" style="border-radius: 50%; vertical-align:middle">
+            </a>
+        <?php endif; ?>
     </div>
 </nav>
 

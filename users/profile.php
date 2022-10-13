@@ -11,6 +11,14 @@ if (strlen($_SESSION['user_login']) == 0) {
 <!DOCTYPE html>
 <html lang="en">
    <?php include('includes/new-header.php'); ?>
+
+   <style>
+        .profile-username:hover{
+            color: red;
+            cursor: pointer;
+        }
+   </style>
+
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
 
@@ -45,8 +53,11 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 <!-- Profile Image -->
                                 <div class="card card-primary card-outline">
                                     <div class="card-body box-profile">
+                                        <div class="text-right">
+                                            <span data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-user-edit text-info"></i></span>
+                                        </div>
                                         <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture" />
+                                            <img class="profile-user-img img-fluid img-circle" src="../assets/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture" />
                                         </div>
 
                                         <h3 class="profile-username text-center"><?=$_SESSION['name']; ?></h3>
@@ -55,7 +66,7 @@ if (strlen($_SESSION['user_login']) == 0) {
 
                                         <ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item"><b>Donated</b> <a class="float-right">1,322</a></li>
-                                            <li class="list-group-item"><b>Following</b> <a class="float-right">543</a></li>
+                                            <li class="list-group-item"><b>Requested</b> <a class="float-right">543</a></li>
                                             <li class="list-group-item"><b>Friends</b> <a class="float-right">13,287</a></li>
                                         </ul>
 
@@ -123,7 +134,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                                 <!-- Post -->
                                                 <div class="post">
                                                     <div class="user-block">
-                                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image" />
+                                                        <img class="img-circle img-bordered-sm" src="../assets/adminlte/dist/img/user1-128x128.jpg" alt="user image" />
                                                         <span class="username">
                                                             <a href="#">Jonathan Burke Jr.</a>
                                                             <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -151,7 +162,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                                 <!-- Post -->
                                                 <div class="post clearfix">
                                                     <div class="user-block">
-                                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image" />
+                                                        <img class="img-circle img-bordered-sm" src="../assets/adminlte/dist/img/user7-128x128.jpg" alt="User Image" />
                                                         <span class="username">
                                                             <a href="#">Sarah Ross</a>
                                                             <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -178,7 +189,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                                 <!-- Post -->
                                                 <div class="post">
                                                     <div class="user-block">
-                                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image" />
+                                                        <img class="img-circle img-bordered-sm" src="../assets/adminlte/dist/img/user6-128x128.jpg" alt="User Image" />
                                                         <span class="username">
                                                             <a href="#">Adam Jones</a>
                                                             <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -188,19 +199,19 @@ if (strlen($_SESSION['user_login']) == 0) {
                                                     <!-- /.user-block -->
                                                     <div class="row mb-3">
                                                         <div class="col-sm-6">
-                                                            <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" />
+                                                            <img class="img-fluid" src="../assets/adminlte/dist/img/photo1.png" alt="Photo" />
                                                         </div>
                                                         <!-- /.col -->
                                                         <div class="col-sm-6">
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    <img class="img-fluid mb-3" src="../../dist/img/photo2.png" alt="Photo" />
-                                                                    <img class="img-fluid" src="../../dist/img/photo3.jpg" alt="Photo" />
+                                                                    <img class="img-fluid mb-3" src="../assets/adminlte/dist/img/photo2.png" alt="Photo" />
+                                                                    <img class="img-fluid" src="../assets/adminlte/dist/img/photo3.jpg" alt="Photo" />
                                                                 </div>
                                                                 <!-- /.col -->
                                                                 <div class="col-sm-6">
-                                                                    <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg" alt="Photo" />
-                                                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" />
+                                                                    <img class="img-fluid mb-3" src="../assets/adminlte/dist/img/photo4.jpg" alt="Photo" />
+                                                                    <img class="img-fluid" src="../assets/adminlte/dist/img/photo1.png" alt="Photo" />
                                                                 </div>
                                                                 <!-- /.col -->
                                                             </div>
@@ -377,6 +388,90 @@ if (strlen($_SESSION['user_login']) == 0) {
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <input type="file" value="" id="uploadImage" class="required borrowerImageFile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
+                                        <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:50%;border:1px solid black;"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Password</label>
+                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inputAddress">Full Name</label>
+                                    <input type="text" class="form-control" id="fname" name="fname" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Password</label>
+                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress2">Address 2</label>
+                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">City</label>
+                                        <input type="text" class="form-control" id="inputCity" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputState">State</label>
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputZip">Zip</label>
+                                        <input type="text" class="form-control" id="inputZip" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck" />
+                                        <label class="form-check-label" for="gridCheck">
+                                            Check me out
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <footer class="main-footer">
                 <div class="float-right d-none d-sm-block"><b>Version</b> 3.2.0</div>
                 <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
@@ -391,12 +486,30 @@ if (strlen($_SESSION['user_login']) == 0) {
         <!-- ./wrapper -->
 
         <!-- jQuery -->
-        <script src="../../plugins/jquery/jquery.min.js"></script>
+        <script src="../assets/adminlte/plugins/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
-        <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE App -->
-        <script src="../../dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="../../dist/js/demo.js"></script>
+        <script src="../assets/adminlte/dist/js/adminlte.min.js"></script>
+
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#previewHolder').attr('src', e.target.result);
+                    }
+                        reader.readAsDataURL(input.files[0]);
+                    } else {
+                        alert('select a file to see preview');
+                        $('#previewHolder').attr('src', '');
+                    }
+            }
+
+            $("#uploadImage").change(function() {
+                readURL(this);
+            });
+        </script>
+
     </body>
 </html>

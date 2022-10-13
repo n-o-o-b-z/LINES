@@ -40,10 +40,21 @@ if(!isset($_POST['user_login'])){
                 </li>
 
                 <li class="nav-item">
+                    <a href="../page.php" class="nav-link">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            See Announcements
+                            <!-- <span class="badge badge-info right">2</span> -->
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
                     <a href="request_blood.php" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
-                            Donate
+                            Request for Blood
                             <!-- <span class="badge badge-info right">2</span> -->
                         </p>
                     </a>

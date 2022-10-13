@@ -95,7 +95,7 @@ include('includes/config.php');
 
     <div class="row">
         <?php
-        $status = 1;
+        $status = 0;
         $sql = "SELECT * from tblblooddonars where status=:status order by rand() limit 6";
         $query = $dbh->prepare($sql);
         $query->bindParam(':status', $status, PDO::PARAM_STR);

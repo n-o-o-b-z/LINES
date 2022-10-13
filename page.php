@@ -117,25 +117,24 @@
                     url: "users/xhr/join_event.php",
                     data: {id:data},
                     dataType: "JSON",
+                    statusCode: {
+                        403: function (response) {
+                            window.location.href = "users/";
+                        },
+                    },
                     success: function (response) {
                         
-
                         switch (response) {
                             case 1:
                                 alert('Already Joined!');
-                                break;
-
+                            break;
                             case true:
                                 $(test).removeClass('btn-info');
                                 $(test).addClass('btn-success');
                                 $(test).addClass('disabled');
                                 $(test).attr('disabled', 'disabled');
                                 $(test).html('Registered');
-                                console.log(response);
-                                break;
-                        
-                            // default:
-                            //     break;
+                            break;
                         }
                     }
                 });

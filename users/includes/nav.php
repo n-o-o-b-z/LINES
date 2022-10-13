@@ -13,7 +13,7 @@ if (strlen($_SESSION['user_login']) == 0) {
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="../index.php" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -112,16 +112,18 @@ if (strlen($_SESSION['user_login']) == 0) {
           <!-- <span class="dropdown-item dropdown-header"></span> -->
           <?php
               $myid = $_SESSION['id'];
-              $getdonate = "SELECT a.*,b.FullName FROM donate_request AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id WHERE request_to =:myid ";
+              $status = 0;
+              $getdonate = "SELECT a.*,b.FullName FROM donate_request AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id WHERE request_to =:myid AND a.status=:status";
               $donate_query = $dbh->prepare($getdonate); 
               $donate_query->bindParam(':myid', $myid, PDO::PARAM_STR);
+              $donate_query->bindParam(':status', $status, PDO::PARAM_STR);
               $donate_query->execute(); 
               $getResults = $donate_query->fetchAll(PDO::FETCH_OBJ);
               
             if(sizeof($getResults) >= 0){ 
               foreach($getResults as $getResult){ ?>
                 <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item" data-id="<?=$getResult->id; ?>">
+                  <a class="dropdown-item" id="msg" data-toggle="modal" data-target="#modalMsg" data-id="<?=$getResult->id; ?>">
                     <i class="fas fa-envelope mr-2"></i> <?=$getResult->FullName;?> requesting for blood!
                   </a>
             <?php }
@@ -150,9 +152,75 @@ if (strlen($_SESSION['user_login']) == 0) {
     </ul>
   </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="modalMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+              <input type="hidden" name="message_id">
+              <span id="testing"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deny" data-id="0">Denied</button>
+        <button type="button" class="btn btn-primary" id="accept" data-id="0">Accept</button>
+      </div>
+    </div>
+  </div>accept
+</div>
+
+  <script src="../assets/adminlte/plugins/jquery/jquery.min.js"></script>
+
   <script>
     function logout(){
       window.location.href = "././logout.php";
     }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $(document).on('click','#msg', function () {
+        var msgid = $(this).data('id');
+          $('#message_id').val(msgid);
+          $('#testing').html(msgid);
+
+          // $('#accept').data('id', msgid);
+          // $('#accept').val(msgid);
+          $('#accept').attr("data-id", msgid);
+          $('#deny').attr("data-id", msgid);
+      });
+
+      $('#accept').click(function (e) { 
+        e.preventDefault();
+          var myIds = $(this).data('id');
+          var link = './xhr/accept_request.php';
+          requested(myIds,link);
+      });
+
+      $('#deny').click(function (e) { 
+        e.preventDefault();
+        alert('I was denied');
+      });
+
+
+      function requested(data,url){
+        var d = data;
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {id:d},
+          dataType: "dataType",
+          success: function (response) {
+            console.log(response);
+          }
+        });
+      }
+
+    });
   </script>
   <!-- /.navbar -->

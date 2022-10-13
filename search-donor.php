@@ -55,7 +55,7 @@ include('includes/config.php');
 </head>
 
 <body>
-
+    <?php include('includes/nav.php'); ?>
     <?php include('includes/header.php'); ?>
 
     <!-- Page Content -->
@@ -147,7 +147,7 @@ include('includes/config.php');
         <div class="row">
             <?php
             if (isset($_POST['submit'])) {
-                $status = 1;
+                $status = 0;
                 $bloodgroup = $_POST['bloodgroup'];
                 $purok = $_POST['purok'];
                 $barangay = $_POST['barangay'];

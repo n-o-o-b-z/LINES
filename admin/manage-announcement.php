@@ -427,7 +427,7 @@ if(isset($_GET['del']))
                     up: "fa fa-arrow-up",
                     down: "fa fa-arrow-down"
                 }
-            });
+        });
 
         $('#datetimepicker15').datetimepicker({
             icons: {
@@ -452,7 +452,7 @@ if(isset($_GET['del']))
         }
 
         $("#uploadImage").change(function() {
-        readURL(this);
+            readURL(this);
         });
                     
     });
