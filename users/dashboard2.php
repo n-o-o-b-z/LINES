@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+// include('includes/config.php');
 if (strlen($_SESSION['user_login']) == 0) {
 	header('location:index.php');
 }
@@ -48,7 +48,7 @@ if (strlen($_SESSION['user_login']) == 0) {
 
                     <div class="row mb-3">
 						<div class="col-lg-6">
-							<button class="btn btn-primary"> REQUEST FOR BLOOD</button>
+							<button class="btn btn-primary">REQUEST FOR BLOOD</button>
 						</div>
 					</div>
 
@@ -62,7 +62,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                     					$query = $dbh->prepare($sql); $query->execute(); $results = $query->fetchAll(PDO::FETCH_OBJ); $bg = $query->rowCount(); ?>
                                     <h3><?php echo htmlentities($bg); ?></h3>
 
-                                    <p>LISTED BLOOD GROUPS</p>
+                                    <p>LIST OF DONATIONS</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
@@ -75,12 +75,12 @@ if (strlen($_SESSION['user_login']) == 0) {
                             <!-- small box -->
                             <div class="small-box" style="color: white; background-color: #800000;">
                                 <div class="inner">
-                                    <?php
-                    $sql1 = "SELECT id from tblblooddonars ";
-                    $query1 = $dbh->prepare($sql1);; $query1->execute(); $results1 = $query1->fetchAll(PDO::FETCH_OBJ); $regbd = $query1->rowCount(); ?>
+                                        <?php
+                                            $sql1 = "SELECT id from tblblooddonars ";
+                                            $query1 = $dbh->prepare($sql1);; $query1->execute(); $results1 = $query1->fetchAll(PDO::FETCH_OBJ); $regbd = $query1->rowCount(); ?>
                                     <h3><?php echo htmlentities($regbd); ?></h3>
 
-                                    <p>REGISTERED BLOOD GROUP</p>
+                                    <p>REQUEST FOR BLOOD</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
@@ -94,11 +94,11 @@ if (strlen($_SESSION['user_login']) == 0) {
                             <div class="small-box bg-warning" style="color: white !important;">
                                 <div class="inner">
                                     <?php
-                    $sql6 = "SELECT id from tblcontactusquery ";
-                    $query6 = $dbh->prepare($sql6);; $query6->execute(); $results6 = $query6->fetchAll(PDO::FETCH_OBJ); $query = $query6->rowCount(); ?>
+                                $sql6 = "SELECT id from tblcontactusquery ";
+                                $query6 = $dbh->prepare($sql6);; $query6->execute(); $results6 = $query6->fetchAll(PDO::FETCH_OBJ); $query = $query6->rowCount(); ?>
                                     <h3><?php echo htmlentities($query); ?></h3>
 
-                                    <p>TOTAL QUIRIES</p>
+                                    <p>LIST OF BLOOD QUIRIES</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
@@ -114,8 +114,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <?php
                     $status = 0; //active
                     $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
-                    $query= $dbh ->
-                                    prepare($sql); $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
+                    $query= $dbh->prepare($sql); $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
                                     <h3><?php echo htmlentities($counter); ?></h3>
 
                                     <p>ACTIVE</p>

@@ -455,7 +455,7 @@ if(isset($_GET['del']))
         readURL(this);
         });
                     
-    } );
+    });
 
     $('#modalDonors').on('hide.bs.modal', function (e) {
         $('#tester').html('');

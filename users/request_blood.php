@@ -38,6 +38,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <label for="exampleInputEmail1">Blood Type</label>
                                     <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
                                     <select name="btype" id="btype" class="form-control">
+                                        <option value="">Select Blood Group</option>
                                         <?php $sql = "SELECT DISTINCT BloodGroup from  tblbloodgroup ";
                                         $query = $dbh->prepare($sql);
                                         $query->execute();
@@ -52,7 +53,9 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label for="exampleInputEmail1">Purok</label>
-                                    <select name="purok" id="btype" class="form-control">
+                                    <select name="purok" id="purok" class="form-control">
+                                        <option value="">Select Purok</option>
+
                                         <?php $sql = "SELECT DISTINCT Purok from  tblblooddonars ";
                                         $query = $dbh->prepare($sql);
                                         $query->execute();
@@ -67,7 +70,9 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 </div>
                                 <div class="form-group col-lg-4">
                                     <label for="exampleInputEmail1">Barangay</label>
-                                    <select name="barangay" id="btype" class="form-control">
+                                    <select name="barangay" id="barangay" class="form-control">
+                                        <option value="">Select Barangay</option>
+
                                         <?php $sql = "SELECT DISTINCT Barangay from  tblblooddonars ";
                                         $query = $dbh->prepare($sql);
                                         $query->execute();
@@ -91,18 +96,16 @@ if (strlen($_SESSION['user_login']) == 0) {
                     <div class="row">
                         <?php
                         if (isset($_POST['submit'])) {
-                            $status = 1;
+                            $status = 0;
                             $bloodgroup = $_POST['btype'];
                             $purok = $_POST['purok'];
                             $barangay = $_POST['barangay'];
-                            $id = $_SESSION['id'];
-                            $sql = "SELECT * FROM tblblooddonars WHERE (status=:status and BloodGroup=:bloodgroup) ||  (Purok=:purok) and (Barangay=:barangay) AND id != :id";
+                            $sql = "SELECT * from tblblooddonars where status=:status AND  BloodGroup=:bloodgroup ||  (Purok=:purok) || (Barangay=:barangay)";
                             $query = $dbh->prepare($sql);
                             $query->bindParam(':status', $status, PDO::PARAM_STR);
                             $query->bindParam(':bloodgroup', $bloodgroup, PDO::PARAM_STR);
                             $query->bindParam(':purok', $purok, PDO::PARAM_STR);
                             $query->bindParam(':barangay', $barangay, PDO::PARAM_STR);
-                            $query->bindParam(':id', $id, PDO::PARAM_STR);
                             $query->execute();
                             $results = $query->fetchAll(PDO::FETCH_OBJ);
                             $cnt = 1;
@@ -110,7 +113,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 foreach ($results as $result) { ?>
 
                                     <div class="col-lg-4 col-sm-6 portfolio-item">
-                                        <div class="bg-white p-3 text-center rounded box"><img class="img-responsive rounded-circle" src="https://i.imgur.com/uppKNuF.jpg" width="90">
+                                        <div class="bg-white p-3 text-center rounded box" style="overflow-wrap: break-word;"><img class="img-responsive rounded-circle" src="https://i.imgur.com/uppKNuF.jpg" width="90">
                                             <h5 class="mt-3 name"><?php echo htmlentities($result->FullName); ?></h5>
                                             <!-- <span class="work d-block">Comapay agents house</span>
                                             <span class="work d-block">real estate</span> -->

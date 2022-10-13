@@ -1,5 +1,10 @@
 <?php
- include('config.php');
+session_start();
+error_reporting(0);
+include('includes/config.php');
+if (strlen($_SESSION['user_login']) == 0) {
+	header('location:index.php');
+}
 ?>
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -107,32 +112,27 @@
           <!-- <span class="dropdown-item dropdown-header"></span> -->
           <?php
               $myid = $_SESSION['id'];
-              $getdonate = "SELECT * FROM donate_request WHERE request_to =:myid ";
+              $getdonate = "SELECT a.*,b.FullName FROM donate_request AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id WHERE request_to =:myid ";
               $donate_query = $dbh->prepare($getdonate); 
               $donate_query->bindParam(':myid', $myid, PDO::PARAM_STR);
               $donate_query->execute(); 
               $getResults = $donate_query->fetchAll(PDO::FETCH_OBJ);
               
-              foreach($getResults as $getResult){
-                if($getResults == ''){?>
-                  <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="fas fa-envelope mr-2"></i> <?php $result->user_id;?>
-                  <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <?php }else {?>
+            if(sizeof($getResults) >= 0){ 
+              foreach($getResults as $getResult){ ?>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="fas fa-envelope mr-2"></i> <?php $result->user_id;?>
-                  <span class="float-right text-muted text-sm">3 mins</span>
+                  <a href="#" class="dropdown-item" data-id="<?=$getResult->id; ?>">
+                    <i class="fas fa-envelope mr-2"></i> <?=$getResult->FullName;?> requesting for blood!
+                  </a>
+            <?php }
+            }else{ ?>
+              <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" data-id="<?=$getResult->id; ?>">
+                  <i class="mr-2"></i> NO DATA TO SHOW  
+                  <span class="float-right text-muted text-sm"></span>
                 </a>
-              
-            <?php }} ?>
+          <?php } ?>
           
-
-
-          
-          <!-- <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> -->
         </div>
       </li>
       <li class="nav-item">
