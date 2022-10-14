@@ -17,6 +17,35 @@ if (strlen($_SESSION['user_login']) == 0) {
             color: red;
             cursor: pointer;
         }
+
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .inputfile + label {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: white;
+            background-color: black;
+            display: inline-block;
+        }
+
+        .inputfile:focus + label,
+        .inputfile + label:hover {
+            background-color: red;
+        }
+        .inputfile + label {
+            cursor: pointer; /* "hand" cursor */
+        }
+        .inputfile:focus + label {
+            outline: 1px dotted #000;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
    </style>
 
     <body class="hold-transition sidebar-mini">
@@ -60,7 +89,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                             <img class="profile-user-img img-fluid img-circle" src="../assets/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture" />
                                         </div>
 
-                                        <h3 class="profile-username text-center"><?=$_SESSION['name']; ?></h3>
+                                        <h3 class="profile-username text-center" contenteditable><?=$_SESSION['name']; ?></h3>
 
                                         <!-- <p class="text-muted text-center">Software Engineer</p> -->
 
@@ -403,7 +432,8 @@ if (strlen($_SESSION['user_login']) == 0) {
                             <form>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <input type="file" value="" id="uploadImage" class="required borrowerImageFile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
+                                        <input type="file" value="" id="uploadImage" class="required borrowerImageFile inputfile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
+                                        <label for="uploadImage">Choose a file</label>
                                         <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:50%;border:1px solid black;"/>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -493,6 +523,7 @@ if (strlen($_SESSION['user_login']) == 0) {
         <script src="../assets/adminlte/dist/js/adminlte.min.js"></script>
 
         <script>
+            $("#previewHolder").hide();
             function readURL(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
@@ -507,7 +538,12 @@ if (strlen($_SESSION['user_login']) == 0) {
             }
 
             $("#uploadImage").change(function() {
-                readURL(this);
+                if(this.value){
+                    $('#previewHolder').show();
+                    readURL(this);
+                }else{
+                    $("#previewHolder").hide();
+                }
             });
         </script>
 
