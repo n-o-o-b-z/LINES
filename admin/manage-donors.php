@@ -13,7 +13,53 @@ if(isset($_GET['del']))
 	$query -> bindParam(':id',$id, PDO::PARAM_STR);
 	$query -> execute();
 	$msg="Data Deleted successfully";   
-}  
+}
+
+if(isset($_POST['ban']))
+{
+    $id = $_POST['ban'];
+    $status = 2;
+    $sql = "UPDATE tblblooddonars SET status = :status WHERE id=:id";
+    $query= $dbh -> prepare($sql);
+    $query-> bindParam(':id', $id, PDO::PARAM_STR);
+    $query-> bindParam(':status', $status, PDO::PARAM_STR);
+    $query -> execute();
+    $msg="Data Deleted successfully";
+    // header("Refresh:0");
+}
+
+if(isset($_POST['mark-unban']) || isset($_POST['mark-active']))
+{
+    $the_value = '';
+    if(isset($_POST['mark-unban'])){
+        $the_value = $_POST['mark-unban'];
+    }
+    if(isset($_POST['mark-active'])){
+        $the_value = $_POST['mark-active'];
+    }
+
+    $id = $the_value;
+    $status = 0;
+    $sql = "UPDATE tblblooddonars SET status = :status WHERE id=:id";
+    $query= $dbh -> prepare($sql);
+    $query-> bindParam(':id', $id, PDO::PARAM_STR);
+    $query-> bindParam(':status', $status, PDO::PARAM_STR);
+    $query -> execute();
+    $msg="Data Deleted successfully";
+    // header("Refresh:0");
+}
+
+if(isset($_POST['mark-inactive']))
+{
+    $id = $_POST['mark-inactive'];
+    $status = 1;
+    $sql = "UPDATE tblblooddonars SET status = :status WHERE id=:id";
+    $query= $dbh -> prepare($sql);
+    $query-> bindParam(':id', $id, PDO::PARAM_STR);
+    $query-> bindParam(':status', $status, PDO::PARAM_STR);
+    $query -> execute();
+    $msg="Data Deleted successfully";
+}
 
 ?>
 
@@ -112,22 +158,24 @@ if(isset($_GET['del']))
                                                 <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">EDIT</button>
                                                 <button type="button" class="btn btn-primary dropdown-item" id="viewBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">DONATIONS</button>
                                                 <div class="dropdown-divider"></div>
-                                                    <?php if($result->status == 0):?>
-                                                        <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
-                                                                    BAN
-                                                        </button>
-                                                        <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
-                                                                    MARK INACTIVE
-                                                        </button>
-                                                        <?php elseif($result->status == 1):?>
-                                                            <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
-                                                                    MARK ACTIVE
+                                                    <form action="#" method="post">
+                                                        <?php if($result->status == 0):?>
+                                                            <button type="submit" class="btn btn-default dropdown-item" name="ban" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                                        BAN
                                                             </button>
-                                                        <?php else:?>
-                                                            <button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">
-                                                                    UNBAN
+                                                            <button type="submit" class="btn btn-default dropdown-item" name="mark-inactive" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                                        MARK INACTIVE
                                                             </button>
-                                                    <?php endif ?>
+                                                            <?php elseif($result->status == 1):?>
+                                                                <button type="submit" class="btn btn-default dropdown-item" name="mark-active" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                                        MARK ACTIVE
+                                                                </button>
+                                                            <?php else:?>
+                                                                <button type="submit" class="btn btn-default dropdown-item" name="unban" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                                        UNBAN
+                                                                </button>
+                                                        <?php endif ?>
+                                                    </form>
                                                 </div>
                                         </div>
 

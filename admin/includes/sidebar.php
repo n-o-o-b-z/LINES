@@ -41,7 +41,7 @@ if(!isset($_POST['alogin'])){
 
                 <li class="nav-item">
 					<a href="manage-bloodgroup2.php" class="nav-link">
-						<i class="nav-icon fa fa-trash"></i>
+                        <i class="nav-icon fas fa-layer-group"></i>
 						<p>Blood Group</p>
 					</a>
 				</li>
@@ -84,21 +84,21 @@ if(!isset($_POST['alogin'])){
 
                 <li class="nav-item">
                     <a href="manage-donors.php" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
                             Donors List
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Manage Contact Us Query
-                        </p>
-                    </a>
-                </li>
+                    <!-- <li class="nav-item">
+                        <a href="pages/gallery.html" class="nav-link">
+                            <i class="nav-icon far fa-image"></i>
+                            <p>
+                                Manage Contact Us Query
+                            </p>
+                        </a>
+                    </li> -->
 
                 <li class="nav-item">
                     <a href="pages/gallery.html" class="nav-link">
@@ -111,7 +111,7 @@ if(!isset($_POST['alogin'])){
 
                 <li class="nav-item">
                     <a href="manage-announcement.php" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
+                        <i class="nav-icon fas fa-bullhorn"></i>
                         <p>
                             Manage Announcements
                         </p>
@@ -122,7 +122,7 @@ if(!isset($_POST['alogin'])){
                 <?php if($_SESSION['role'] == 'Admin'){?>
                     <li class="nav-item">
                     <a href="manage-accounts.php" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
                             Manage Accounts
                         </p>
@@ -130,15 +130,6 @@ if(!isset($_POST['alogin'])){
                     </li>
                 <?php } ?>
 
-
-                <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Update Contact Info
-                        </p>
-                    </a>
-                </li>
                 
             </ul>
         </nav>

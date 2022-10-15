@@ -51,19 +51,18 @@ if($query->rowCount() > 0)
 }
 
 ?>
-<!doctype html>
-<html lang="en" class="no-js">
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>LIFELINE | User Login</title>
+
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+
 	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-social.css">
 	<link rel="stylesheet" href="css/bootstrap-select.css">
@@ -71,51 +70,219 @@ if($query->rowCount() > 0)
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/style.css">
+	<!-- icons  -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+		* {
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+			font-family: "Poppins", sans-serif;
+		}
+
+		.flex-r,
+		.flex-c {
+			justify-content: center;
+			align-items: center;
+			display: flex;
+		}
+
+		.flex-c {
+			flex-direction: column;
+		}
+
+		.flex-r {
+			flex-direction: row;
+		}
+
+		.container {
+			width: 100%;
+			min-height: 100vh;
+			padding: 20px 10px;
+			background: #e5e5e5;
+		}
+
+		.login-text {
+			background-color: #f6f6f6;
+			max-width: 400px;
+			min-height: 500px;
+			border-radius: 10px;
+			padding: 10px 20px;
+		}
+
+		.logo {
+			margin-bottom: 20px;
+		}
+
+		.logo span,
+		.logo span i {
+			font-size: 25px;
+			color: #0d8aa7;
+		}
+
+		.login-text h1 {
+			font-size: 25px;
+		}
+
+		.login-text p {
+			font-size: 15px;
+			color: #000000b2;
+		}
+
+		form {
+			align-items: flex-start !important;
+			width: 100%;
+			margin-top: 15px;
+		}
+
+		.input-box {
+			margin: 10px 0px;
+			width: 100%;
+		}
+
+		.label {
+			font-size: 15px;
+			color: black;
+			margin-bottom: 3px;
+		}
+
+		.input {
+			background-color: #f6f6f6;
+			padding: 0px 5px;
+			border: 2px solid rgba(216, 216, 216, 1);
+			border-radius: 10px;
+			overflow: hidden;
+			justify-content: flex-start;
+		}
+
+		input {
+			border: none;
+			outline: none;
+			padding: 10px 5px;
+			background-color: #f6f6f6;
+			flex: 1;
+		}
+
+		.input i {
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+		.check span {
+			color: #000000b2;
+			font-size: 15px;
+			font-weight: bold;
+			margin-left: 5px;
+		}
+
+		.btn {
+			color: #ffffff;
+			border-radius: 30px;
+			padding: 10px 15px;
+			background: linear-gradient(122.33deg, #68bed1 30.62%, #1e94e9 100%);
+			margin-top: 30px;
+			margin-bottom: 10px;
+			font-size: 16px;
+			transition: all 0.3s linear;
+		}
+
+		.btn:hover {
+			transform: translateY(-2px);
+		}
+
+		.extra-line {
+			font-size: 15px;
+			font-weight: 600;
+		}
+
+		.extra-line a {
+			color: #0095b6;
+		}
+
+	</style>
 </head>
 
+
 <body>
-	
-	<div class="login-page bk-img" style="background-image: url(img/banner.jpg);">
-		<div class="form-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3">
-						<h1 class="text-center text-bold text-light mt-4x">LIFELINE: Blood Donor Management System Sign in</h1>
-						<div class="well row pt-2x pb-3x bk-light">
-							<div class="col-md-8 col-md-offset-2">
-								<form method="post">
+  <div class=" flex-r container">
+    <div class="flex-r login-wrapper">
+      <div class="login-text">
+		<div class="logo">
+        	<span><i class="fab fa-speakap"></i></span>
+          	<span>LIFELINE</span>
+        </div>
+        <h1>Login</h1>
+        <p>It's not long before you embark on this journey! </p>
 
-									<label for="" class="text-uppercase text-sm">Email</label>
-									<input type="email" placeholder="Email" name="email" class="form-control mb" required>
+        <form class="flex-c" method="POST">
+          <div class="input-box">
+            <span class="label">E-mail</span>
+            <div class=" flex-r input">
+              <input type="text" name="email">
+              <!-- <i class="fas fa-at"></i> -->
+            </div>
+          </div>
 
-									<label for="" class="text-uppercase text-sm">Password</label>
-									<input type="password" placeholder="Password" name="password" class="form-control mb" required>
+          <div class="input-box">
+            <span class="label">Password</span>
+            <div class="flex-r input">
+              <input type="password" name="password" id="test_input" >
+              <!-- <i class="fas fa-lock"></i> -->
+			  <!-- <i class="far fa-eye"></i> -->
+			  <i class="far fa-eye-slash" class="opener" id="eye_close"></i>
+			  <i class="far fa-eye" class="opener" id="eye_open"></i>
+            </div>
+          </div>
 
-								
+          <div class="check">
+            <input type="checkbox" name="" id="">
+            <span>Remember me</span>
+          </div>
 
-									<button class="btn btn-primary btn-block" name="login" type="submit">LOGIN</button>
-									<br><br>
-									<div><a href="forgot.php" style="align-items: center;">Forgot password?</a></div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Loading Scripts -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.dataTables.min.js"></script>
-	<script src="js/dataTables.bootstrap.min.js"></script>
-	<script src="js/Chart.min.js"></script>
-	<script src="js/fileinput.js"></script>
-	<script src="js/chartData.js"></script>
-	<script src="js/main.js"></script>
+          <input class="form-control btn" type="submit" name="login" value="Submit">
+          <span class="extra-line">
+            <span>Forgot password?</span>
+            <a href="forgot.php">Recover here.</a>
+          </span>
+        </form>
 
+      </div>
+    </div>
+  </div>
 </body>
+
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script>
+	$('#eye_open').hide();
+	$('#eye_close').click(function(){
+    	if($('#test_input').attr('type') =='password'){
+			//  $('#test-input').prop('type', 'text');
+			$('#test_input').attr('type', 'text');
+			$('#eye_close').hide();
+			$('#eye_open').show();
+		
+		}else{
+			$('#test_input').attr('type', 'password');
+			$('#eye_close').show();
+			$('#eye_open').hide();
+		}
+	});
+
+	$('#eye_open').click(function(){
+    	if($('#test_input').attr('type') =='text'){
+			//  $('#test-input').prop('type', 'text');
+			$('#test_input').attr('type', 'password');
+			$('#eye_close').show();
+			$('#eye_open').hide();
+		
+		}else{
+			$('#test_input').attr('type', 'text');
+			$('#eye_close').hide();
+			$('#eye_open').show	();
+		}
+	});
+</script>
 
 </html>

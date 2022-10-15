@@ -1,24 +1,32 @@
 <?php
 session_start();
 error_reporting(0);
-// include('includes/config.php');
-if (strlen($_SESSION['user_login']) == 0) {
-	header('location:index.php');
+if(!$_SESSION['user_login']){
+    header('location:index.php');
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <?php include('includes/new-header.php'); ?>
-        <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<head>
+    <?php include('../users/includes/new-header.php'); ?>
+     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <?php include('includes/nav.php'); ?>
+<div class="wrapper">
 
-    </head>
-    <body>
-        <?php include('includes/nav.php'); ?>
-        <?php include('includes/sidebar.php'); ?>
 
-        <div class="content-wrapper">
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+
+  <?php 
+  
+    include('includes/sidebar.php');
+  ?>
+
+  <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">

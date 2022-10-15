@@ -121,7 +121,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                 ?>
                 <h3><?php echo htmlentities($counter); ?></h3>
 
-                <p>ACTIVE</p>
+                <p>ACTIVE DONORS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -145,7 +145,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                 ?>
                 <h3><?php echo htmlentities($counter); ?></h3>
 
-                <p>INACTIVE</p>
+                <p>INACTIVE DONORS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
