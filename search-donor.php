@@ -55,7 +55,7 @@ include('includes/config.php');
 </head>
 
 <body>
-
+    <?php include('includes/nav.php'); ?>
     <?php include('includes/header.php'); ?>
 
     <!-- Page Content -->
@@ -79,7 +79,8 @@ include('includes/config.php');
 
                 <div class="col-lg-4 mb-4">
                     <div class="font-italic">Blood Group<span style="color:red">*</span> </div>
-                    <div><select name="bloodgroup" class="form-control" required>
+                    <div><select name="bloodgroup" class="form-control" >
+                        <option value="">Select Blood Group</option>
                             <?php $sql = "SELECT * from  tblbloodgroup ";
                             $query = $dbh->prepare($sql);
                             $query->execute();
@@ -97,7 +98,9 @@ include('includes/config.php');
 
                 <div class="col-lg-4 mb-4">
                     <div class="font-italic">Purok</div>
-                    <div><select name="tblblooddonars" class="form-control" required>
+                    <div><select name="purok" class="form-control" >
+                    <option value="">Select Purok</option>
+
                             <?php $sql = "SELECT DISTINCT Purok from  tblblooddonars ";
                             $query = $dbh->prepare($sql);
                             $query->execute();
@@ -114,7 +117,9 @@ include('includes/config.php');
 
                 <div class="col-lg-4 mb-4">
                     <div class="font-italic">Barangay</div>
-                    <div><select name="tblblooddonars" class="form-control" required>
+                    <div><select name="barangay" class="form-control" >
+                            <option value="">Select Barangay</option>
+
                             <?php $sql = "SELECT DISTINCT Barangay from  tblblooddonars ";
                             $query = $dbh->prepare($sql);
                             $query->execute();
@@ -142,11 +147,11 @@ include('includes/config.php');
         <div class="row">
             <?php
             if (isset($_POST['submit'])) {
-                $status = 1;
+                $status = 0;
                 $bloodgroup = $_POST['bloodgroup'];
                 $purok = $_POST['purok'];
                 $barangay = $_POST['barangay'];
-                $sql = "SELECT * from tblblooddonars where (status=:status and BloodGroup=:bloodgroup) ||  (Purok=:purok) and (Barangay=:barangay)";
+                $sql = "SELECT * from tblblooddonars where status=:status AND  BloodGroup=:bloodgroup ||  (Purok=:purok) || (Barangay=:barangay)";
                 $query = $dbh->prepare($sql);
                 $query->bindParam(':status', $status, PDO::PARAM_STR);
                 $query->bindParam(':bloodgroup', $bloodgroup, PDO::PARAM_STR);

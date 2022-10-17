@@ -2,42 +2,14 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
-if (strlen($_SESSION['user_login']) == 0) {
-	header('location:index.php');
-} else {
+// if (strlen($_SESSION['user_login']) == 0) {
+// 	header('location:index.php');
+// } else {
 ?>
 	<!doctype html>
 	<html lang="en" class="no-js">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<meta name="theme-color" content="#3e454c">
-
-		<title>BBDMS | Admin Dashboard</title>
-		<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon" />
-		<!-- Font awesome -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
-		<!-- Sandstone Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<!-- Bootstrap Datatables -->
-		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-		<!-- Bootstrap social button library -->
-		<link rel="stylesheet" href="css/bootstrap-social.css">
-		<!-- Bootstrap select -->
-		<link rel="stylesheet" href="css/bootstrap-select.css">
-		<!-- Bootstrap file input -->
-		<link rel="stylesheet" href="css/fileinput.min.css">
-		<!-- Awesome Bootstrap checkbox -->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-		<!-- Admin Stye -->
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-		<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-	</head>
+	<?php include('includes/header.php'); ?>
 
 	<body>
 		<?php include('includes/header.php'); ?>
@@ -264,4 +236,3 @@ if (strlen($_SESSION['user_login']) == 0) {
 	</body>
 
 	</html>
-<?php } ?>

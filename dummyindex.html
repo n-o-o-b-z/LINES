@@ -2,25 +2,80 @@
 <head>
   <title>Pusher Test</title>
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-  <script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('9026a8fb79691852de9d', {
-      cluster: 'ap1'
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
-    });
-  </script>
 </head>
 <body>
   <h1>Pusher Test</h1>
   <p>
     Try publishing an event to channel <code>my-channel</code>
     with event name <code>my-event</code>.
+    <table>
+      <thead>
+        <tr>
+          <td>Chats</td>
+        </tr>
+      </thead>
+      <tbody id="appended">
+
+      </tbody>
+    </table>
   </p>
 </body>
+<script>
+  playSound(data['message']);
+  function playSound(data) {
+    if (!window.Notification) {
+    console.log('Browser does not support notifications.')
+  } else {
+    // check if permission is already granted
+    if (Notification.permission === 'granted') {
+      // show notification here
+      const notify = new Notification('Hi there!', {
+        body: data,
+        icon: 'https://bit.ly/2DYqRrh'
+      })
+    } else {
+      // request permission from the user
+      Notification.requestPermission()
+        .then(function (p) {
+          if (p === 'granted') {
+            // show notification here
+            const notify = new Notification('Hi there!', {
+              body: data,
+              icon: 'https://bit.ly/2DYqRrh'
+            })
+          } else {
+            console.log('User has blocked notifications.')
+          }
+        })
+        .catch(function (err) {
+          console.error(err)
+        })
+    }
+  }
+
+}
+</script>
+<script>
+
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('9026a8fb79691852de9d', {
+    cluster: 'ap1'
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('my-event', function(data) {
+    playSound(data['message']);
+    var content = '<tr>';
+        content += '<td>';
+        content +=  data['message'];
+        content += '<td>';
+        content += '<tr>';
+    $('#appended').append(content);
+ 
+  });
+</script>
+</html>

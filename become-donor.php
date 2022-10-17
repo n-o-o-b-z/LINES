@@ -38,13 +38,12 @@ if (isset($_POST['submit'])) {
         if ($lastInsertId) {
             $msg = "Your info submitted successfully";
         } else {
-            $error = "Something went wrong. Please try again";
+            $error = "EMAIL ALREADY TAKEN!";
         }
         }
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,12 +55,9 @@ if (isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>LIFELINE | Become A Donor</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="icon" href="images/26042022123157Bakiad.png" type="image/x-icon" />
-    <link href="css/modern-business.css" rel="stylesheet">
-    <style>
+    <?php include('includes/header.php'); ?>
+
+    <!-- <style>
         .navbar-toggler {
             z-index: 1;
         }
@@ -90,15 +86,14 @@ if (isset($_POST['submit'])) {
             -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
         }
-    </style>
+    </style> -->
 
 
 </head>
 
 <body>
 
-    <?php include('includes/header.php'); ?>
-
+    <?php include('includes/nav.php'); ?>
     <!-- Page Content -->
     <div class="container">
 
@@ -213,10 +208,7 @@ if (isset($_POST['submit'])) {
                     <div><input type="submit" name="submit" class="btn btn-primary" value="submit" style="cursor:pointer"></div>
                 </div>
 
-
-
             </div>
-
 
 
             <!-- /.row -->

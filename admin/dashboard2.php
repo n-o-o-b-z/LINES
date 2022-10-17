@@ -58,7 +58,7 @@ if (strlen($_SESSION['alogin']) == 0) {
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="manage-bloodgroup2.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -121,7 +121,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                 ?>
                 <h3><?php echo htmlentities($counter); ?></h3>
 
-                <p>ACTIVE</p>
+                <p>ACTIVE DONORS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -145,7 +145,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                 ?>
                 <h3><?php echo htmlentities($counter); ?></h3>
 
-                <p>INACTIVE</p>
+                <p>INACTIVE DONORS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -162,5 +162,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     </section>
     <!-- /.content -->
   </div>
+  <?php include('includes/footer.php'); ?>
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
