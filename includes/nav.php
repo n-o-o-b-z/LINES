@@ -25,7 +25,7 @@ session_start();
         <?php }else{}?>
 
         <li class="nav-item">
-          <a class="nav-link" href="page.php?type=aboutus">About</a>
+          <a class="nav-link" href="aboutus.php">About</a>
         </li>
 
         <li class="nav-item">
