@@ -118,6 +118,17 @@ if(!isset($_POST['alogin'])){
                     </a>
                 </li>
 
+                <?php if($_SESSION['role'] !== 'Hospital'){?>
+                    <li class="nav-item">
+                        <a href="manage-reports.php" class="nav-link">
+                        <i class="nav-icon far fa-file-pdf"></i>
+                            <p>
+                                Generate Reports
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <!-- //! FOR ADMIN ONLY -->
                 <?php if($_SESSION['role'] == 'Admin'){?>
                     <li class="nav-item">
@@ -125,6 +136,17 @@ if(!isset($_POST['alogin'])){
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Manage Accounts
+                        </p>
+                    </a>
+                    </li>
+                <?php } ?>
+                
+                <?php if($_SESSION['role'] !== 'Hospital'){?>
+                    <li class="nav-item">
+                    <a href="manage-appointments.php" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+                        <p>
+                            Manage Appointments
                         </p>
                     </a>
                     </li>

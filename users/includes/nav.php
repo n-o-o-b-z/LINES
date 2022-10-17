@@ -103,36 +103,73 @@ if (strlen($_SESSION['user_login']) == 0) {
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
+     
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <?php
+              $status = 0;
+              $request = $_SESSION['id'];
+              $getCount = "SELECT COUNT(id) AS counter  FROM donate_request WHERE status=:status AND request_to=:request_to";
+              $count_query = $dbh->prepare($getCount); 
+              $count_query->bindParam(':status', $status, PDO::PARAM_STR);
+              $count_query->bindParam(':request_to', $request, PDO::PARAM_STR);
+              $count_query->execute(); 
+              $getCounted = $count_query->fetch(PDO::FETCH_OBJ);
+              ?>
+        <a class="nav-link <?=$getCounted->counter == 0 ? '':''?>" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">
+           <?php
+              echo $getCounted->counter;
+            ?>
+          </span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
           <!-- <span class="dropdown-item dropdown-header"></span> -->
           <?php
               $myid = $_SESSION['id'];
               $status = 0;
+              $status1 = 2;
+              
               $getdonate = "SELECT a.*,b.FullName FROM donate_request AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id WHERE request_to =:myid AND a.status=:status";
               $donate_query = $dbh->prepare($getdonate); 
               $donate_query->bindParam(':myid', $myid, PDO::PARAM_STR);
               $donate_query->bindParam(':status', $status, PDO::PARAM_STR);
               $donate_query->execute(); 
               $getResults = $donate_query->fetchAll(PDO::FETCH_OBJ);
-              
-            if(sizeof($getResults) >= 0){ 
-              foreach($getResults as $getResult){ ?>
+
+              $myid = $_SESSION['id'];
+              $status = 0;
+              $status1 = 1;
+              $getAppointments = "SELECT * FROM appointments WHERE status=:status OR status=:status1 AND requester_id=:requester OR accepter_id=:accepter";
+              $appointment_query = $dbh->prepare($getAppointments); 
+              $appointment_query->bindParam(':requester', $myid, PDO::PARAM_STR);
+              $appointment_query->bindParam(':accepter', $myid, PDO::PARAM_STR);
+              $appointment_query->bindParam(':status', $status, PDO::PARAM_STR);
+              $appointment_query->bindParam(':status1', $status1, PDO::PARAM_STR);
+              $appointment_query->execute(); 
+              $getAppResults = $appointment_query->fetchAll(PDO::FETCH_OBJ);
+              if(sizeof($getAppResults) >= 0){ 
+                foreach($getAppResults as $getAppResult){ ?>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="mview" data-toggle="modal" data-target="#modalView" data-id="<?=$getAppResult->id; ?>">
+                      <i class="fas fa-envelope mr-2"></i> <span class="text-primary text-bold">RHU</span> set an appointment (Click to View)
+                    </a>
+              <?php }}
+
+         
+              if(sizeof($getResults) >= 0){ 
+                foreach($getResults as $getResult){ ?>
+                  <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="msg" data-toggle="modal" data-target="#modalMsg" data-id="<?=$getResult->id; ?>">
+                      <i class="fas fa-envelope mr-2"></i> <?=$getResult->FullName;?> requesting for blood!
+                    </a>
+              <?php }
+              }else{ ?>
                 <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" id="msg" data-toggle="modal" data-target="#modalMsg" data-id="<?=$getResult->id; ?>">
-                    <i class="fas fa-envelope mr-2"></i> <?=$getResult->FullName;?> requesting for blood!
+                  <a href="#" class="dropdown-item" data-id="<?=$getResult->id; ?>">
+                    <i class="mr-2"></i> NO DATA TO SHOW  
+                    <span class="float-right text-muted text-sm"></span>
                   </a>
-            <?php }
-            }else{ ?>
-              <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item" data-id="<?=$getResult->id; ?>">
-                  <i class="mr-2"></i> NO DATA TO SHOW  
-                  <span class="float-right text-muted text-sm"></span>
-                </a>
           <?php } ?>
           
         </div>
@@ -157,7 +194,7 @@ if (strlen($_SESSION['user_login']) == 0) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Requesting for Blood</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -171,8 +208,31 @@ if (strlen($_SESSION['user_login']) == 0) {
         <button type="button" class="btn btn-primary" id="accept" data-id="0">Accept</button>
       </div>
     </div>
-  </div>accept
+  </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Appointment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            LOCATION: <span id="loc"></span></br>
+            DATE: <span id="ddate"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deny" data-id="0" style="visibility:hidden">Close</button>
+        <button type="button" class="btn btn-primary" data-id="0"  data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <script src="../assets/adminlte/plugins/jquery/jquery.min.js"></script>
 
@@ -205,6 +265,24 @@ if (strlen($_SESSION['user_login']) == 0) {
       $('#deny').click(function (e) { 
         e.preventDefault();
         alert('I was denied');
+      });
+
+      $(document).on('click','#mview', function () {
+        var msgid = $(this).data('id');
+        console.log('test');
+        var urls = 'xhr/view-appointment.php';
+        $.ajax({
+          type: "POST",
+          url: urls,
+          data: {id:msgid},
+          dataType: "json",
+          success: function (response) {
+            $('#ddate').html(response[0].date);
+            $('#loc').html(response[0].location);
+            console.log(msgid);
+          }
+        });
+      
       });
 
 

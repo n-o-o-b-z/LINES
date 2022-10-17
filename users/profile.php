@@ -430,15 +430,18 @@ if (strlen($_SESSION['user_login']) == 0) {
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div class="form-row">
+                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <input type="file" value="" id="uploadImage" class="required borrowerImageFile inputfile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
                                         <label for="uploadImage">Choose a file</label>
                                         <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:50%;border:1px solid black;"/>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+                                       
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputZip">Zip</label>
+                                        <input type="text" class="form-control" id="inputZip" />
                                     </div>
                                 </div>
                                 

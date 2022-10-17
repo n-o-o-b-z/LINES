@@ -25,7 +25,11 @@ if($query->rowCount() > 0)
 		if($results[0]->status == 1){
 			echo "<script>alert('Inactived Account!');</script>";
 		}elseif($results[0]->status == 2){
-			echo "<script>alert('Banned Account!');</script>";
+			// echo "<script>alert('Banned Account!');</script>";
+			echo '<script src=""></script>';
+			echo '<script type="text/javascript">';
+			echo 'setTimeout(function () { swal("WOW!","Message!","success");';
+			echo '}, 1000);</script>';
 		}
 	}else{
 		$_SESSION['user_login'] = $_POST['email'];

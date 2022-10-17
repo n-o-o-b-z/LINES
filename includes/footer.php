@@ -12,3 +12,11 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/tether/tether.min.js"></script>
     <script src="css/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+            $(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') ) {
+        $(this).collapse('hide');
+    }
+});
+    </script>

@@ -102,8 +102,10 @@ if (strlen($_SESSION['user_login']) == 0) {
                             $bloodgroup = $_POST['btype'];
                             $purok = $_POST['purok'];
                             $barangay = $_POST['barangay'];
-                            $sql = "SELECT * from tblblooddonars where status=:status AND  BloodGroup=:bloodgroup ||  (Purok=:purok) || (Barangay=:barangay)";
+                            $id = $_SESSION['id'];
+                            $sql = "SELECT * from tblblooddonars where id!=:id AND status=:status AND  BloodGroup=:bloodgroup ||  (Purok=:purok) || (Barangay=:barangay)";
                             $query = $dbh->prepare($sql);
+                            $query->bindParam(':id', $id, PDO::PARAM_STR);
                             $query->bindParam(':status', $status, PDO::PARAM_STR);
                             $query->bindParam(':bloodgroup', $bloodgroup, PDO::PARAM_STR);
                             $query->bindParam(':purok', $purok, PDO::PARAM_STR);

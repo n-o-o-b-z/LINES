@@ -13,6 +13,44 @@ if(isset($_GET['del']))
 	$query -> bindParam(':id',$id, PDO::PARAM_STR);
 	$query -> execute();
 	$msg="Data Deleted successfully";
+}
+
+
+if(isset($_GET['donated']))
+{
+	$id= $_GET['donated'];
+    $status = 1;
+    $sql = "UPDATE event_donors SET status = :status WHERE id=:id";
+	$query = $dbh->prepare($sql);
+	$query -> bindParam(':status',$status, PDO::PARAM_STR);
+	$query -> bindParam(':id',$id, PDO::PARAM_STR);
+	$query -> execute();
+	$msg="Data Deleted successfully";
+
+    $sqls = "SELECT a.user_id,a.created_at,a.status,b.BloodGroup FROM  event_donors AS a LEFT JOIN tblblooddonars AS b ON a.user_id = b.id  WHERE a.id=:id";
+    $querys = $dbh->prepare($sqls);
+    $querys->bindParam(':id',$id, PDO::PARAM_STR);
+    $querys->execute();
+    $resultse = $querys->fetchAll(PDO::FETCH_OBJ);
+    foreach($resultse as $resulted){
+        $userid       = $resulted->user_id;
+        $bloodtype    = $resulted->BloodGroup;
+        $stats        = $resulted->status;
+        $created_at   = $resulted->created_at;
+
+    }
+    $date2=date_create($created_at);
+    $date_true =  date_format($date2,"Y-m-d");
+    $insert_sql="INSERT INTO donation_history(`user_id`,blood_type_id,donation_date,`status`,`created_at`) VALUES(:userid, :bloodtype, :donationDate, :stats, :created_at)";
+    $insert_query = $dbh->prepare($insert_sql);
+    $insert_query->bindParam(':userid',$userid,PDO::PARAM_STR);
+    $insert_query->bindParam(':bloodtype',$bloodtype,PDO::PARAM_STR);
+    $insert_query->bindParam(':donationDate',$date_true,PDO::PARAM_STR);
+    $insert_query->bindParam(':stats',$stats,PDO::PARAM_STR);
+    $insert_query->bindParam(':created_at',$created_at,PDO::PARAM_STR);
+    $insert_query->execute();
+
+    
 
 }
 ?>
@@ -270,6 +308,14 @@ if(isset($_GET['del']))
 		</div>
 	</div>
 
+    <div class="modal fade  modal-supsm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
+
 
 
 </body>
@@ -383,8 +429,6 @@ if(isset($_GET['del']))
                 cache: false,
                 success: function (response) {
 
-                 
-
                     var dataArray = response;
                     for (var i = 0; i < dataArray.length; i++){
                         var fullname = dataArray[i].FullName;
@@ -392,19 +436,28 @@ if(isset($_GET['del']))
 
                         var holder;
                         if(status == 0){
-                            holder = 'Not Donated!';
+                            holder = '<span class="badge badge-primary">Pending</span>';
                         }else {
-                            holder = 'Donated';
+                            holder = '<span class="badge badge-success">Donated</span>';
                         }
                     
                         console.log(response[i]['FullName']);
+                        console.log(response[i].id)
                         var html = '';
                             html += "<tr>";
                             html += "<td>"+(i+1)+"</td>";
                             html += "<td>"+fullname+"</td>";
                             html += "<td>"+ holder +"</td>";
+                            html += "<td data-id="+response[i].id+">";
+                            html += "<div class='btn-group'>";
+                            html += "<button type='button' class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Action</button>";
+                            html += "<div class='dropdown-menu'>";
+                            html += "<a class='dropdown-item' href='manage-announcement.php?donated="+response[i].id+"'>Donated</a>";
+                            // hhtml += "<button data-toggle='modal' data-target='#modal-supsm'>asdasda</button>";
+                            html += "</div>";
+                            html += "</div>";
+                            html += "</td>";
                             html += "</tr>";
-
                         $('#tester').append(html);
                     }
 

@@ -1,93 +1,101 @@
 <?php
-//include library
-include('library/tcpdf.php');
+	function generateRow(){
+		$contents = '';
+		include_once('includes/config.php');
+		// $sql = "SELECT * FROM members";
+ 
+		// //use for MySQLi OOP
+		// $query = $conn->query($sql);
+		// while($row = $query->fetch_assoc()){
+		// 	$contents .= "
+		// 	<tr>
+		// 		<td>".$row['id']."</td>
+		// 		<td>".$row['firstname']."</td>
+		// 		<td>".$row['lastname']."</td>
+		// 		<td>".$row['address']."</td>
+		// 	</tr>
+		// 	";
+		// }
 
-//make TCPDF object
-$pdf = new TCPDF('P','mm','A4');
 
-//remove default header and footer
-$pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
+		$sql1="SELECT * FROM tblblooddonars";
+		$query1 = $dbh->prepare($sql1);
+		$query1->execute();
+		$results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+		// while($results1 <= 0){
+		// 	$contents .= "
+		// 	<tr>
+		// 		<td>".$results1['id']."</td>
+		// 		<td>".$results1['FullName']."</td>
+		// 		<td>".$results1['status']."</td>
+		// 		<td>".$results1['status']."</td>
+		// 	</tr>
+		// 	";
+		// }
 
-//add page
-$pdf->AddPage();
+		foreach($results1 as $result1){
+			$contents .= "
+				<tr>
+					<td>".$result1->id."</td>
+					<td>".$result1->FullName."</td>
+					<td>".$result1->status."</td>
+					<td>".$result1->status."</td>
+				</tr>
+				";
+		}
 
-//add content (student list)
-//title
-$pdf->SetFont('Helvetica','',14);
-$pdf->Cell(190,10,"University of Insert Name Here",0,1,'C');
 
-$pdf->SetFont('Helvetica','',8);
-$pdf->Cell(190,5,"Student List",0,1,'C');
-
-$pdf->SetFont('Helvetica','',10);
-$pdf->Cell(30,5,"Class",0);
-$pdf->Cell(160,5,": Programming 101",0);
-$pdf->Ln();
-$pdf->Cell(30,5,"Teacher Name",0);
-$pdf->Cell(160,5,": Prof. John Smith",0);
-$pdf->Ln();
-$pdf->Ln(2);
-
-//make the table
-$html = "
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Email</th>
-			<th>Gender</th>
-			<th>Address</th>
-		</tr>
-		";
-//load the json data
-$file = file_get_contents('MOCK_DATA-100.json');
-$data = json_decode($file);
-
-//loop the data
-foreach($data as $student){	
-	$html .= "
-			<tr>
-				<td>". $student->id ."</td>
-				<td>". $student->first_name ."</td>
-				<td>". $student->last_name ."</td>
-				<td>". $student->email ."</td>
-				<td>". $student->gender ."</td>
-				<td>". $student->address ."</td>
-			</tr>
-			";
-}		
-
-$html .= "
-	</table>
-	<style>
-	table {
-		border-collapse:collapse;
+		////////////////
+ 
+		//use for MySQLi Procedural
+		// $query = mysqli_query($conn, $sql);
+		// while($row = mysqli_fetch_assoc($query)){
+		// 	$contents .= "
+		// 	<tr>
+		// 		<td>".$row['id']."</td>
+		// 		<td>".$row['firstname']."</td>
+		// 		<td>".$row['lastname']."</td>
+		// 		<td>".$row['address']."</td>
+		// 	</tr>
+		// 	";
+		// }
+		////////////////
+ 
+		return $contents;
 	}
-	th,td {
-		border:1px solid #888;
-	}
-	table tr th {
-		background-color:#888;
-		color:#fff;
-		font-weight:bold;
-	}
-	</style>
-";
-//WriteHTMLCell
-$pdf->WriteHTMLCell(192,0,9,'',$html,0);	
+ 
+	require_once('assets/tcpdf/tcpdf.php');  
 
-
-//output
-$pdf->Output();
-
-
-
-
-
-
-
-
-
-
+    $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+    $pdf->SetCreator(PDF_CREATOR);  
+    $pdf->SetTitle("Generated PDF using TCPDF");  
+    $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);  
+    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));  
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));  
+    $pdf->SetDefaultMonospacedFont('helvetica');  
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+    $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
+    $pdf->setPrintHeader(false);  
+    $pdf->setPrintFooter(false);  
+    $pdf->SetAutoPageBreak(TRUE, 10);  
+    $pdf->SetFont('helvetica', '', 11);  
+    $pdf->AddPage();  
+    $content = '';  
+    $content .= '
+      	<h2 align="center">Generated PDF using TCPDF</h2>
+      	<h4>Members Table</h4>
+      	<table border="1" cellspacing="0" cellpadding="3">  
+           <tr>  
+                <th width="5%">ID</th>
+				<th width="20%">Firstname</th>
+				<th width="20%">Lastname</th>
+				<th width="55%">Address</th> 
+           </tr>  
+      ';  
+    $content .= generateRow();  
+    $content .= '</table>';  
+    $pdf->writeHTML($content);  
+    $pdf->Output('members.pdf', 'I');
+ 
+ 
+?>
