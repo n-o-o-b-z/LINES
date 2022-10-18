@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         $message = $_POST['message'];
         $status = 1;
         $password = md5($_POST['message']);
-        $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status)";
+        $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status,:password)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
         $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
