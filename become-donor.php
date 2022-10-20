@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
         $blodgroup = $_POST['bloodgroup'];
         $purok = $_POST['purok'];
         $barangay = $_POST['barangay'];
-        $message = $_POST['message'];
+        $message = $_POST['password'];
         $status = 1;
         $password = md5($_POST['password']);
         $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status,:password)";
