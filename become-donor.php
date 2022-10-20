@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+$page = 'donor';
 include('includes/config.php');
 if (isset($_POST['submit'])) {
     if($_POST['age'] < 16){
@@ -19,7 +20,7 @@ if (isset($_POST['submit'])) {
         $barangay = $_POST['barangay'];
         $message = $_POST['message'];
         $status = 1;
-        $password = md5($_POST['message']);
+        $password = md5($_POST['password']);
         $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status,:password)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
@@ -174,7 +175,21 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="col-lg-4 mb-4">
                     <div class="font-italic">Barangay</div>
-                    <div><textarea class="form-control" placeholder="ex: Bakiad" name="barangay" required></textarea></div>
+                    <div>
+                        <!-- <textarea class="form-control" placeholder="ex: Bakiad" name="barangay" required></textarea> -->
+                                <select name="barangay" id="" class="form-control" required>
+                                <?php $sql = "SELECT * from  barangays ";
+                                    $query = $dbh->prepare($sql);
+                                    $query->execute();
+                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                    $cnt = 1;
+                                    if ($query->rowCount() > 0) {
+                                        foreach ($results as $result) {               ?>
+                                            <option value="<?php echo htmlentities($result->name); ?>"><?php echo htmlentities($result->name); ?></option>
+                                    <?php }
+                                } ?>
+                                </select>
+                    </div>
                 </div>
 
                 <div class="col-lg-8 mb-4">

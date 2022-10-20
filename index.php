@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+$page = 'Home';
 include('includes/config.php');
 ?>
 <!DOCTYPE html>
@@ -10,7 +11,8 @@ include('includes/config.php');
 <body style="padding-top:0px !important">
 
     <!-- Navigation -->
-    <?php include('includes/nav.php'); ?>
+    <?php 
+    include('includes/nav.php'); ?>
     <?php include('includes/slider.php'); ?>
 
     <!-- Page Content -->

@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+$page = 'contact';
 include('includes/config.php');
 if (isset($_POST['send'])) {
     $name = $_POST['fullname'];
@@ -76,7 +77,10 @@ if (isset($_POST['send'])) {
 
 <body>
 
-    <?php include('includes/header.php'); ?>
+    <?php 
+        include('includes/nav.php'); 
+        include('includes/header.php'); 
+    ?>
 
     <!-- Page Content -->
     <div class="container">

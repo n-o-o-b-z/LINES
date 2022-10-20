@@ -1,6 +1,7 @@
 <?php
     session_start();
     error_reporting(0);
+    $page = 'announcement';
     include('includes/config.php');
     include('includes/header.php');
 ?>

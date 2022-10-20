@@ -34,15 +34,8 @@ if($query->rowCount() > 0)
 		echo "<script type='text/javascript'> document.location = 'dashboard2.php'; </script>";
 	}
 	
-	
-	
 } else{
-	
 	echo "<script>alert('Invalid Details');</script>";
-
-	
-//   echo "<script>alert('Invalid Details');</script>";
-
 }
 
 }
