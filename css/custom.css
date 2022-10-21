@@ -5,8 +5,6 @@
 }
 
 li.hov:hover {
-    color: green !important;
     font-weight: bold;
-    transition: 0.5;
-
+    transition: 0.2s;
 }

@@ -126,7 +126,7 @@ if (strlen($_SESSION['alogin']) == 0) {
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="manage-donors" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 
@@ -150,9 +150,34 @@ if (strlen($_SESSION['alogin']) == 0) {
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="manage-donors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-secondary">
+              <div class="inner">
+              <?php
+                    $status = 2; //active
+                    $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
+                    $query= $dbh -> prepare($sql);
+                    $query-> bindParam(':status', $status, PDO::PARAM_STR);
+                    $query-> execute();
+                    $results=$query->fetchAll(PDO::FETCH_OBJ);
+                    $counter = $query->rowCount();
+                ?>
+                <h3><?php echo htmlentities($counter); ?></h3>
+                <p>BANNED DONORS</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="manage-donors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+          
         </div>
         <!-- /.row -->
         <!-- Main row -->

@@ -207,7 +207,7 @@ if($query->rowCount() > 0)
 
 	</style>
 </head>
-
+		
 
 <body>
   <div class=" flex-r container">

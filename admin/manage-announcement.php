@@ -126,26 +126,48 @@ if(isset($_GET['donated']))
 
 
                                     <td>
-						                <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-trash text-secondary"></i></a>
-                                        <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">edit</button>
-                                        <!-- <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">s</button> -->
+						                <!-- <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-trash text-secondary"></i></a>
+                                        <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">edit</button> -->
                                     
                                         <?php
-                                            if($result->is_hidden == 0){
-                                                echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
-                                                        make hidden
-                                                </button>';
-                                            }else {
-                                                echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
-                                                        make hidden
-                                                </button>';
-                                            }
+                                            // if($result->is_hidden == 0){
+                                            //     echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
+                                            //             make hidden
+                                            //     </button>';
+                                            // }else {
+                                            //     echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
+                                            //             make hidden
+                                            //     </button>';
+                                            // }
                                         ?>
 
-                                        <form action="" method="POST">
+                                        <!-- <form action="" method="POST">
                                             <button type="button" class="btn btn-primary" id="viewDonors" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modalDonors">View Donors</button>
-                                        </form>
+                                        </form> -->
                                         
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                    <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');" class="dropdown-item"><i class="fa fa-trash text-secondary"></i> Delete</a>
+                                                    <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">Edit</button>
+                                                <div class="dropdown-divider"></div>
+                                                <form method="post">
+                                                    <?php
+                                                        if($result->is_hidden == 0){
+                                                            // echo '<button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">Hide</button>';
+                                                            echo ' <button type="submit" class="btn btn-default dropdown-item" name="ban" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                            BAN
+                                                            </button>';
+                                                        }else {
+                                                            echo '<button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">Show</button>';
+                                                        }
+                                                     ?>
+                                                    <button type="button" class="btn btn-defaul dropdown-item" id="viewDonors" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modalDonors">View Donors</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                         
                                     </td>
                                 </tr>
@@ -182,7 +204,7 @@ if(isset($_GET['donated']))
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputState">Date</label>
-                                        <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" autocomplete="off">   
+                                        <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker55" data-toggle="datetimepicker" data-target="#datetimepicker55"  autocomplete="off">   
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -480,6 +502,15 @@ if(isset($_GET['donated']))
                     up: "fa fa-arrow-up",
                     down: "fa fa-arrow-down"
                 }
+        });
+
+        $('#datetimepicker55').datetimepicker({
+            icons: {
+                time: "fas fa-clock",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
         });
 
         $('#datetimepicker15').datetimepicker({

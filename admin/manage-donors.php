@@ -153,7 +153,7 @@ if(isset($_POST['mark-inactive']))
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="manage-accounts.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">DELETE</a>
+                                                <a class="dropdown-item" href="manage-donors.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">DELETE</a>
                                                 
                                                 <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">EDIT</button>
                                                 <button type="button" class="btn btn-primary dropdown-item" id="viewBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-xnl">DONATIONS</button>

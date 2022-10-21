@@ -120,9 +120,9 @@ if(!$_SESSION['user_login']){
                             <div class="small-box bg-success">
                                 <div class="inner">
                                     <?php
-                    $status = 0; //active
-                    $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
-                    $query= $dbh->prepare($sql); $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
+                                        $status = 0; //active
+                                        $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
+                                        $query= $dbh->prepare($sql); $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
                                     <h3><?php echo htmlentities($counter); ?></h3>
 
                                     <p>ACTIVE</p>
