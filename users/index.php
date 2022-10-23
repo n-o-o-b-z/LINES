@@ -4,56 +4,6 @@ include('includes/config.php');
 if(isset($_SESSION['user_login'])){
 	header('LOCATION: dashboard2.php');
 }
-if(isset($_POST['login']))
-{
-$email=$_POST['email'];
-$password=md5($_POST['password']);
-
-
-// $sql ="SELECT a.Full_name,a.Email,a.Password,a.role_id,b.id,b.name,a.status FROM admin AS a LEFT JOIN roles AS b ON a.role_id = b.id WHERE Email=:email and Password=:password";
-$sql = "SELECT id, FullName, EmailId,status FROM tblblooddonars WHERE EmailId=:email AND password=:password";
-$query= $dbh -> prepare($sql);
-$query-> bindParam(':email', $email, PDO::PARAM_STR);
-$query-> bindParam(':password', $password, PDO::PARAM_STR);
-// $query-> bindParam(':status', $status, PDO::PARAM_STR);
-$query-> execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
-{
-
-	if($results[0]->status == 1 || $results[0]->status == 2 ){
-		if($results[0]->status == 1){
-			echo "<script>alert('Inactived Account!');</script>";
-		}elseif($results[0]->status == 2){
-			// echo "<script>alert('Banned Account!');</script>";
-			echo '<script src=""></script>';
-			echo '<script type="text/javascript">';
-			echo 'setTimeout(function () { swal("WOW!","Message!","success");';
-			echo '}, 1000);</script>';
-		}
-	}else{
-		$_SESSION['user_login'] = $_POST['email'];
-		// $_SESSION['roles']   = $results[0]->name;
-		$_SESSION['name'] = $results[0]->FullName;
-		$_SESSION['id'] = $results[0]->id;
-
-		// echo "<script type='text/javascript'> document.location = 'change-password.php'; </script>";
-		echo "<script type='text/javascript'> document.location = 'dashboard2.php'; </script>";
-	}
-	
-	
-	
-} else{
-	
-	echo "<script>alert('Invalid Details');</script>";
-
-	
-//   echo "<script>alert('Invalid Details');</script>";
-
-}
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +26,7 @@ if($query->rowCount() > 0)
 	<link rel="stylesheet" href="css/style.css">
 	<!-- icons  -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.37/dist/sweetalert2.all.min.js"></script>
 	<style>
 		@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
@@ -214,11 +164,13 @@ if($query->rowCount() > 0)
     <div class="flex-r login-wrapper">
       <div class="login-text">
 		<div class="logo">
-        	<span><i class="fab fa-speakap"></i></span>
+        	<span><i class="fas fa-heartbeat text-danger"></i></span>
           	<span>LIFELINE</span>
         </div>
         <h1>Login</h1>
-        <p>It's not long before you embark on this journey! </p>
+        <!-- <p style="visibility:hidden">It's not long before you embark on this journey! </p> -->
+        <p class="px-2"> BE A HERO, A BRAVE ONE, AND DONATE BLOOD. </p>
+
 
         <form class="flex-c" method="POST">
           <div class="input-box">
@@ -251,11 +203,81 @@ if($query->rowCount() > 0)
             <a href="forgot.php">Recover here.</a>
           </span>
         </form>
+		
+		<span class="">
+			<a href="../index.php" class="text-primary">Go back</a>
+		</span>
 
       </div>
     </div>
   </div>
 </body>
+	<!-- Loading Scripts -->
+	<script src="js/jquery.min.js"></script>
+
+<?php
+if(isset($_POST['login']))
+{
+	$email=$_POST['email'];
+	$password=md5($_POST['password']);
+
+
+	// $sql ="SELECT a.Full_name,a.Email,a.Password,a.role_id,b.id,b.name,a.status FROM admin AS a LEFT JOIN roles AS b ON a.role_id = b.id WHERE Email=:email and Password=:password";
+	$sql = "SELECT id, FullName, EmailId,status FROM tblblooddonars WHERE EmailId=:email AND password=:password";
+	$query= $dbh -> prepare($sql);
+	$query-> bindParam(':email', $email, PDO::PARAM_STR);
+	$query-> bindParam(':password', $password, PDO::PARAM_STR);
+	$query-> execute();
+	$results=$query->fetchAll(PDO::FETCH_OBJ);
+
+	if($query->rowCount() > 0)
+	{
+		if($results[0]->status == 1 || $results[0]->status == 2 ){
+			if($results[0]->status == 1){
+				echo "<script>
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: 'Inactive account, Please wait for Admin to Approved this account!',
+							showConfirmButton: false,
+							timer: 2500
+						});
+					</script>";
+					
+			}elseif($results[0]->status == 2){
+				// echo "<script>alert('Banned Account!');</script>";
+				echo "<script>
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: 'This is a banned account!',
+							showConfirmButton: false,
+							timer: 1500
+						});
+					</script>";
+			}
+		}else{
+			$_SESSION['user_login'] = $_POST['email'];
+			// $_SESSION['roles']   = $results[0]->name;
+			$_SESSION['name'] = $results[0]->FullName;
+			$_SESSION['id'] = $results[0]->id;
+
+			// echo "<script type='text/javascript'> document.location = 'change-password.php'; </script>";
+			echo "<script type='text/javascript'> document.location = 'dashboard2.php'; </script>";
+		}
+	}else {
+		echo "<script>
+				Swal.fire({
+					position: 'center',
+					icon: 'error',
+					title: 'No records found!',
+					showConfirmButton: false,
+					timer: 1500
+				});
+			</script>";
+	}
+}
+?>
 
 <script src="../vendor/jquery/jquery.min.js"></script>
 <script>

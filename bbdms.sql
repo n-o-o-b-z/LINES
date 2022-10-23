@@ -9,19 +9,19 @@
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `role_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `updationDate` timestamp NOT NULL,
   `Full_name` varchar(50) NOT NULL DEFAULT 'NULL',
-  `status` int NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `announcement`;
 CREATE TABLE `announcement` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `date` datetime NOT NULL,
   `banner` varchar(225) DEFAULT NULL,
@@ -31,93 +31,99 @@ CREATE TABLE `announcement` (
   `is_hidden` int(1) unsigned zerofill NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `barangays`;
-CREATE TABLE `barangays` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+DROP TABLE IF EXISTS `appointments`;
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `requester_id` int(11) DEFAULT NULL,
+  `accepter_id` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `codes`;
 CREATE TABLE `codes` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `code` varchar(5) NOT NULL,
-  `expire` int NOT NULL,
+  `expire` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `code` (`code`),
   KEY `expire` (`expire`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `donate_request`;
 CREATE TABLE `donate_request` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT NULL,
-  `volume_request` int DEFAULT NULL,
-  `status` int DEFAULT '0',
-  `request_to` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `volume_request` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `request_to` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `donation_history`;
 CREATE TABLE `donation_history` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `blood_type_id` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `blood_type_id` varchar(255) NOT NULL,
   `donation_date` timestamp NOT NULL,
-  `status` int NOT NULL,
+  `status` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `event_donors`;
 CREATE TABLE `event_donors` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `announcement_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `status` int NOT NULL,
-  `donated_volume` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `donated_volume` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `permission_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permission_id` int(11) DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `tblblooddonars`;
 CREATE TABLE `tblblooddonars` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FullName` varchar(100) DEFAULT NULL,
   `MobileNumber` char(11) DEFAULT NULL,
   `EmailId` varchar(100) NOT NULL,
   `password` varchar(250) NOT NULL DEFAULT '',
   `Gender` varchar(20) DEFAULT NULL,
   `BirthDay` date DEFAULT NULL,
-  `age` int DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
   `BloodGroup` varchar(20) DEFAULT NULL,
   `Purok` varchar(10) NOT NULL,
   `Barangay` varchar(255) DEFAULT NULL,
   `Message` mediumtext,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `EmailId` (`EmailId`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblbloodgroup`;
 CREATE TABLE `tblbloodgroup` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `BloodGroup` varchar(20) NOT NULL,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -125,7 +131,7 @@ CREATE TABLE `tblbloodgroup` (
 
 DROP TABLE IF EXISTS `tblcontactusinfo`;
 CREATE TABLE `tblcontactusinfo` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Address` tinytext,
   `EmailId` varchar(255) DEFAULT NULL,
   `ContactNo` char(11) DEFAULT NULL,
@@ -134,19 +140,20 @@ CREATE TABLE `tblcontactusinfo` (
 
 DROP TABLE IF EXISTS `tblcontactusquery`;
 CREATE TABLE `tblcontactusquery` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `EmailId` varchar(120) DEFAULT NULL,
   `ContactNumber` char(11) DEFAULT NULL,
   `Message` longtext,
   `PostingDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `is_opened` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tblpages`;
 CREATE TABLE `tblpages` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `PageName` varchar(255) DEFAULT NULL,
   `type` varchar(255) NOT NULL DEFAULT '',
   `detail` longtext NOT NULL,
@@ -154,77 +161,26 @@ CREATE TABLE `tblpages` (
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 INSERT INTO `admin` (`id`, `role_id`, `Email`, `Password`, `updationDate`, `Full_name`, `status`) VALUES
-(1, 1, 'charles.bernadez2001@gmail.com ', '21232f297a57a5a743894a0e4a801fc3', '2022-09-03 21:09:31', 'Charles Bernadez', 0);
-INSERT INTO `admin` (`id`, `role_id`, `Email`, `Password`, `updationDate`, `Full_name`, `status`) VALUES
-(3, 3, 'rhu@admin.com', '21232f297a57a5a743894a0e4a801fc3', '2022-10-09 18:11:56', 'RHU', 0);
-INSERT INTO `admin` (`id`, `role_id`, `Email`, `Password`, `updationDate`, `Full_name`, `status`) VALUES
-(4, 4, 'hospital@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '2022-10-09 18:16:14', 'Hospital', 2);
+(1, 1, 'charles.bernadez2001@gmail.com ', '21232f297a57a5a743894a0e4a801fc3', '2022-09-03 21:09:31', 'Charles Bernadez', 0),
+(3, 3, 'rhu@admin.com', '21232f297a57a5a743894a0e4a801fc3', '2022-10-09 18:11:56', 'RHU', 0),
+(4, 4, 'hospital@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '2022-10-09 18:16:14', 'Hospital', 0);
 
 INSERT INTO `announcement` (`id`, `title`, `date`, `banner`, `location`, `organizer`, `details`, `is_hidden`) VALUES
 (1, 'Blood camps', '2022-10-31 03:25:00', NULL, 'Omamuri', 'Carlo Cabanelas', NULL, 0);
 INSERT INTO `announcement` (`id`, `title`, `date`, `banner`, `location`, `organizer`, `details`, `is_hidden`) VALUES
 (2, 'White blood', '2022-07-10 09:00:00', NULL, 'Lady Anne', 'Charles Bernadez', NULL, 0);
 INSERT INTO `announcement` (`id`, `title`, `date`, `banner`, `location`, `organizer`, `details`, `is_hidden`) VALUES
-(3, 'White blood', '2022-07-10 09:00:00', NULL, 'Lady Anne', 'Charles Bernadez', 'asdasdasd', 1);
+(3, 'White blood', '2022-07-10 09:00:00', NULL, 'Lady Anne', 'Charles Bernadez', 'asdasdasd', 0);
 INSERT INTO `announcement` (`id`, `title`, `date`, `banner`, `location`, `organizer`, `details`, `is_hidden`) VALUES
 (24, 'DAET LADY ANNE', '2022-10-12 09:51:00', NULL, 'LADY ANNE', 'Carlo Cabanelas', 'PUNTA KAYO MGA ULOLS', 0),
-(27, 'Nezuko!', '2022-10-13 14:36:00', '../../images/uploads/844021demon-slayer-nezuko-pfp-2.jpg', 'Nagoya, Japan', 'Masashi Kishimoto', 'Hello ako si Nezuko!', 0);
+(27, 'Nezuko!', '2022-10-13 14:36:00', '../../images/uploads/844021demon-slayer-nezuko-pfp-2.jpg', 'Nagoya, Japan', 'Masashi Kishimoto', 'Hello ako si Nezuko!', 0),
+(28, 'Blood letting activity', '2022-10-17 00:00:00', '../../images/uploads/849924ccs.jpg', 'Mabini', 'RHU', 'test', 0);
 
-INSERT INTO `barangays` (`id`, `name`) VALUES
-(2, 'Awitan');
-INSERT INTO `barangays` (`id`, `name`) VALUES
-(3, 'Awitan');
-INSERT INTO `barangays` (`id`, `name`) VALUES
-(4, 'Baay');
-INSERT INTO `barangays` (`id`, `name`) VALUES
-(5, 'Bagacay'),
-(6, 'Bagong Silang I'),
-(7, 'Bagong Silang II'),
-(8, 'Bagong Silang III'),
-(9, 'Bakiad'),
-(10, 'Bautista'),
-(11, 'Bayabas'),
-(12, 'Bayan-bayan'),
-(13, 'Benit'),
-(14, 'Bulhao'),
-(15, 'Cabatuhan'),
-(16, 'Cabusay'),
-(17, 'Calabasa'),
-(18, 'Canapawan'),
-(19, 'Daguit'),
-(20, 'Dalas'),
-(21, 'Dumagmang'),
-(22, 'Exciban'),
-(23, 'Fundado'),
-(24, 'Guinacutan'),
-(25, 'Guisican'),
-(26, 'Gumamela (Poblacion)'),
-(27, 'Iberica'),
-(28, 'Kalamunding (Poblacion)'),
-(29, 'Lugi'),
-(30, 'Mabilo I'),
-(31, 'Mabilo II'),
-(32, 'Macogon'),
-(33, 'Mahawan-hawan'),
-(34, 'Malangcao-Basud'),
-(35, 'Malasugui'),
-(36, 'Malatap'),
-(37, 'Malaya'),
-(38, 'Malibago'),
-(39, 'Maot'),
-(40, 'Masalong'),
-(41, 'Matanlang'),
-(42, 'Napaod'),
-(43, 'Pag-asa'),
-(44, 'Pangpang'),
-(45, 'Pinya (Poblacion)'),
-(46, 'San Antonio'),
-(47, 'San Francisco (Poblacion)'),
-(48, 'Santa Cruz'),
-(49, 'Submakin'),
-(50, 'Talobatib'),
-(51, 'Tigbinan'),
-(52, 'Tulay Na Lupa');
+INSERT INTO `appointments` (`id`, `requester_id`, `accepter_id`, `date`, `location`, `message`, `status`, `created_at`) VALUES
+(1, 51, 43, '2022-10-26 04:11:00', 'test', NULL, 1, '2022-10-17 04:11:51');
+INSERT INTO `appointments` (`id`, `requester_id`, `accepter_id`, `date`, `location`, `message`, `status`, `created_at`) VALUES
+(19, 54, 53, '2022-10-22 12:20:00', 'Omamuri', NULL, 0, '2022-10-22 12:20:29');
+
 
 INSERT INTO `codes` (`id`, `email`, `code`, `expire`) VALUES
 (1, 'charles.bernadez2001@gmail.com', '66462', 1662198206);
@@ -251,9 +207,35 @@ INSERT INTO `codes` (`id`, `email`, `code`, `expire`) VALUES
 (19, 'charles.bernadez2001@gmail.com', '67386', 1662210591);
 
 INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
-(66, 43, NULL, 0, 51, NULL);
+(66, 43, NULL, 1, 51, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
+(67, 51, NULL, 0, 41, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
+(68, 43, NULL, 1, 51, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
+(69, 51, NULL, 0, 40, NULL),
+(70, 51, NULL, 0, 43, NULL),
+(71, 51, NULL, 1, 50, NULL),
+(72, NULL, NULL, 0, NULL, NULL),
+(73, NULL, NULL, 0, NULL, NULL),
+(74, NULL, NULL, 0, NULL, NULL),
+(75, NULL, NULL, 0, NULL, NULL),
+(76, NULL, NULL, 0, NULL, NULL),
+(77, NULL, NULL, 0, NULL, NULL),
+(78, NULL, NULL, 0, NULL, NULL),
+(79, NULL, NULL, 0, NULL, NULL),
+(80, NULL, NULL, 0, NULL, NULL),
+(81, NULL, NULL, 0, NULL, NULL),
+(82, NULL, NULL, 0, NULL, NULL),
+(83, NULL, NULL, 0, NULL, NULL),
+(84, NULL, NULL, 0, NULL, NULL),
+(85, NULL, NULL, 0, NULL, NULL),
+(86, NULL, NULL, 0, NULL, NULL),
+(87, NULL, NULL, 0, NULL, NULL),
+(88, 53, NULL, 1, 54, NULL);
 
-
+INSERT INTO `donation_history` (`id`, `user_id`, `blood_type_id`, `donation_date`, `status`, `created_at`) VALUES
+(1, 50, 'A+', '2022-10-16 00:00:00', 1, '2022-10-16 00:00:00');
 
 
 INSERT INTO `event_donors` (`id`, `announcement_id`, `user_id`, `status`, `donated_volume`, `created_at`) VALUES
@@ -263,7 +245,10 @@ INSERT INTO `event_donors` (`id`, `announcement_id`, `user_id`, `status`, `donat
 INSERT INTO `event_donors` (`id`, `announcement_id`, `user_id`, `status`, `donated_volume`, `created_at`) VALUES
 (46, 2, 51, 0, NULL, '2022-10-12 00:00:00');
 INSERT INTO `event_donors` (`id`, `announcement_id`, `user_id`, `status`, `donated_volume`, `created_at`) VALUES
-(47, 24, 51, 0, NULL, '2022-10-12 00:00:00');
+(47, 24, 51, 0, NULL, '2022-10-12 00:00:00'),
+(48, 27, 50, 1, NULL, '2022-10-16 00:00:00'),
+(49, 3, 51, 0, NULL, '2022-10-22 00:00:00'),
+(50, 28, 51, 0, NULL, '2022-10-22 00:00:00');
 
 INSERT INTO `roles` (`id`, `permission_id`, `name`) VALUES
 (1, NULL, 'Admin');
@@ -281,7 +266,11 @@ INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `pass
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`) VALUES
 (43, 'Jane Doe', 'asdasdas', 'jdoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdas', '2022-10-10 13:41:57', 0),
 (50, 'Julian Felipe', 'asdasdas', 'jfelipe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A+', 'qwdas', 'dasdsad', 'aqweqew', '2022-10-10 15:19:06', 0),
-(51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0);
+(51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0),
+(52, 'testacle', '1234567890', 'test@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Female', '2011-02-09', 11, 'O-', 'p-1', 'Kalamunding', 'est', '2022-10-16 22:53:29', 0),
+(53, 'Johnny Sins', '09486670890', 'sinsBirth@gmail.com', '680aca0199e2c7bef47405c05b5fb6ab', 'Male', '2001-01-01', 21, 'O+', 'P-3', 'Kalamunding', 'Donor ini', '2022-10-17 10:39:45', 0),
+(54, 'JohnPApa', '09486670890', 'papa@gmail.com', '0ac6cd34e2fac333bf0ee3cd06bdcf96', 'Male', '2001-01-01', 21, 'O+', 'P-3', 'Bakiad', 'donor ini', '2022-10-17 10:40:54', 2),
+(55, 'Dexter Macabangon', '09983544993', 'ffelipe@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-12', 21, 'A-', 'test', 'asdasdasd', 'asdasdasd', '2022-10-19 02:36:03', 1);
 
 INSERT INTO `tblbloodgroup` (`id`, `BloodGroup`, `PostingDate`) VALUES
 (1, 'A-', '2017-07-01 04:33:50');
@@ -293,7 +282,7 @@ INSERT INTO `tblbloodgroup` (`id`, `BloodGroup`, `PostingDate`) VALUES
 (4, 'A-', '2017-07-01 04:34:10'),
 (5, 'A+', '2017-07-01 04:34:13'),
 (7, 'AB+', '2020-07-17 16:49:36'),
-(8, 'AKO LANG TO', '2022-09-06 18:08:15'),
+(8, 'test edit', '2022-09-06 18:08:15'),
 (9, 'O+', '2022-09-09 18:40:17'),
 (30, 'teasd', '2022-10-07 22:48:23');
 
@@ -301,8 +290,8 @@ INSERT INTO `tblcontactusinfo` (`id`, `Address`, `EmailId`, `ContactNo`) VALUES
 (1, 'P-2, Barangay Bakiad																						', 'bakiad2022@gmail.com', '09486670890');
 
 
-INSERT INTO `tblcontactusquery` (`id`, `name`, `EmailId`, `ContactNumber`, `Message`, `PostingDate`, `status`) VALUES
-(11, 'Charles P. Bernadez', 'charles.bernadez2001@gmail.com', '19512659595', 'Hello Good Day!\r\nI\'m from RHU Labo, we would like to inform you we will be having a Blood Letting Activity this coming September 22, 2022, at Labo Sports Plaza Complex from 8 am to 5 pm. We will be inviting your community to participate in this incoming activity.\r\n\r\nFrom the Municipal Office of RHU Labo.\r\nThank You and Godbless.', '2022-09-09 18:50:56', NULL);
+INSERT INTO `tblcontactusquery` (`id`, `name`, `EmailId`, `ContactNumber`, `Message`, `PostingDate`, `status`, `is_opened`) VALUES
+(11, 'Charles P. Bernadez', 'charles.bernadez2001@gmail.com', '19512659595', 'Hello Good Day!\r\nI\'m from RHU Labo, we would like to inform you we will be having a Blood Letting Activity this coming September 22, 2022, at Labo Sports Plaza Complex from 8 am to 5 pm. We will be inviting your community to participate in this incoming activity.\r\n\r\nFrom the Municipal Office of RHU Labo.\r\nThank You and Godbless.', '2022-09-09 18:50:56', NULL, 0);
 
 
 INSERT INTO `tblpages` (`id`, `PageName`, `type`, `detail`) VALUES

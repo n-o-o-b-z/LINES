@@ -94,9 +94,22 @@ if (strlen($_SESSION['user_login']) == 0) {
                                         <!-- <p class="text-muted text-center">Software Engineer</p> -->
 
                                         <ul class="list-group list-group-unbordered mb-3">
-                                            <li class="list-group-item"><b>Donated</b> <a class="float-right">1,322</a></li>
+                                            	
+                                            <?php 
+                                                $uid = $_SESSION['id'];
+                                                $sql = "SELECT COUNT('id') as counter FROM donation_history WHERE `user_id`=:uid ";
+                                                $query = $dbh->prepare($sql);
+                                                $query->bindParam(':uid',$uid, PDO::PARAM_STR);
+                                                $query->execute();
+                                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                foreach($results as $result){
+                                             ?>
+                                                
+                               
+                                            <li class="list-group-item"><b>Donated</b> <a class="float-right"> <?php echo $result->counter; ?> </a></li>
                                             <li class="list-group-item"><b>Requested</b> <a class="float-right">543</a></li>
                                             <li class="list-group-item"><b>Friends</b> <a class="float-right">13,287</a></li>
+                                            <?php } ?>
                                         </ul>
 
                                         <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>

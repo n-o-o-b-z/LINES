@@ -37,7 +37,16 @@ if (isset($_POST['submit'])) {
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
-            $msg = "Your info submitted successfully";
+            // $msg = "Your info submitted successfully";
+            echo "<script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Your work has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>";
         } else {
             $error = "EMAIL ALREADY TAKEN!";
         }

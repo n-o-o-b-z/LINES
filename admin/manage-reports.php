@@ -22,6 +22,8 @@ if(isset($_GET['del']))
 <html lang="en">
     <head>
         <?php include('includes/new-header.php'); ?>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     </head>
     <body>
         <?php include('includes/nav.php'); ?>
@@ -46,12 +48,16 @@ if(isset($_GET['del']))
                             <div class="form-group col-lg-4 offset-md-4">
                                 <form  method="POST">
                                         <label for="">Select Generate</label>
-                                        <select class="form-control form-control-md" id="generate" name="generate">
+                                        <!-- <select class="form-control form-control-md" id="generate" name="generate">
                                             <option>SELECT..</option>
                                             <option value="1">DONORS LIST</option>
                                             <option value="3">BLOOD GROUP</option>
+                                        </select> -->
+                                        <select class="js-example-basic-multiple" multiple="multiple">
+                                            <option value="AL">Alabama</option>
+                                                ...
+                                            <option value="WY">Wyoming</option>
                                         </select>
-
                                         <label for="">Date</label>
                                         <input type="text" class="form-control" name="daterange" id="date"/>
                                     </div>
@@ -201,4 +207,9 @@ if(isset($_GET['del']))
  
  
 ?>
+<!-- <script src="../admin/js/jquery.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+$(".js-example-basic-multiple").select2();
+</script>
 </html>

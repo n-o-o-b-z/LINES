@@ -54,16 +54,17 @@ if (!isset($_SESSION['alogin'])) {
           <?php
               // $myid = $_SESSION['id'];
               $status = NULL;
-              $table = "SELECT count(*) FROM tblcontactusquery"; 
+              $openornot = 1;
+              $table = "SELECT count(*) FROM tblcontactusquery WHERE is_opened = :openornot";
               $result_table = $dbh->prepare($table); 
+              $result_table->bindParam(':openornot', $openornot , PDO::PARAM_STR);
               $result_table->execute(); 
               $number_of_rows = $result_table->fetchColumn(); 
-            
-              var_dump($number_of_rows);
+              echo $number_of_rows;
+              // var_dump($number_of_rows);
              ?>
           
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right classa">
         <?php
               // $myid = $_SESSION['id'];
               // $status = '';
@@ -73,6 +74,9 @@ if (!isset($_SESSION['alogin'])) {
               // $getContact_query->bindParam(':status', $status, PDO::PARAM_STR);
               $getContact_query->execute(); 
               $getResults = $getContact_query->fetchAll(PDO::FETCH_OBJ);
+            ?>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right classa" id="txt-msg" data-id="<?= $getResults[0]->id; ?>" data-toggle="modal" data-target="#message_modal">
+       <?php
             if(sizeof($getResults) >= 0){ 
               foreach($getResults as $getResult){ ?>
                 <a href="#" class="dropdown-item">
@@ -94,8 +98,7 @@ if (!isset($_SESSION['alogin'])) {
 
 
           
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
+          <!-- <a href="#" class="dropdown-item">
             <div class="media">
               <img src="../assets/adminlte/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
@@ -107,11 +110,9 @@ if (!isset($_SESSION['alogin'])) {
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
-            <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <!-- Message Start -->
             <div class="media">
               <img src="../assets/adminlte/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
@@ -123,10 +124,12 @@ if (!isset($_SESSION['alogin'])) {
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
-            <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a> -->
+
+
+
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
@@ -218,6 +221,26 @@ if (!isset($_SESSION['alogin'])) {
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="message_modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="message_modalLabel"><span id="name_content"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="message_content"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="../assets/adminlte/plugins/jquery/jquery.min.js"></script>
 
   <script>
@@ -266,6 +289,27 @@ if (!isset($_SESSION['alogin'])) {
               console.log(response);
           }
         });
+      });
+
+      $(document).on('click','#txt-msg', function () {
+        var id = $(this).data('id');
+        $.ajax({
+          type: "POST",
+          url: "xhr/show-message.php",
+          data: {id:id},
+          dataType: "JSON",
+          success: function (response) {
+            console.log(response[0].name);
+            
+            $('#name_content').html(response[0].name);
+            $('#message_content').html(response[0].Message);
+          }
+        });
+      });
+
+      $('#message_modal').on('hide.bs.modal', function (e) {
+        $('#name_content').html('');
+        $('#message_content').html('');
       });
 
     });
