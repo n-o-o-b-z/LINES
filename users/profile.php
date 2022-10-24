@@ -83,7 +83,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 <div class="card card-primary card-outline">
                                     <div class="card-body box-profile">
                                         <div class="text-right">
-                                            <span data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-user-edit text-info"></i></span>
+                                            <span id="editBtn" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?=$_SESSION['id'];?>"><i class="fas fa-user-edit text-info"></i></span>
                                         </div>
                                         <div class="text-center">
                                             <img class="profile-user-img img-fluid img-circle" src="../assets/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture" />
@@ -108,11 +108,10 @@ if (strlen($_SESSION['user_login']) == 0) {
                                
                                             <li class="list-group-item"><b>Donated</b> <a class="float-right"> <?php echo $result->counter; ?> </a></li>
                                             <li class="list-group-item"><b>Requested</b> <a class="float-right">543</a></li>
-                                            <li class="list-group-item"><b>Friends</b> <a class="float-right">13,287</a></li>
                                             <?php } ?>
                                         </ul>
 
-                                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                                        <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
@@ -123,23 +122,29 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <div class="card-header">
                                         <h3 class="card-title">About Me</h3>
                                     </div>
-                                    <!-- /.card-header -->
+                                    <?php 
+                                        $id = $_SESSION['id'];
+                                        $sql2 = "SELECT FullName,MobileNumber,EmailId,Gender,BirthDay,age,BloodGroup,Purok,Barangay,Message FROM tblblooddonars WHERE `id`=:uid ";
+                                        $query2 = $dbh->prepare($sql2);
+                                        $query2->bindParam(':uid',$id, PDO::PARAM_STR);
+                                        $query2->execute();
+                                        $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+                                        foreach($results2 as $result2){
+                                    ?>
                                     <div class="card-body">
-                                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                                        <strong><i class="fa-solid fa-heart-circle-exclamation"></i> Type</strong>
 
-                                        <p class="text-muted">
-                                            B.S. in Computer Science from the University of Tennessee at Knoxville
-                                        </p>
+                                        <p class="text-muted"> <?=$result2->BloodGroup;?> </p>
 
                                         <hr />
 
-                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
-                                        <p class="text-muted">Malibu, California</p>
+                                        <p class="text-muted"><?=$result2->Purok.' '.$result2->Barangay;?></p>
 
                                         <hr />
 
-                                        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+                                        <!-- <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
                                         <p class="text-muted">
                                             <span class="tag tag-danger">UI Design</span>
@@ -147,15 +152,15 @@ if (strlen($_SESSION['user_login']) == 0) {
                                             <span class="tag tag-info">Javascript</span>
                                             <span class="tag tag-warning">PHP</span>
                                             <span class="tag tag-primary">Node.js</span>
-                                        </p>
+                                        </p> -->
 
-                                        <hr />
+                                        <!-- <hr /> -->
 
                                         <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
 
-                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                                        <p class="text-muted"><?=$result2->Message;?></p>
                                     </div>
-                                    <!-- /.card-body -->
+                                    <?php }?>
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -436,13 +441,14 @@ if (strlen($_SESSION['user_login']) == 0) {
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="form" action="#" method="POST" enctype="multipart/form-data">
+
                                  <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <input type="file" value="" id="uploadImage" class="required borrowerImageFile inputfile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
@@ -561,6 +567,49 @@ if (strlen($_SESSION['user_login']) == 0) {
                     $("#previewHolder").hide();
                 }
             });
+
+
+            $(document).ready(function () {
+                $(document).on('click','#editBtn', function () {
+                   var dataid = $(this).data('id');
+                   $.ajax({
+                        type: "POST",
+                        url: "xhr/edit-profile.php",
+                        data: {id:dataid},
+                        dataType: "JSON",
+                        success: function (response) {
+                            console.log(response);
+                        }
+                   });
+                });
+            });
+
+
+
+
+
+
+
+                // $("#form").on("submit", function (e) {
+                //     e.preventDefault();
+                //     $.ajax({
+                //         url: "xhr/update-profile.php",
+                //         type: "POST",
+                //         data: new FormData(this),
+                //         contentType: false,
+                //         cache: false,
+                //         processData: false,
+                //         success: function (data) {
+                //             if (data == "invalid") {
+                //                 $("#err").html("Invalid File !").fadeIn();
+                //             } else {
+                //                 $("#form")[0].reset();
+                //                 window.location.reload(true);
+                //             }
+                //         },
+                    
+                //     });
+                // });
         </script>
 
     </body>

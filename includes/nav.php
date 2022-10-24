@@ -35,19 +35,22 @@ session_start();
       
 
         <?php if(!$_SESSION['user_login']):?>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="./users/">Login</a>
-            </li>
+            </li> -->
         <?php endif; ?>
        
       </ul>
      
     </div>
-        <?php if($_SESSION['user_login']):?>
+        <?php if(isset($_SESSION['user_login'])):?>
             <a href="./users/profile.php" rel="noopener noreferrer" style="text-decoration:none;vertical-align:middle;color:white;background-color:gray;padding:1px 10px; border-radius:10px;">
                 <img src="./images/uploads/375457demon-slayer-nezuko-pfp-2.jpg" height="40" size="40" alt="" style="border-radius: 50%; vertical-align:middle">
                 <span><?=$_SESSION['name'];?></span>
             </a>
+          <?php else: ?>
+                <a class="nav-link" href="./users/">Login</a>
         <?php endif; ?>
+       
   </div>
 </nav>
