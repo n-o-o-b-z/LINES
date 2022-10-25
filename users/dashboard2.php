@@ -254,3 +254,26 @@ if(!$_SESSION['user_login']){
         </script>
     </body>
 </html>
+
+<?php
+
+$session_id = $_SESSION['id'];
+$stats = 0; // means no
+
+// UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = 0 WHERE a.id=50 AND b.donation_date < NOW() - interval 30 DAY
+// $updatesql = "UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = :stats WHERE a.id=:id AND b.donation_date < NOW() - interval 3 month";
+$updatesql = "SELECT b.donation_date FROM tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id WHERE a.id=:id ORDER BY b.id DESC LIMIT 1";
+
+$query99= $dbh -> prepare($updatesql);
+$query99-> bindParam(':id', $session_id, PDO::PARAM_STR);
+$query99-> execute();
+$results99=$query99->fetch(PDO::FETCH_OBJ);
+$date =  $results99->donation_date;
+
+$forupdate ="UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = :stats WHERE a.id=:id AND '$date' < NOW() - interval 3 month";
+$query88= $dbh -> prepare($forupdate);
+$query88-> bindParam(':id', $session_id, PDO::PARAM_STR);
+$query88-> bindParam(':stats', $stats, PDO::PARAM_STR);
+$query88-> execute();
+// $results88 = $query88->fetch(PDO::FETCH_OBJ);
+?>
