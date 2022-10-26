@@ -132,7 +132,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-danger">
+            <div class="small-box bg-secondary">
               <div class="inner">
               <?php
                     $status = 1; //active
@@ -156,7 +156,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-secondary">
+            <div class="small-box bg-danger">
               <div class="inner">
               <?php
                     $status = 2; //active

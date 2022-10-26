@@ -458,60 +458,65 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <div class="form-group col-md-6">
                                        
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip" />
-                                    </div>
+                        
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="inputAddress">Full Name</label>
-                                    <input type="text" class="form-control" id="fname" name="fname" />
+                                    <input type="text" class="form-control" id="fname" name="fname" required/>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                                        <label for="inputEmail4">Birth Day</label>
+                                        <input type="text" class="form-control" id="bday" name="bday" required/>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+                                    
+                                    <div class="form-group col-md-3">
+                                        <label for="inputEmail4">Age</label>
+                                        <input type="text" class="form-control" name="age" id="age" disabled required/>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputCity">City</label>
-                                        <input type="text" class="form-control" id="inputCity" />
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">State</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="inputPassword4">Blood Type</label>
+                                        <select name="btype" id="btype" class="form-control" required>
+                                            <?php
+                                                $sql1 = "SELECT * FROM tblbloodgroup";
+                                                $query1 = $dbh->prepare($sql1);
+                                                $query1->execute();
+                                                $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+
+                                                foreach($results1 as $result1): ?>
+                                                    <option value="<?=$result1->BloodGroup;?>"><?=$result1->BloodGroup;?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip" />
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required/>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="mnumber">Mobile No</label>
+                                        <input type="text" class="form-control" id="mnumber"  name="mnumber" required/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck" />
-                                        <label class="form-check-label" for="gridCheck">
-                                            Check me out
-                                        </label>
+                                
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="purok">Purok</label>
+                                        <input type="text" class="form-control" id="purok" name="purok" required/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="brgy">Barangay</label>
+                                        <input type="text" class="form-control" id="brgy" name="brgy" required/>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Sign in</button>
                             </form>
 
                         </div>
@@ -578,7 +583,15 @@ if (strlen($_SESSION['user_login']) == 0) {
                         data: {id:dataid},
                         dataType: "JSON",
                         success: function (response) {
-                            console.log(response);
+                            // console.log(response);
+                            $('#uploadImage').val(response[0].image);
+                            $('#fname').val(response[0].FullName);
+                            $('#bday').val(response[0].BirthDay);
+                            $('#age').val(response[0].age);
+                            $('#email').val(response[0].EmailId);
+                            $('#mnumber').val(response[0].MobileNumber);
+                            $('#purok').val(response[0].Purok);
+                            $('#brgy').val(response[0].Barangay);
                         }
                    });
                 });
