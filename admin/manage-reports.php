@@ -47,18 +47,39 @@ if(isset($_GET['del']))
                         <div class="colonizer col-lg-12 ">
                             <div class="form-group col-lg-4 offset-md-4">
                                 <form  method="POST">
-                                        <label for="">Select Generate</label>
-                                        <!-- <select class="form-control form-control-md" id="generate" name="generate">
-                                            <option>SELECT..</option>
-                                            <option value="1">DONORS LIST</option>
-                                            <option value="3">BLOOD GROUP</option>
-                                        </select> -->
-                                        <select class="js-example-basic-multiple" multiple="multiple">
-                                            <option value="AL">Alabama</option>
-                                                ...
-                                            <option value="WY">Wyoming</option>
-                                        </select>
-                                        <label for="">Date</label>
+                                        <div class="form-group">
+                                            <label for="">Select Generate</label>
+                                            <select class="form-control form-control-md" id="generate" name="generate">
+                                                <option>SELECT..</option>
+                                                <option value="1">DONORS LIST</option>
+                                                <option value="3">BLOOD GROUP</option>
+                                            </select>
+                                        </div>
+
+                                       <div class="form-group">
+                                        <label for="">Select Donors</label>
+                                            <select class="js-example-basic-multiple form-control" multiple="multiple">
+                                                <option value="AL">Alabama</option>
+                                                <option value="WY">Wyoming</option>
+                                                <?php
+
+                                                ?>
+                                            </select>
+                                       </div>
+
+                                       <div class="form-group">
+                                        <label for="">Blood Group</label>
+                                            <select class="js-example-basic-multiple form-control" multiple="multiple">
+                                                <option value="AL">Alabama</option>
+                                                <option value="WY">Wyoming</option>
+                                                <?php
+
+                                                ?>
+                                            </select>
+                                       </div>
+                                        
+                                    <div class="form-group">
+                                        <label for="">Date Range</label>
                                         <input type="text" class="form-control" name="daterange" id="date"/>
                                     </div>
 
@@ -69,6 +90,7 @@ if(isset($_GET['del']))
 
                                     </div>
                                 </form>
+                            </div>
                         </div>
                     </div>
                 </div>
