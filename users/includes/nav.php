@@ -260,11 +260,12 @@ if (strlen($_SESSION['user_login']) == 0) {
           var myIds = $(this).data('id');
           var link = './xhr/accept_request.php';
           requested(myIds,link);
+          alert('Accepted!');
       });
 
       $('#deny').click(function (e) { 
         e.preventDefault();
-        alert('I was denied');
+        alert('Denied');
       });
 
       $(document).on('click','#mview', function () {

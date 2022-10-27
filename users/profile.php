@@ -456,25 +456,24 @@ if (strlen($_SESSION['user_login']) == 0) {
                                         <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:50%;border:1px solid black;"/>
                                     </div>
                                     <div class="form-group col-md-6">
-                                       
                                     </div>
-                        
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="inputAddress">Full Name</label>
                                     <input type="text" class="form-control" id="fname" name="fname" required/>
+                                    
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputEmail4">Birth Day</label>
                                         <input type="text" class="form-control" id="bday" name="bday" required/>
-                                    </div>
+                                    </div>  
                                     
                                     <div class="form-group col-md-3">
                                         <label for="inputEmail4">Age</label>
-                                        <input type="text" class="form-control" name="age" id="age" disabled required/>
+                                        <input type="text" class="form-control" name="age" id="age" readonly required/>
                                     </div>
 
                                     <div class="form-group col-md-3">
@@ -515,15 +514,18 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <div class="form-group col-md-6">
                                         <label for="brgy">Barangay</label>
                                         <input type="text" class="form-control" id="brgy" name="brgy" required/>
+                                        <input type="hidden" class="form-control" id="ids" name="id"/>
+                                        
                                     </div>
                                 </div>
-                            </form>
+                       
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -592,8 +594,33 @@ if (strlen($_SESSION['user_login']) == 0) {
                             $('#mnumber').val(response[0].MobileNumber);
                             $('#purok').val(response[0].Purok);
                             $('#brgy').val(response[0].Barangay);
+                            $('#ids').val(response[0].id);
+
                         }
                    });
+                });
+     
+
+
+                $("#form").on("submit", function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "xhr/update-profile.php",
+                        type: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data == "invalid") {
+                                $("#err").html("Invalid File !").fadeIn();
+                            } else {
+                                $("#form")[0].reset();
+                                // window.location.reload(true);
+                            }
+                        },
+                    
+                    });
                 });
             });
 

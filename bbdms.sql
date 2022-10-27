@@ -72,7 +72,8 @@ CREATE TABLE `donate_request` (
   `volume_request` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '0',
   `request_to` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `is_expired` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
@@ -273,33 +274,33 @@ INSERT INTO `codes` (`id`, `email`, `code`, `expire`) VALUES
 (18, 'charles.bernadez2001@gmail.com', '46587', 1662210269),
 (19, 'charles.bernadez2001@gmail.com', '67386', 1662210591);
 
-INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
-(66, 43, NULL, 1, 51, NULL);
-INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
-(67, 51, NULL, 0, 41, NULL);
-INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
-(68, 43, NULL, 1, 51, NULL);
-INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `created_at`) VALUES
-(69, 51, NULL, 0, 40, NULL),
-(70, 51, NULL, 0, 43, NULL),
-(71, 51, NULL, 1, 50, NULL),
-(72, NULL, NULL, 0, NULL, NULL),
-(73, NULL, NULL, 0, NULL, NULL),
-(74, NULL, NULL, 0, NULL, NULL),
-(75, NULL, NULL, 0, NULL, NULL),
-(76, NULL, NULL, 0, NULL, NULL),
-(77, NULL, NULL, 0, NULL, NULL),
-(78, NULL, NULL, 0, NULL, NULL),
-(79, NULL, NULL, 0, NULL, NULL),
-(80, NULL, NULL, 0, NULL, NULL),
-(81, NULL, NULL, 0, NULL, NULL),
-(82, NULL, NULL, 0, NULL, NULL),
-(83, NULL, NULL, 0, NULL, NULL),
-(84, NULL, NULL, 0, NULL, NULL),
-(85, NULL, NULL, 0, NULL, NULL),
-(86, NULL, NULL, 0, NULL, NULL),
-(87, NULL, NULL, 0, NULL, NULL),
-(88, 53, NULL, 1, 54, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `is_expired`, `created_at`) VALUES
+(66, 43, NULL, 1, 51, 0, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `is_expired`, `created_at`) VALUES
+(67, 51, NULL, 0, 41, 0, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `is_expired`, `created_at`) VALUES
+(68, 43, NULL, 1, 51, 0, NULL);
+INSERT INTO `donate_request` (`id`, `user_id`, `volume_request`, `status`, `request_to`, `is_expired`, `created_at`) VALUES
+(69, 51, NULL, 0, 40, 0, NULL),
+(70, 51, NULL, 1, 43, 0, NULL),
+(71, 51, NULL, 1, 50, 0, NULL),
+(72, NULL, NULL, 0, NULL, 0, NULL),
+(73, NULL, NULL, 0, NULL, 0, NULL),
+(74, NULL, NULL, 0, NULL, 0, NULL),
+(75, NULL, NULL, 0, NULL, 0, NULL),
+(76, NULL, NULL, 0, NULL, 0, NULL),
+(77, NULL, NULL, 0, NULL, 0, NULL),
+(78, NULL, NULL, 0, NULL, 0, NULL),
+(79, NULL, NULL, 0, NULL, 0, NULL),
+(80, NULL, NULL, 0, NULL, 0, NULL),
+(81, NULL, NULL, 0, NULL, 0, NULL),
+(82, NULL, NULL, 0, NULL, 0, NULL),
+(83, NULL, NULL, 0, NULL, 0, NULL),
+(84, NULL, NULL, 0, NULL, 0, NULL),
+(85, NULL, NULL, 0, NULL, 0, NULL),
+(86, NULL, NULL, 0, NULL, 0, NULL),
+(87, NULL, NULL, 0, NULL, 0, NULL),
+(88, 53, NULL, 1, 54, 0, NULL);
 
 INSERT INTO `donation_history` (`id`, `user_id`, `blood_type_id`, `donation_date`, `status`, `created_at`) VALUES
 (1, 50, 'A+', '2022-10-16 00:00:00', 1, '2022-10-16 00:00:00');
@@ -337,7 +338,7 @@ INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `pass
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
 (41, 'John Doe', '23423', 'johndoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-06-05', 21, 'A-', 'p-3', 'cabusay', '12312321', '2022-10-10 12:43:10', 0, NULL, 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
-(43, 'Jane Doe', 'asdasdas', 'jdoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdas', '2022-10-10 13:41:57', 0, NULL, 0),
+(43, 'Jane Doe', '12132131', 'jdoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdas', '2022-10-10 13:41:57', 0, '../../images/uploads/538850274931355_5097644930256787_7673320439151991784_n.jpg', 0),
 (50, 'Julian Felipe', 'asdasdas', 'jfelipe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A+', 'qwdas', 'dasdsad', 'aqweqew', '2022-10-10 15:19:06', 0, NULL, 1),
 (51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0, NULL, 0),
 (52, 'testacle', '1234567890', 'test@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Female', '2011-02-09', 11, 'O-', 'p-1', 'Kalamunding', 'est', '2022-10-16 22:53:29', 0, NULL, 0),

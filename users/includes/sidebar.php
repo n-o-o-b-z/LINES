@@ -20,8 +20,18 @@ if(!isset($_POST['user_login'])){
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <!-- <img src="../../assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
-                <img src="../../images/default-image.png" class="img-circle elevation-2" alt="User Image">
+                <?php
+                    $sql1 = "SELECT image from tblblooddonars ";
+                    $query1 = $dbh->prepare($sql1);;
+                    $query1->execute();
+                    $results1 = $query1->fetch(PDO::FETCH_OBJ);
 
+                    if($results->image == NULL){ 
+                ?>
+                        <img src="./../images/default.jpg" class="img-circle elevation-2" alt="User Image">
+                <?php }else{ ?>
+                        <img src="<?=$results1->image?>" class="img-circle elevation-2" alt="User Image">
+                <?php } ?>
             </div>
             <div class="info">
                 <a href="profile.php" class="d-block"><?=$_SESSION['name'];?> <span class="badge badge-primary"></span></a>

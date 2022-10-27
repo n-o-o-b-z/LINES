@@ -276,4 +276,11 @@ $query88-> bindParam(':id', $session_id, PDO::PARAM_STR);
 $query88-> bindParam(':stats', $stats, PDO::PARAM_STR);
 $query88-> execute();
 // $results88 = $query88->fetch(PDO::FETCH_OBJ);
+
+// $expired = 0;
+// $forupdate ="UPDATE donate_request SET is_expired =:expired  WHERE id=:id AND '$date' < NOW() - interval 3 hour"";
+// $query88= $dbh -> prepare($forupdate);
+// $query88-> bindParam(':id', $session_id, PDO::PARAM_STR);
+// $query88-> bindParam(':stats', $stats, PDO::PARAM_STR);
+// $query88-> execute();
 ?>
