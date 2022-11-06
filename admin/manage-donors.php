@@ -118,8 +118,20 @@ if(isset($_POST['mark-inactive']))
 					</thead>
 					<tbody id="test">
 					
-                    <?php $sql = "SELECT * FROM tblblooddonars ";
+                    <?php 
+                    if(isset($_GET['active'])){
+                        $status = 0;
+                        $sql = "SELECT * FROM tblblooddonars WHERE status =:status ";
+                    }elseif(isset($_GET['inactive'])){
+                        $status = 1;
+                        $sql = "SELECT * FROM tblblooddonars WHERE status =:status ";
+                    }else{
+                        $sql = "SELECT * FROM tblblooddonars";
+                    }
                         $query = $dbh->prepare($sql);
+                        if(isset($_GET['active']) || isset($_GET['inactive'])){
+                            $query -> bindParam(':status',$status, PDO::PARAM_STR);
+                        }
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_OBJ);
                         $cnt = 1;

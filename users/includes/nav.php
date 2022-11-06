@@ -182,7 +182,8 @@ if (strlen($_SESSION['user_login']) == 0) {
       <!-- <form action="" method="post"> -->
         <li class="nav-item" onclick="logout();">
           <a class="nav-link" data-widget="control-sidebar" role="button">
-            <i class="fas fa-th-large"></i>
+            <!-- <i class="fas fa-th-large"></i> -->
+            <span>Logout <i class="fa-solid fa-right-from-bracket"></i>  </span>
           </a>
         </li>
       <!-- </form> -->

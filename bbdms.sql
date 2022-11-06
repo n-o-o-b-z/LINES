@@ -332,7 +332,7 @@ INSERT INTO `roles` (`id`, `permission_id`, `name`) VALUES
 (4, NULL, 'Hospital');
 
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
-(36, 'Charles P. Bernadez', '19512659595', 'charles.bernadez2001@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', NULL, 'O+', 'P-1', 'Bakiad', 'donor', '2022-09-12 18:17:34', 0, NULL, 0);
+(36, 'Charles P. Bernadez', '19512659595', 'charles.bernadez2001@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'P-1', 'Bakiad', 'donor', '2022-09-12 18:17:34', 0, './../images/uploads/247093active.webp', 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
 (40, 'Dexter Macabangon', '12312', 'dex@example.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2000-01-01', 22, 'A-', 'wqeqwe`qw', 'qweqwe`', 'waedasdasdas', '2022-10-05 23:16:26', 0, NULL, 0);
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
@@ -340,7 +340,7 @@ INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `pass
 INSERT INTO `tblblooddonars` (`id`, `FullName`, `MobileNumber`, `EmailId`, `password`, `Gender`, `BirthDay`, `age`, `BloodGroup`, `Purok`, `Barangay`, `Message`, `PostingDate`, `status`, `image`, `can_donate`) VALUES
 (43, 'Jane Doe', '12132131', 'jdoe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-10-17', 21, 'A-', 'P-1', 'Cabusay', 'asdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdas', '2022-10-10 13:41:57', 0, './../images/uploads/538850274931355_5097644930256787_7673320439151991784_n.jpg', 0),
 (50, 'Julian Felipe', 'asdasdas', 'jfelipe@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A+', 'qwdas', 'dasdsad', 'aqweqew', '2022-10-10 15:19:06', 0, NULL, 1),
-(51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0, NULL, 0),
+(51, 'Ronald Doctor', '0902193111', 'ronald@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Male', '2001-01-01', 21, 'A-', 'test purok', 'test barangay', 'test message', '2022-10-10 15:20:20', 0, './../images/uploads/886401791910demon-slayer-nezuko-pfp-2.jpg', 0),
 (52, 'testacle', '1234567890', 'test@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Female', '2011-02-09', 11, 'O-', 'p-1', 'Kalamunding', 'est', '2022-10-16 22:53:29', 0, NULL, 0),
 (53, 'Johnny Sins', '09486670890', 'sinsBirth@gmail.com', '680aca0199e2c7bef47405c05b5fb6ab', 'Male', '2001-01-01', 21, 'O+', 'P-3', 'Kalamunding', 'Donor ini', '2022-10-17 10:39:45', 0, NULL, 0),
 (54, 'JohnPApa', '09486670890', 'papa@gmail.com', '0ac6cd34e2fac333bf0ee3cd06bdcf96', 'Male', '2001-01-01', 21, 'O+', 'P-3', 'Bakiad', 'donor ini', '2022-10-17 10:40:54', 2, NULL, 0),

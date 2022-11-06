@@ -21,15 +21,19 @@ if(!isset($_POST['user_login'])){
             <div class="image">
                 <!-- <img src="../../assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
                 <?php
-                $ids = $_SESSION['id'];
+                    $ids = $_SESSION['id'];
                     $sql1 = "SELECT image from tblblooddonars WHERE id=:ids ";
                     $query1 = $dbh->prepare($sql1);
                     $query1->bindParam(':ids',$ids, PDO::PARAM_STR);
                     $query1->execute();
                     $results1 = $query1->fetch(PDO::FETCH_OBJ);
-                    // var_dump($results1->image);
-?>
-                        <img src="<?=$results1->image?>" class="img-circle elevation-2" alt="User Image">
+                    if($results1->image !== NULL){
+                ?>
+                
+                    <img src="<?=$results1->image?>" class="img-circle elevation-2" alt="User Image" style="height: 34px !important;width: 34px !important">
+                <?php }else{ ?>
+                    <img src="./../images/default-image.png" class="img-circle elevation-2" alt="User Image">
+                <?php } ?>
                
             </div>
             <div class="info">

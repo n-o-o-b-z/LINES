@@ -45,7 +45,19 @@ session_start();
     </div>
         <?php if(isset($_SESSION['user_login'])):?>
             <a href="./users/profile.php" rel="noopener noreferrer" style="text-decoration:none;vertical-align:middle;color:white;background-color:gray;padding:1px 10px; border-radius:10px;">
-                <img src="./images/uploads/375457demon-slayer-nezuko-pfp-2.jpg" height="40" size="40" alt="" style="border-radius: 50%; vertical-align:middle">
+                <?php
+                    $ids = $_SESSION['id'];
+                    $sql1 = "SELECT image from tblblooddonars WHERE id=:ids ";
+                    $query1 = $dbh->prepare($sql1);
+                    $query1->bindParam(':ids',$ids, PDO::PARAM_STR);
+                    $query1->execute();
+                    $results1 = $query1->fetch(PDO::FETCH_OBJ);
+                    if($results1->image !== NULL){
+                ?>
+                  <img src="<?=str_replace('./../', '', $results1->image)?>" height="40" size="40" alt="" style="border-radius: 50%; vertical-align:middle">
+                <?php }else{ ?>
+                  <img src="./images/default-image.png" height="40" size="40" alt="" style="border-radius: 50%; vertical-align:middle">
+                <?php } ?>
                 <span><?=$_SESSION['name'];?></span>
             </a>
           <?php else: ?>

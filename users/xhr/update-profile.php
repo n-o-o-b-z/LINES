@@ -10,6 +10,7 @@ if(strlen($_SESSION['user_login'])==0){
 
 $valid_extensions = array('jpg', 'jpeg', 'jfif', 'pjepg', 'pjp', 'gif', 'avif', 'apng', 'png', 'svg', 'webp', 'bmp'); // valid extensions
 $path = '../../images/uploads/'; // upload directory
+$path2 = './../images/uploads/';
 if(!empty($_POST['fname']) || !empty($_POST['email']) || !empty($_POST['btype'])|| !empty($_POST['bday'])|| !empty($_POST['age']))
 {
     $img = $_FILES['image']['name'];
@@ -25,6 +26,7 @@ if(!empty($_POST['fname']) || !empty($_POST['email']) || !empty($_POST['btype'])
     if(in_array($ext, $valid_extensions)) 
     { 
         $path = $path.strtolower($final_image); 
+        $path3 = $path2.strtolower($final_image); 
         if(move_uploaded_file($tmp,$path)) 
         {
             // echo "<img src='$path' />";
@@ -46,7 +48,7 @@ if(!empty($_POST['fname']) || !empty($_POST['email']) || !empty($_POST['btype'])
             $sql = "UPDATE tblblooddonars SET image=:image, FullName=:fname, BirthDay=:bday, age=:age, BloodGroup=:btype, EmailId=:email, MobileNumber=:mnumber, Purok=:purok, Barangay=:brgy WHERE id=:id";
             $query= $dbh -> prepare($sql);
             $query->bindParam(':id', $id , PDO::PARAM_STR);
-            $query->bindParam(':image', $path, PDO::PARAM_STR);
+            $query->bindParam(':image', $path3, PDO::PARAM_STR);
             $query->bindParam(':fname', $fname, PDO::PARAM_STR);
             $query->bindParam(':bday', $date_true, PDO::PARAM_STR);
             $query->bindParam(':age', $age, PDO::PARAM_STR);
@@ -67,6 +69,7 @@ if(!empty($_POST['fname']) || !empty($_POST['email']) || !empty($_POST['btype'])
             //     echo $error="Something went wrong. Please try again";
             // }
         }
+        echo true;   
     }else {
         echo 'invalid';
     }

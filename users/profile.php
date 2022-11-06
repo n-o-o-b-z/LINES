@@ -85,8 +85,22 @@ if (strlen($_SESSION['user_login']) == 0) {
                                         <div class="text-right">
                                             <span id="editBtn" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?=$_SESSION['id'];?>"><i class="fas fa-user-edit text-info"></i></span>
                                         </div>
-                                        <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle" src="../assets/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture" />
+                                        <div class="text-center circular">
+                                            <?php
+                                                $user_ids = $_SESSION['id'];
+                                                $pic_sql = "SELECT image from tblblooddonars WHERE id=:ids ";
+                                                $qry1 = $dbh->prepare($pic_sql);
+                                                $qry1->bindParam(':ids',$user_ids, PDO::PARAM_STR);
+                                                $qry1->execute();
+                                                $rslts = $qry1->fetch(PDO::FETCH_OBJ);
+                                                if($rslts->image !== NULL){
+                                            ?>
+                                                <!-- <img class="profile-user-img img-fluid img-circle" src="./../images/uploads/default-image.png" alt="User profile picture"/> -->
+                                            <img class="profile-user-img img-fluid img-circle" src="<?=$rslts->image?>" alt="User profile picture"/>
+                                        <?php }else{ ?>
+                                            <img src="./../images/default-image.png" class="profile-user-img img-fluid img-circle" alt="User Image">
+                                        <?php } ?>
+
                                         </div>
 
                                         <h3 class="profile-username text-center" contenteditable><?=$_SESSION['name']; ?></h3>
@@ -104,11 +118,22 @@ if (strlen($_SESSION['user_login']) == 0) {
                                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                 foreach($results as $result){
                                              ?>
-                                                
                                
-                                            <li class="list-group-item"><b>Donated</b> <a class="float-right"> <?php echo $result->counter; ?> </a></li>
-                                            <li class="list-group-item"><b>Requested</b> <a class="float-right">543</a></li>
+                                                <li class="list-group-item"><b>Donated</b> <a class="float-right"> <?php echo $result->counter; ?> </a></li>
                                             <?php } ?>
+
+                                            <?php 
+                                                $uid = $_SESSION['id'];
+                                                $sqls = "SELECT COUNT('id') as counter FROM donate_request WHERE `user_id`=:uid ";
+                                                $queryss = $dbh->prepare($sqls);
+                                                $queryss->bindParam(':uid',$uid, PDO::PARAM_STR);
+                                                $queryss->execute();
+                                                $resultss = $queryss->fetchAll(PDO::FETCH_OBJ);
+                                                foreach($resultss as $resulta){
+                                             ?>
+                                                <li class="list-group-item"><b>Requested</b> <a class="float-right"> <?php echo $resulta->counter; ?> </a></li>
+                                            <?php } ?>
+                                      
                                         </ul>
 
                                         <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
@@ -586,7 +611,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                         dataType: "JSON",
                         success: function (response) {
                             // console.log(response);
-                            $('#uploadImage').val(response[0].image);
+                            // $('#uploadImage').val(response[0].image);
                             $('#fname').val(response[0].FullName);
                             $('#bday').val(response[0].BirthDay);
                             $('#age').val(response[0].age);
@@ -616,6 +641,41 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 $("#err").html("Invalid File !").fadeIn();
                             } else {
                                 $("#form")[0].reset();
+                                if(data == 1){
+                                    // Swal.fire(
+                                    //     'Updated!',
+                                    //     'You clicked the button!',
+                                    //     'success'
+                                    // );
+
+                                    let timerInterval
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Updated Successfully!',
+                                        // html: 'I will close in <b></b> milliseconds.',
+                                        timer: 1200,    
+                                        timerProgressBar: false,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                        b.textContent = Swal.getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                    }).then((result) => {
+                                    /* Read more about handling dismissals below */
+                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                        // console.log('I was closed by the timer')
+                                        window.location.reload(true);
+
+                                    }
+                                    })
+
+                                    
+                                }
                                 // window.location.reload(true);
                             }
                         },
