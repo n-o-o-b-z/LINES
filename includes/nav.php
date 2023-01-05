@@ -39,11 +39,8 @@ session_start();
                 <a class="nav-link" href="./users/">Login</a>
             </li> -->
         <?php endif; ?>
-       
-      </ul>
-     
-    </div>
-        <?php if(isset($_SESSION['user_login'])):?>
+       <li>
+       <?php if(isset($_SESSION['user_login'])):?>
             <a href="./users/profile.php" rel="noopener noreferrer" style="text-decoration:none;vertical-align:middle;color:white;background-color:gray;padding:1px 10px; border-radius:10px;">
                 <?php
                     $ids = $_SESSION['id'];
@@ -63,6 +60,11 @@ session_start();
           <?php else: ?>
                 <a class="nav-link" href="./users/">Login</a>
         <?php endif; ?>
+       </li>
+      </ul>
+     
+    </div>
+        
        
   </div>
 </nav>
