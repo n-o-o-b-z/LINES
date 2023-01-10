@@ -57,6 +57,10 @@ if(isset($_SESSION['user_login'])){
 			min-height: 100vh;
 			padding: 20px 10px;
 			background: #e5e5e5;
+			background: url('../logo.png');
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
 		}
 
 		.login-text {
@@ -65,6 +69,8 @@ if(isset($_SESSION['user_login'])){
 			min-height: 500px;
 			border-radius: 10px;
 			padding: 10px 20px;
+			background: rgba(255,255,255,0.95) !important;
+			border: 1px solid gray;
 		}
 
 		.logo {
@@ -155,6 +161,10 @@ if(isset($_SESSION['user_login'])){
 			color: #0095b6;
 		}
 
+		.login-wrapper{
+			background: rgba(0,0,0,0) !important;
+		}
+
 	</style>
 </head>
 		
@@ -204,9 +214,15 @@ if(isset($_SESSION['user_login'])){
           </span>
         </form>
 		
+		<div>
+			<a href="/admin"><small>ADMIN LOGIN</small></a>
+		</div>
+
 		<span class="">
 			<a href="../index.php" class="text-primary">Go back</a>
 		</span>
+
+		
 
       </div>
     </div>

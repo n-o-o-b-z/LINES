@@ -1,7 +1,7 @@
 {
     "name": "Lifeline BLood Donation",
     "short_name": "Lifeline",
-    "start_url": "https://lines.test",
+    "start_url": "https://lifelinegiveblood.com/",
     "scope": ".",
     "icons": [
       {
