@@ -1,9 +1,9 @@
 <?php 
 // DB credentials.
-define('DB_HOST','cpanel08wh');
-define('DB_USER','kchaqayw_admin');
-define('DB_PASS','June26,2022c');
-define('DB_NAME','kchaqayw_bbdms');
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','');
+define('DB_NAME','bbdms');
 // Establish database connection.
 try
 {
