@@ -49,7 +49,8 @@ if($lastInsertId)
 }
 else 
 {
-    echo $error="Something went wrong. Please try again";
+    // echo $error="Something went wrong. Please try again";
+    echo $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 
 ?>

@@ -51,6 +51,9 @@ if(isset($_SESSION['alogin'])){
 									<button class="btn btn-primary btn-block" name="login" type="submit">LOGIN</button>
 									<br><br>
 									<div><a href="forgot.php" style="align-items: center;">Forgot password?</a></div>
+									<div><a href="../index.php" style="align-items: center; color: black !important"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Go back</a></div>
+
+
 								</form>
 							</div>
 						</div>
