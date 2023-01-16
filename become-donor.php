@@ -18,10 +18,12 @@ if (isset($_POST['submit'])) {
         $blodgroup = $_POST['bloodgroup'];
         $purok = $_POST['purok'];
         $barangay = $_POST['barangay'];
-        $message = $_POST['password'];
+        $message = $_POST['message'];
+        $password = $_POST['password'];
+
         $status = 1;
         $password = md5($_POST['password']);
-        $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status,:password)";
+        $sql = "INSERT INTO  tblblooddonars(FullName, MobileNumber, EmailId, Age ,BirthDay ,Gender ,BloodGroup ,Purok ,Barangay ,Message ,status ,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay, :message, :status, :password)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
         $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
@@ -34,19 +36,22 @@ if (isset($_POST['submit'])) {
         $query->bindParam(':barangay', $barangay, PDO::PARAM_STR);
         $query->bindParam(':message', $message, PDO::PARAM_STR);
         $query->bindParam(':status', $status, PDO::PARAM_STR);
+        $query->bindParam(':password', $password, PDO::PARAM_STR);
+
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
             // $msg = "Your info submitted successfully";
-            echo "<script>
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                </script>";
+            // echo "<script>
+            //         Swal.fire({
+            //             position: 'center',
+            //             icon: 'success',
+            //             title: 'Your work has been saved',
+            //             showConfirmButton: false,
+            //             timer: 1500
+            //         })
+            //     </script>";
+            $error = 'SUCCESSFULLY ADDED';
         } else {
             $error = "EMAIL ALREADY TAKEN!";
         }
