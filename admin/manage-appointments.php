@@ -71,18 +71,16 @@ if(isset($_POST['mark-pending']))
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Donors List</h1>
+            <h1 class="m-0">Appointment List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <!-- <li class="breadcrumb-item"><a href="index.php">Home</a></li> -->
-              <li class="breadcrumb-item active">
-                <!-- <span>Manage Blood Groups</span> -->
-                <!-- <button type="button" class="btn btn-primary" id="addBtn" data-toggle="modal" data-target="#modal-lg2">ADD BLOOD GROUP</button> -->
-				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-sm">
-					ADD DONORS
-				</button>  
-			</li>
+                <!-- <li class="breadcrumb-item active">
+                    <button type="button" class="btn btn-info disabled" data-toggle="modal" data-target="#modal-sm" disabled>
+                        Add Appointments
+                    </button>  
+			    </li> -->
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

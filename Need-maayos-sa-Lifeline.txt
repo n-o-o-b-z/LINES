@@ -1,0 +1,96 @@
+Di gumagana
+
+- di naka Post ang password at di naka md5 encryption
+
+
+---------------------------------------------------------------------
+Sa BHW as ADMIN
+
+DASHBOARD Admin
+ di gumagana
+-Registered Blood Group
+-Total Queries
+-Active Donors
+-Inactive Donors
+
+Donor List
+- infinite reload sa pag delete ng user
+
+Manage Pages
+ -di gumagana manage pages
+
+Manage Announcement
+ - sa add announcement ay hindi naka type"date" at di malagyan ng oras.
+
+
+Generate Report
+- di gumagana ang generate report
+
+Manage Account
+ - infinite reload sa pag delete ng account
+
+---------------------------------------------------------------------
+
+DASHBOARD RHU Admin
+ di gumagana
+-Registered Blood Group
+-Total Queries
+-Active Donors
+-Inactive Donors
+
+DONOR LIST
+- walang indicator kung "success" of hindi ang paggawa ng user pagsubmit submit
+- di gumagana ang delete sa donors
+
+Manage Pages
+ -di gumagana manage pages o kaya naman dapat wala na yan sa left navigation ng RHU
+
+Manage Announcement
+ - sa add announcement ay hindi naka type"date" at di malagyan ng oras.
+
+Manage Appointments
+ - walang delete
+ - "ADD DONORS" -> walang indicator kung "success" of hindi ang paggawa ng user pagsubmit submit
+ 
+
+-------------------------------------------------------------------------------------------------------------
+
+DASHBOARD Hospital Admin
+ di gumagana
+-Registered Blood Group
+-Total Queries
+-Active Donors
+-Inactive Donors
+
+DONOR LIST
+- walang indicator kung "success" of hindi ang paggawa ng user pagsubmit submit
+- di gumagana ang delete sa donors
+
+Manage Pages
+ -di gumagana manage pages o kaya naman dapat wala na yan sa left navigation ng hospital
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+USER Account
+
+DASHBOARD User Admin
+ di gumagana
+-List of Donations walng view
+-Request for blood walang view
+-List of Blood queries(yung mga humihingi ng tulong sa kanya) walng view 
+-Active wlang view
+-Inactive walang view
+
+Notification
+ - kapag titingnan ang request ni requester ay id lang ang nalabas hindi full name.
+ - di malaman ng user kung inaccept yung kanyang request sa kanyang pinag rerequessan
+ - "denied" lang ang nagana hindi "accept" sa notif galing sa requester
+
+
+Di gumagana sa USER
+
+- di nagana ang login
+- di naka Post ang password at di naka md5 encryption
+
+

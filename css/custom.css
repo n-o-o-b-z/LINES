@@ -1,0 +1,10 @@
+.actived {
+    color: black;
+    font-weight: bold;
+    /* text-shadow: -1px -1px 0 gray, 1px -1px 0 gray, -1px 1px 0 gray, 1px 1px 0 gray; */
+}
+
+li.hov:hover {
+    font-weight: bold;
+    transition: 0.2s;
+}

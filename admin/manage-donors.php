@@ -118,8 +118,20 @@ if(isset($_POST['mark-inactive']))
 					</thead>
 					<tbody id="test">
 					
-                    <?php $sql = "SELECT * FROM tblblooddonars ";
+                    <?php 
+                    if(isset($_GET['active'])){
+                        $status = 0;
+                        $sql = "SELECT * FROM tblblooddonars WHERE status =:status ";
+                    }elseif(isset($_GET['inactive'])){
+                        $status = 1;
+                        $sql = "SELECT * FROM tblblooddonars WHERE status =:status ";
+                    }else{
+                        $sql = "SELECT * FROM tblblooddonars";
+                    }
                         $query = $dbh->prepare($sql);
+                        if(isset($_GET['active']) || isset($_GET['inactive'])){
+                            $query -> bindParam(':status',$status, PDO::PARAM_STR);
+                        }
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_OBJ);
                         $cnt = 1;
@@ -153,7 +165,7 @@ if(isset($_POST['mark-inactive']))
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="manage-accounts.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">DELETE</a>
+                                                <a class="dropdown-item" href="manage-donors.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');">DELETE</a>
                                                 
                                                 <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">EDIT</button>
                                                 <button type="button" class="btn btn-primary dropdown-item" id="viewBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-xnl">DONATIONS</button>

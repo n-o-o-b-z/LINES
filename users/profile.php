@@ -83,10 +83,24 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 <div class="card card-primary card-outline">
                                     <div class="card-body box-profile">
                                         <div class="text-right">
-                                            <span data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-user-edit text-info"></i></span>
+                                            <span id="editBtn" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?=$_SESSION['id'];?>"><i class="fas fa-user-edit text-info"></i></span>
                                         </div>
-                                        <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle" src="../assets/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture" />
+                                        <div class="text-center circular">
+                                            <?php
+                                                $user_ids = $_SESSION['id'];
+                                                $pic_sql = "SELECT image from tblblooddonars WHERE id=:ids ";
+                                                $qry1 = $dbh->prepare($pic_sql);
+                                                $qry1->bindParam(':ids',$user_ids, PDO::PARAM_STR);
+                                                $qry1->execute();
+                                                $rslts = $qry1->fetch(PDO::FETCH_OBJ);
+                                                if($rslts->image !== NULL){
+                                            ?>
+                                                <!-- <img class="profile-user-img img-fluid img-circle" src="./../images/uploads/default-image.png" alt="User profile picture"/> -->
+                                            <img class="profile-user-img img-fluid img-circle" src="<?=$rslts->image?>" alt="User profile picture"/>
+                                        <?php }else{ ?>
+                                            <img src="./../images/default-image.png" class="profile-user-img img-fluid img-circle" alt="User Image">
+                                        <?php } ?>
+
                                         </div>
 
                                         <h3 class="profile-username text-center" contenteditable><?=$_SESSION['name']; ?></h3>
@@ -94,12 +108,35 @@ if (strlen($_SESSION['user_login']) == 0) {
                                         <!-- <p class="text-muted text-center">Software Engineer</p> -->
 
                                         <ul class="list-group list-group-unbordered mb-3">
-                                            <li class="list-group-item"><b>Donated</b> <a class="float-right">1,322</a></li>
-                                            <li class="list-group-item"><b>Requested</b> <a class="float-right">543</a></li>
-                                            <li class="list-group-item"><b>Friends</b> <a class="float-right">13,287</a></li>
+                                            	
+                                            <?php 
+                                                $uid = $_SESSION['id'];
+                                                $sql = "SELECT COUNT('id') as counter FROM donation_history WHERE `user_id`=:uid ";
+                                                $query = $dbh->prepare($sql);
+                                                $query->bindParam(':uid',$uid, PDO::PARAM_STR);
+                                                $query->execute();
+                                                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                foreach($results as $result){
+                                             ?>
+                               
+                                                <li class="list-group-item"><b>Donated</b> <a class="float-right"> <?php echo $result->counter; ?> </a></li>
+                                            <?php } ?>
+
+                                            <?php 
+                                                $uid = $_SESSION['id'];
+                                                $sqls = "SELECT COUNT('id') as counter FROM donate_request WHERE `user_id`=:uid ";
+                                                $queryss = $dbh->prepare($sqls);
+                                                $queryss->bindParam(':uid',$uid, PDO::PARAM_STR);
+                                                $queryss->execute();
+                                                $resultss = $queryss->fetchAll(PDO::FETCH_OBJ);
+                                                foreach($resultss as $resulta){
+                                             ?>
+                                                <li class="list-group-item"><b>Requested</b> <a class="float-right"> <?php echo $resulta->counter; ?> </a></li>
+                                            <?php } ?>
+                                      
                                         </ul>
 
-                                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                                        <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
@@ -110,23 +147,29 @@ if (strlen($_SESSION['user_login']) == 0) {
                                     <div class="card-header">
                                         <h3 class="card-title">About Me</h3>
                                     </div>
-                                    <!-- /.card-header -->
+                                    <?php 
+                                        $id = $_SESSION['id'];
+                                        $sql2 = "SELECT FullName,MobileNumber,EmailId,Gender,BirthDay,age,BloodGroup,Purok,Barangay,Message FROM tblblooddonars WHERE `id`=:uid ";
+                                        $query2 = $dbh->prepare($sql2);
+                                        $query2->bindParam(':uid',$id, PDO::PARAM_STR);
+                                        $query2->execute();
+                                        $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+                                        foreach($results2 as $result2){
+                                    ?>
                                     <div class="card-body">
-                                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                                        <strong><i class="fa-solid fa-heart-circle-exclamation"></i> Type</strong>
 
-                                        <p class="text-muted">
-                                            B.S. in Computer Science from the University of Tennessee at Knoxville
-                                        </p>
+                                        <p class="text-muted"> <?=$result2->BloodGroup;?> </p>
 
                                         <hr />
 
-                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
-                                        <p class="text-muted">Malibu, California</p>
+                                        <p class="text-muted"><?=$result2->Purok.' '.$result2->Barangay;?></p>
 
                                         <hr />
 
-                                        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+                                        <!-- <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
                                         <p class="text-muted">
                                             <span class="tag tag-danger">UI Design</span>
@@ -134,15 +177,15 @@ if (strlen($_SESSION['user_login']) == 0) {
                                             <span class="tag tag-info">Javascript</span>
                                             <span class="tag tag-warning">PHP</span>
                                             <span class="tag tag-primary">Node.js</span>
-                                        </p>
+                                        </p> -->
 
-                                        <hr />
+                                        <!-- <hr /> -->
 
                                         <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
 
-                                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                                        <p class="text-muted"><?=$result2->Message;?></p>
                                     </div>
-                                    <!-- /.card-body -->
+                                    <?php }?>
                                 </div>
                                 <!-- /.card -->
                             </div>
@@ -423,13 +466,14 @@ if (strlen($_SESSION['user_login']) == 0) {
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="form" action="#" method="POST" enctype="multipart/form-data">
+
                                  <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <input type="file" value="" id="uploadImage" class="required borrowerImageFile inputfile" data-errormsg="PhotoUploadErrorMsg" accept="image/*" name="image">
@@ -437,69 +481,76 @@ if (strlen($_SESSION['user_login']) == 0) {
                                         <img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px" style="border-radius:50%;border:1px solid black;"/>
                                     </div>
                                     <div class="form-group col-md-6">
-                                       
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip" />
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="inputAddress">Full Name</label>
-                                    <input type="text" class="form-control" id="fname" name="fname" />
+                                    <input type="text" class="form-control" id="fname" name="fname" required/>
+                                    
                                 </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                                        <label for="inputEmail4">Birth Day</label>
+                                        <input type="text" class="form-control" id="bday" name="bday" required/>
+                                    </div>  
+                                    
+                                    <div class="form-group col-md-3">
+                                        <label for="inputEmail4">Age</label>
+                                        <input type="text" class="form-control" name="age" id="age" readonly required/>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputCity">City</label>
-                                        <input type="text" class="form-control" id="inputCity" />
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">State</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="inputPassword4">Blood Type</label>
+                                        <select name="btype" id="btype" class="form-control" required>
+                                            <?php
+                                                $sql1 = "SELECT * FROM tblbloodgroup";
+                                                $query1 = $dbh->prepare($sql1);
+                                                $query1->execute();
+                                                $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+
+                                                foreach($results1 as $result1): ?>
+                                                    <option value="<?=$result1->BloodGroup;?>"><?=$result1->BloodGroup;?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip" />
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required/>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label for="mnumber">Mobile No</label>
+                                        <input type="text" class="form-control" id="mnumber"  name="mnumber" required/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck" />
-                                        <label class="form-check-label" for="gridCheck">
-                                            Check me out
-                                        </label>
+                                
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="purok">Purok</label>
+                                        <input type="text" class="form-control" id="purok" name="purok" required/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="brgy">Barangay</label>
+                                        <input type="text" class="form-control" id="brgy" name="brgy" required/>
+                                        <input type="hidden" class="form-control" id="ids" name="id"/>
+                                        
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Sign in</button>
-                            </form>
+                       
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -548,6 +599,117 @@ if (strlen($_SESSION['user_login']) == 0) {
                     $("#previewHolder").hide();
                 }
             });
+
+
+            $(document).ready(function () {
+                $(document).on('click','#editBtn', function () {
+                   var dataid = $(this).data('id');
+                   $.ajax({
+                        type: "POST",
+                        url: "xhr/edit-profile.php",
+                        data: {id:dataid},
+                        dataType: "JSON",
+                        success: function (response) {
+                            // console.log(response);
+                            // $('#uploadImage').val(response[0].image);
+                            $('#fname').val(response[0].FullName);
+                            $('#bday').val(response[0].BirthDay);
+                            $('#age').val(response[0].age);
+                            $('#email').val(response[0].EmailId);
+                            $('#mnumber').val(response[0].MobileNumber);
+                            $('#purok').val(response[0].Purok);
+                            $('#brgy').val(response[0].Barangay);
+                            $('#ids').val(response[0].id);
+
+                        }
+                   });
+                });
+     
+
+
+                $("#form").on("submit", function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "xhr/update-profile.php",
+                        type: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data == "invalid") {
+                                $("#err").html("Invalid File !").fadeIn();
+                            } else {
+                                $("#form")[0].reset();
+                                if(data == 1){
+                                    // Swal.fire(
+                                    //     'Updated!',
+                                    //     'You clicked the button!',
+                                    //     'success'
+                                    // );
+
+                                    let timerInterval
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Updated Successfully!',
+                                        // html: 'I will close in <b></b> milliseconds.',
+                                        timer: 1200,    
+                                        timerProgressBar: false,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                        b.textContent = Swal.getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                    }).then((result) => {
+                                    /* Read more about handling dismissals below */
+                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                        // console.log('I was closed by the timer')
+                                        window.location.reload(true);
+
+                                    }
+                                    })
+
+                                    
+                                }
+                                // window.location.reload(true);
+                            }
+                        },
+                    
+                    });
+                });
+            });
+
+
+
+
+
+
+
+                // $("#form").on("submit", function (e) {
+                //     e.preventDefault();
+                //     $.ajax({
+                //         url: "xhr/update-profile.php",
+                //         type: "POST",
+                //         data: new FormData(this),
+                //         contentType: false,
+                //         cache: false,
+                //         processData: false,
+                //         success: function (data) {
+                //             if (data == "invalid") {
+                //                 $("#err").html("Invalid File !").fadeIn();
+                //             } else {
+                //                 $("#form")[0].reset();
+                //                 window.location.reload(true);
+                //             }
+                //         },
+                    
+                //     });
+                // });
         </script>
 
     </body>

@@ -12,9 +12,14 @@ if(isset($_GET['del']))
 	$sql = "DELETE FROM admin  WHERE id=:id";
 	$query = $dbh->prepare($sql);
 	$query -> bindParam(':id',$id, PDO::PARAM_STR);
-	$query -> execute();
+	$delele_query = $query->execute();
 	$msg="Data Deleted successfully";
-    header("Refresh:0");
+    // header("Refresh:0");
+    if($delele_query){
+        echo $msg;
+    }else{
+        echo  'something went wrong';
+    }
 }
 
 if(isset($_POST['ban']))
@@ -26,7 +31,7 @@ if(isset($_POST['ban']))
     $query-> bindParam(':id', $id, PDO::PARAM_STR);
     $query-> bindParam(':status', $status, PDO::PARAM_STR);
     $query -> execute();
-    $msg="Data Deleted successfully";
+    $msg="Data Banned successfully";
     // header("Refresh:0");
 }
 

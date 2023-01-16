@@ -28,8 +28,11 @@
   <link rel="stylesheet" href="../assets/adminlte/plugins/summernote/summernote-bs4.min.css">
 
   <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.37/dist/sweetalert2.all.min.js"></script>
+
+
 
 </head>

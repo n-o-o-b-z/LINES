@@ -117,7 +117,7 @@ if (strlen($_SESSION['user_login']) == 0) {
                                 foreach ($results as $result) { ?>
 
                                     <div class="col-lg-4 col-sm-6 portfolio-item">
-                                        <div class="bg-white p-3 text-center rounded box mt-3" style="overflow-wrap: break-word;"><img class="img-responsive rounded-circle" src="https://i.imgur.com/uppKNuF.jpg" width="90">
+                                        <div class="bg-white p-3 text-center rounded box mt-3" style="overflow-wrap: break-word;"><img class="img-responsive rounded-circle circular" src="<?=$result->image !== NULL ? $result->image : './../images/default-image.png'?>" width="90">
                                             <h5 class="mt-3 name"><?php echo htmlentities($result->FullName); ?></h5>
                                             <!-- <span class="work d-block">Comapay agents house</span>
                                             <span class="work d-block">real estate</span> -->

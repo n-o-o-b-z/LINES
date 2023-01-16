@@ -54,11 +54,11 @@ if(!$_SESSION['user_login']){
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
 
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
 						<div class="col-lg-6">
 							<button class="btn btn-primary">REQUEST FOR BLOOD</button>
 						</div>
-					</div>
+					</div> -->
 
                     <div class="row">
                         <div class="col-lg-3 col-6">
@@ -66,14 +66,19 @@ if(!$_SESSION['user_login']){
                             <div class="small-box bg-primary" style="color: white;">
                                 <div class="inner">
                                     <?php
-                    					$sql = "SELECT id from tblbloodgroup ";
-                    					$query = $dbh->prepare($sql); $query->execute(); $results = $query->fetchAll(PDO::FETCH_OBJ); $bg = $query->rowCount(); ?>
-                                    <h3><?php echo htmlentities($bg); ?></h3>
+                                        $uids = $_SESSION['id'];
+                    					$sql4 = "SELECT COUNT('id') as counters from donation_history WHERE `user_id`=:uid ";
+                    					$query4 = $dbh->prepare($sql4); 
+                                        $query4-> bindParam(':uid', $uids, PDO::PARAM_STR); 
+                                        $query4->execute(); 
+                                        $results4 = $query4->fetch(PDO::FETCH_OBJ); 
+                                    ?>
+                                    <h3><?php echo htmlentities($results4->counters); ?></h3>
 
                                     <p>LIST OF DONATIONS</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                    <i class="fa-solid fa-hand-holding-heart"></i>
                                 </div>
                                 <a href="manage-bloodgroup2.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
@@ -83,15 +88,23 @@ if(!$_SESSION['user_login']){
                             <!-- small box -->
                             <div class="small-box" style="color: white; background-color: #800000;">
                                 <div class="inner">
-                                        <?php
-                                            $sql1 = "SELECT id from tblblooddonars ";
-                                            $query1 = $dbh->prepare($sql1);; $query1->execute(); $results1 = $query1->fetchAll(PDO::FETCH_OBJ); $regbd = $query1->rowCount(); ?>
-                                    <h3><?php echo htmlentities($regbd); ?></h3>
+                                    <?php
+                                  
+                                        $uids = $_SESSION['id'];
+                    					$sql5 = "SELECT COUNT('id') as counters from donate_request WHERE `user_id`=:uid ";
+                    					$query5 = $dbh->prepare($sql5); 
+                                        $query5-> bindParam(':uid', $uids, PDO::PARAM_STR); 
+                                        $query5->execute(); 
+                                        $results5 = $query5->fetch(PDO::FETCH_OBJ); 
+                                        $bg5 = $query5->rowCount(); 
+                                    ?>
+                                      
+                                    <h3><?php echo htmlentities($results5->counters); ?></h3>
 
-                                    <p>REQUEST FOR BLOOD</p>
+                                    <p>REQUESTED FOR BLOOD</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
+                                    <i class="fa-solid fa-hand-holding-medical"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
@@ -102,14 +115,19 @@ if(!$_SESSION['user_login']){
                             <div class="small-box bg-warning" style="color: white !important;">
                                 <div class="inner">
                                     <?php
-                                $sql6 = "SELECT id from tblcontactusquery ";
-                                $query6 = $dbh->prepare($sql6);; $query6->execute(); $results6 = $query6->fetchAll(PDO::FETCH_OBJ); $query = $query6->rowCount(); ?>
-                                    <h3><?php echo htmlentities($query); ?></h3>
+                                        $uids = $_SESSION['id'];
+                    					$sql6 = "SELECT COUNT('id') as counters from donate_request WHERE `request_to`=:uid ";
+                    					$query6 = $dbh->prepare($sql6); 
+                                        $query6-> bindParam(':uid', $uids, PDO::PARAM_STR); 
+                                        $query6->execute(); 
+                                        $results6 = $query6->fetch(PDO::FETCH_OBJ); 
+                                    ?>
+                                    <h3><?php echo htmlentities($results6->counters); ?></h3>
 
                                     <p>LIST OF BLOOD QUIRIES</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="fa-solid fa-file-medical"></i>
                                 </div>
                                 <a href="#" style="color: white !important;" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
@@ -120,15 +138,16 @@ if(!$_SESSION['user_login']){
                             <div class="small-box bg-success">
                                 <div class="inner">
                                     <?php
-                    $status = 0; //active
-                    $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
-                    $query= $dbh->prepare($sql); $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
+                                        $status = 0; //active
+                                        $sql ="SELECT id FROM tblblooddonars WHERE `status`=:status";
+                                        $query= $dbh->prepare($sql);
+                                        $query-> bindParam(':status', $status, PDO::PARAM_STR); $query-> execute(); $results=$query->fetchAll(PDO::FETCH_OBJ); $counter = $query->rowCount(); ?>
                                     <h3><?php echo htmlentities($counter); ?></h3>
 
                                     <p>ACTIVE</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="fa-solid fa-user-large"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
@@ -148,7 +167,7 @@ if(!$_SESSION['user_login']){
                                     <p>INACTIVE</p>
                                 </div>
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="fa-solid fa-user-large-slash"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
@@ -235,3 +254,33 @@ if(!$_SESSION['user_login']){
         </script>
     </body>
 </html>
+
+<?php
+
+$session_id = $_SESSION['id'];
+$stats = 0; // means no
+
+// UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = 0 WHERE a.id=50 AND b.donation_date < NOW() - interval 30 DAY
+// $updatesql = "UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = :stats WHERE a.id=:id AND b.donation_date < NOW() - interval 3 month";
+$updatesql = "SELECT b.donation_date FROM tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id WHERE a.id=:id ORDER BY b.id DESC LIMIT 1";
+
+$query99= $dbh -> prepare($updatesql);
+$query99-> bindParam(':id', $session_id, PDO::PARAM_STR);
+$query99-> execute();
+$results99=$query99->fetch(PDO::FETCH_OBJ);
+$date =  $results99->donation_date;
+
+$forupdate ="UPDATE tblblooddonars AS a LEFT JOIN donation_history AS b ON a.id = b.user_id SET a.can_donate = :stats WHERE a.id=:id AND '$date' < NOW() - interval 3 month";
+$query88= $dbh -> prepare($forupdate);
+$query88-> bindParam(':id', $session_id, PDO::PARAM_STR);
+$query88-> bindParam(':stats', $stats, PDO::PARAM_STR);
+$query88-> execute();
+// $results88 = $query88->fetch(PDO::FETCH_OBJ);
+
+// $expired = 0;
+// $forupdate ="UPDATE donate_request SET is_expired =:expired  WHERE id=:id AND '$date' < NOW() - interval 3 hour"";
+// $query88= $dbh -> prepare($forupdate);
+// $query88-> bindParam(':id', $session_id, PDO::PARAM_STR);
+// $query88-> bindParam(':stats', $stats, PDO::PARAM_STR);
+// $query88-> execute();
+?>

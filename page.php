@@ -1,6 +1,7 @@
 <?php
     session_start();
     error_reporting(0);
+    $page = 'announcement';
     include('includes/config.php');
     include('includes/header.php');
 ?>
@@ -46,7 +47,7 @@
                         foreach ($results as $result) { ?>
                         <div class="col-lg-3">
 
-                            <div class="card mt-5" style="width: 18rem;">
+                            <div class="card mt-5">
                                     <?php
                                         $date = date_create($result->date);
                                         $path = str_replace('../', '', $result->banner);

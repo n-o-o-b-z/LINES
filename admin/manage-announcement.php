@@ -122,30 +122,52 @@ if(isset($_GET['donated']))
                                     <td><?php echo htmlentities($result->location); ?></td>
                                     <td><?php echo htmlentities($result->organizer); ?></td>
                                     <td><?php echo htmlentities($result->details); ?></td>
-                                    <td><?=$result->is_hidden == 0 ? '<span class="badge badge-success">Active</span>':'<span class="badge badge-danger">hidden</span>'?></td>
+                                    <td><?=$result->is_hidden == 0 ? '<span class="badge badge-success" id="status-holder'.$result->id.'">Active</span>':'<span class="badge badge-danger" id="status-holder'.$result->id.'">Hidden</span>'?></td>
 
 
                                     <td>
-						                <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-trash text-secondary"></i></a>
-                                        <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">edit</button>
-                                        <!-- <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">s</button> -->
+						                <!-- <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-trash text-secondary"></i></a>
+                                        <button type="button" class="btn btn-primary" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">edit</button> -->
                                     
                                         <?php
-                                            if($result->is_hidden == 0){
-                                                echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
-                                                        make hidden
-                                                </button>';
-                                            }else {
-                                                echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
-                                                        make hidden
-                                                </button>';
-                                            }
+                                            // if($result->is_hidden == 0){
+                                            //     echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
+                                            //             make hidden
+                                            //     </button>';
+                                            // }else {
+                                            //     echo '<button type="button" class="btn btn-default" data-id="'.$result->id.'">
+                                            //             make hidden
+                                            //     </button>';
+                                            // }
                                         ?>
 
-                                        <form action="" method="POST">
+                                        <!-- <form action="" method="POST">
                                             <button type="button" class="btn btn-primary" id="viewDonors" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modalDonors">View Donors</button>
-                                        </form>
+                                        </form> -->
                                         
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                    <a href="manage-announcement.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');" class="dropdown-item"><i class="fa fa-trash text-secondary"></i> Delete</a>
+                                                    <button type="button" class="btn btn-primary dropdown-item" id="editBtn" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modal-lg">Edit</button>
+                                                <div class="dropdown-divider"></div>
+                                                <form method="POST">
+                                                    <?php
+                                                        if($result->is_hidden == 0){
+                                                            // echo '<button type="button" class="btn btn-default dropdown-item" data-id="'.$result->id.'">Hide</button>';
+                                                            echo '<button type="button" name="hide" class="btn btn-default dropdown-item btnUpdateStatus" value="'.$result->is_hidden.'" data-id="'.$result->id.'">
+                                                                    HIDE
+                                                                </button>';
+                                                        }else {
+                                                            echo '<button type="button" name="show" class="btn btn-default dropdown-item btnUpdateStatus" value="'.$result->is_hidden.'" data-id="'.$result->id.'">Show</button>';
+                                                        }
+                                                     ?>
+                                                    <button type="button" class="btn btn-defaul dropdown-item" id="viewDonors" data-id="<?php echo $result->id;?>" data-toggle="modal" data-target="#modalDonors">View Donors</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                         
                                     </td>
                                 </tr>
@@ -182,7 +204,7 @@ if(isset($_GET['donated']))
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="inputState">Date</label>
-                                        <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" autocomplete="off">   
+                                        <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker55" data-toggle="datetimepicker" data-target="#datetimepicker55"  autocomplete="off">   
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -482,6 +504,15 @@ if(isset($_GET['donated']))
                 }
         });
 
+        $('#datetimepicker55').datetimepicker({
+            icons: {
+                time: "fas fa-clock",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+
         $('#datetimepicker15').datetimepicker({
             icons: {
                 time: "fas fa-clock",
@@ -514,8 +545,54 @@ if(isset($_GET['donated']))
         $('#tester').html('');
     })
 
-    
+    $(document).on('click','.btnUpdateStatus', function () {
+        var data = $(this).data('id');
+        var status = $(this).val();
+        var stat2 = $(this);
+        var element = $(this).get(0);
+        console.log(data +' '+ status +' '+ element);
+        $.ajax({
+            type: "POST",
+            url: "xhr/edit-announcement-status.php",
+            data: {data:data,status:status},
+            dataType: "html",
+            success: function (response) {
+                console.log(response);
+                if(response == 1){
+                    toastr["success"]("Success");
+                    if(status == 0){
+                        console.log('trig');
+                        $(element).html('Show');
+                        $('#status-holder'+data).html('Hidden').addClass('badge-danger').removeClass('badge-success');
+                        $(stat2).val('1');
+                    }else{
+                        $(element).html('Hide');
+                        $('#status-holder'+data).html('Active').removeClass('badge-danger').addClass('badge-success');
+                        $(stat2).val('0');
+                    }
+                }
+            }
+        });
+    });
 
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        }
   </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </html>
