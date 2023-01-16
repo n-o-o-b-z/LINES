@@ -101,61 +101,94 @@ if (strlen($_SESSION['alogin']) == 0) {
 	// 	return $contents;
 	// }
 
-    function generateBloodGroup(){
-		$contents = '';
-		include_once('includes/config.php');
+    // function generateBloodGroup(){
+	// 	$contents = '';
+	// 	include_once('includes/config.php');
 
         
-        $pieces = explode(" - ", $_POST['daterange']);
+    //     $pieces = explode(" - ", $_POST['daterange']);
 
-        $date1=date_create($pieces[0].'00:00:00');
-        $date_true1 =  date_format($date1,"Y-m-d H:i:s");
+    //     $date1=date_create($pieces[0].'00:00:00');
+    //     $date_true1 =  date_format($date1,"Y-m-d H:i:s");
 
-        $date2=date_create($pieces[1].'00:00:00');
-        $date_true2 =  date_format($date2,"Y-m-d H:i:s");
-        $from =  $date_true1;
-        $to   =  $date_true2;
+    //     $date2=date_create($pieces[1].'00:00:00');
+    //     $date_true2 =  date_format($date2,"Y-m-d H:i:s");
+    //     $from =  $date_true1;
+    //     $to   =  $date_true2;
 
 
+    //     $arr = $_POST['blood'];
+    //     $placeholders = str_repeat('?,', count($arr) - 1) . '?';
+
+    //     if($_POST['blood'][0] == 'all'){
+    //         $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :froms AND :tos";
+    //     }else {
+	// 	    // $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :fromsa AND :tosa AND BloodGroup IN ($placeholders)";
+	// 	    $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :fromsa AND :tosa AND BloodGroup IN ($placeholders)";
+    //     }
+
+	// 	$query1 = $dbh->prepare($sql1);
+        
+	// 	if($_POST['blood'][0] == 'all'){
+    //         // $query1->bindParam(':fromsa',$from, PDO::PARAM_STR);
+    //         // $query1->bindParam(':tosa',$to, PDO::PARAM_STR);
+    //         $query1->execute();
+    //     }else{
+    //         // $query1->bindParam(':froms',$from, PDO::PARAM_STR);
+    //         // $query1->bindParam(':tos',$to, PDO::PARAM_STR);
+    //         $query1->execute($arr);
+
+    //     }
+	// 	$results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+		
+
+	// 	foreach($results1 as $key => $result1){
+	// 		$contents .= "
+	// 			<tr>
+	// 				<td>".++$key."</td>
+	// 				<td>".$result1->FullName."</td>
+	// 				<td>".$result1->Purok.' '.$result1->Barangay."</td>
+	// 				<td>".$result1->BloodGroup."</td>
+	// 				<td>".getStatus($result1->status)."</td>
+
+	// 			</tr>
+	// 			";
+	// 	}
+	// 	return $contents;
+	// }
+
+
+    function getBLoodgroup(){
+        $contents = '';
+        include_once('includes/config.php');
+
+        // $arr = [1,2,3,55,51,52,54,31,32,34];
         $arr = $_POST['blood'];
         $placeholders = str_repeat('?,', count($arr) - 1) . '?';
 
         if($_POST['blood'][0] == 'all'){
-            $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :froms AND :tos";
+            $sql1="SELECT * FROM tblbloodgroup";
         }else {
-		    // $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :fromsa AND :tosa AND BloodGroup IN ($placeholders)";
-		    $sql1="SELECT * FROM tblblooddonars WHERE PostingDate BETWEEN :fromsa AND :tosa AND BloodGroup IN ($placeholders)";
+            $sql1="SELECT * FROM tblbloodgroup WHERE id IN ($placeholders)";
         }
 
-		$query1 = $dbh->prepare($sql1);
+        $query1 = $dbh->prepare($sql1);
+        // $query1->bindParam(':arr',$arr, PDO::PARAM_STR);
+        $query1->execute($arr);
+        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
         
-		if($_POST['blood'][0] == 'all'){
-            // $query1->bindParam(':fromsa',$from, PDO::PARAM_STR);
-            // $query1->bindParam(':tosa',$to, PDO::PARAM_STR);
-            $query1->execute();
-        }else{
-            // $query1->bindParam(':froms',$from, PDO::PARAM_STR);
-            // $query1->bindParam(':tos',$to, PDO::PARAM_STR);
-            $query1->execute($arr);
 
+        foreach($results1 as $key => $result1){
+            $contents .= "
+                <tr>
+                    <td>".++$key."</td>
+                    <td>".$result1->BloodGroup."</td>
+                    <td>".$result1->PostingDate."</td>
+                </tr>
+                ";
         }
-		$results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-		
-
-		foreach($results1 as $key => $result1){
-			$contents .= "
-				<tr>
-					<td>".++$key."</td>
-					<td>".$result1->FullName."</td>
-					<td>".$result1->Purok.' '.$result1->Barangay."</td>
-					<td>".$result1->BloodGroup."</td>
-					<td>".getStatus($result1->status)."</td>
-
-				</tr>
-				";
-		}
-		return $contents;
-	}
+        return $contents;
+    }
 
     
  
@@ -205,13 +238,11 @@ if (strlen($_SESSION['alogin']) == 0) {
                 <table border="1" cellspacing="0" cellpadding="3">  
                     <tr>  
                         <th width="10%">#</th>
-                        <th width="30%">Firstname</th>
-                        <th width="30%">Address</th> 
-                        <th width="20%">Blood Type</th> 
-                        <th width="10%">Status</th>
+                        <th width="30%">Bloodgroup</th>
+                        <th width="30%">Date Created</th> 
                     </tr>  
             ';  
-            $content .= generateBloodGroup();  
+            $content .= getBLoodgroup();  
             $content .= '</table>';  
             $pdf->writeHTML($content);  
             $pdf->Output('members.pdf', 'I');
