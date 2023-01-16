@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
             //             timer: 1500
             //         })
             //     </script>";
-            $error = 'SUCCESSFULLY ADDED';
+            $msg = 'SUCCESSFULLY ADDED';
         } else {
             $error = "EMAIL ALREADY TAKEN!";
         }
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
             </li>
             <li class="breadcrumb-item active">Become a Donor</li>
         </ol>
-        <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+        <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong style="color:green">SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
         <!-- Content Row -->
         <form name="donar" method="post">
             <div class="row">
