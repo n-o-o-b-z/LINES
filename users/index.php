@@ -215,7 +215,7 @@ if(isset($_SESSION['user_login'])){
         </form>
 		
 		<div>
-			<a href="/admin"><small>ADMIN LOGIN</small></a>
+			<a href="../admin"><small>ADMIN LOGIN</small></a>
 		</div>
 
 		<span class="">
