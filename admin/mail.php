@@ -2,9 +2,9 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
     use PHPMailer\PHPMailer\SMTP;
-  require 'PHPMailer-master/src/Exception.php';
-  require 'PHPMailer-master/src/PHPMailer.php';
-  require 'PHPMailer-master/src/SMTP.php';
+  require 'PHPMailer-6.6.4/src/Exception.php';
+  require 'PHPMailer-6.6.4/src/PHPMailer.php';
+  require 'PHPMailer-6.6.4/src/SMTP.php';
 if (!$con = mysqli_connect("localhost", "root", "", "bbdms")) {
 
   die("could not connect");
