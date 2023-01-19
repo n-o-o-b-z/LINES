@@ -223,11 +223,11 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="col-lg-8 mb-4">
-					<input checked="" type="checkbox" name="term" value="true" required style="margin-left:10px;">
+					<input type="checkbox" name="term" required style="margin-left:10px;">
 					<span style="margin-left:10px;"><b>I am agree to donate my blood and show my information in Blood donors List</b></span>
 				</div>
 				<div class="col-lg-8 mb-4">
-					<input checked="" type="checkbox" name="term" value="true" required style="margin-left:10px;">
+					<input type="checkbox" name="term" required style="margin-left:10px;">
 					<span style="margin-left:10px;"><b>I have read the eligibility criteria and confirm that i am eligible to donate blood.</b></span>
 				</div>
 				<!--End form-group-->
