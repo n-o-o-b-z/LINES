@@ -160,7 +160,7 @@ function is_code_correct($code)
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<title>Forgot</title>
-	<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon"/>
+	<link rel="icon" href="img/logo 192X192.png" type="image/x-icon"/>
 </head>
 <style type="text/css">
 	* {
@@ -285,7 +285,7 @@ function is_code_correct($code)
 					<input type="button" class="btn" value="Start Over">
 				</a>
 				<br><br>
-				<div><a href="login.php">Login</a></div>
+				<div><a href="index.php">Login</a></div>
 			</form>
 
 		</div>

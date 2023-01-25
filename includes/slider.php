@@ -8,19 +8,19 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="background-image: url('images/banner1.jpg')">
+                <div class="carousel-item active" style="background-image: url('images/sliderIMG/abaob.gif'); background-sized: cover;">
                     <div class="carousel-caption d-none d-md-block">
                        
                     </div>
                 </div>
                 <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('images/banner2.jpg')">
+                <div class="carousel-item" style="background-image: url('images/sliderIMG/wholeblood.gif'); background-sized: cover;">
                     <div class="carousel-caption d-none d-md-block">
                     </div>
                 </div>
 
                 <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('images/banner3.jpg')">
+                <div class="carousel-item" style="background-image: url('images/sliderIMG/blood-donation2.gif'); background-sized: cover;">
                     <div class="carousel-caption d-none d-md-block">
                     </div>
                 </div>
