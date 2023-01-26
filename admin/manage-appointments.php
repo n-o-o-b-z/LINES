@@ -53,6 +53,19 @@ if(isset($_POST['mark-pending']))
     $msg="Data Deleted successfully";
     // header("Refresh:0");
 }
+
+    function selectDonor(){
+        include('includes/config.php');
+
+        $sql = "SELECT * from  tblblooddonars where status = 0 ";
+        $query = $dbh->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        $cnt = 1;
+          if($query->rowCount() > 0){
+            return $results;
+        }
+    }
 ?>
 
 
@@ -60,6 +73,14 @@ if(isset($_POST['mark-pending']))
 <html lang="en">
 <head>
     <?php include('includes/new-header.php'); ?>
+    <style>
+        .disabled {
+       
+            cursor: no-drop;
+            background-color: #e9ecef;
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
     <?php include('includes/nav.php'); ?>
@@ -76,11 +97,11 @@ if(isset($_POST['mark-pending']))
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <!-- <li class="breadcrumb-item"><a href="index.php">Home</a></li> -->
-                <!-- <li class="breadcrumb-item active">
-                    <button type="button" class="btn btn-info disabled" data-toggle="modal" data-target="#modal-sm" disabled>
+                <li class="breadcrumb-item active">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-sm" >
                         Add Appointments
                     </button>  
-			    </li> -->
+			    </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -189,47 +210,43 @@ if(isset($_POST['mark-pending']))
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">ADD DONORS</h4>
+					<h4 class="modal-title">ADD APPOINTMENT</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<form action="#" method="post">
-                        <div class="form-group">
-                            <label for="username">Full Name</label>
-                            <input type="text" name="fname" id="fname" class="form-control" required>
-                        </div>
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <label for="username">Email</label>
-                                <input type="text" name="email" id="email" class="form-control" required>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label for="username">Mobile No.</label>
-                                <input type="text" name="mobile" id="mobile" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-lg-4">
-                                <label for="username">Birthday</label>
-                                <!-- <input type="text" name="name" id="name" class="form-control"> -->
-                                <input type="date" name="bday" class="form-control" id="bDay" required>
-                            </div>
-
-                            <div class="form-group col-lg-2">
-                                <label for="username">Age</label>
-                                <input type="text" name="age" id="age" class="form-control" readonly required>
-                            </div>
-
-                            <div class="form-group col-lg-3">
-                                <label for="username">Gender</label>
-                                <select class="form-control" name="gender" id="gender" required>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                <label for="username">DONATOR</label>
+                                <select class="form-control" name="btype" id="donator" required>
+                                    <option> -- SELECT -- </option>
+                                        <?php 
+                                            $donors = selectDonor();
+                                            foreach($donors as $donor): ?>
+                                                <option value="<?php echo htmlentities($donor->id); ?>"><?php echo htmlentities($donor->FullName); ?></option>
+                                        <?php endforeach; ?>
                                 </select>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="username">REQUESTER</label>
+                                <select class="form-control" name="requester" id="requesters" required>
+                                    <option value='0'> -- SELECT -- </option>
+                                        <?php 
+                                            $donors = selectDonor();
+                                            foreach($donors as $donor): ?>
+                                                <option value="<?php echo htmlentities($donor->id); ?>"><?php echo htmlentities($donor->FullName); ?></option>
+                                        <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Date</label>
+                                <input type="text" name="date" class="form-control datetimepicker-input" id="datetimepicker55" data-toggle="datetimepicker" data-target="#datetimepicker55"  autocomplete="off">   
                             </div>
 
                             <div class="form-group col-lg-3">
@@ -243,40 +260,25 @@ if(isset($_POST['mark-pending']))
                                         $cnt = 1;
                                         if ($query->rowCount() > 0) {
                                             foreach ($results as $result) {?>
-                                                <option value="<?php echo htmlentities($result->BloodGroup); ?>"><?php echo htmlentities($result->BloodGroup); ?></option>
+                                                <option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->BloodGroup); ?></option>
                                         <?php }} ?>
                                 </select>
                             </div>
                         </div>
-
+<!-- 
                         <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="username">Purok</label>
-                                <input type="text" name="purok" id="purok" class="form-control" required>
-                            </div>
-
                             <div class="form-group col-lg-6">
                                 <label for="username">Barangay</label>
                                 <input type="text" name="bgry" id="barangay" class="form-control" required>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="username">Message</label>
                             <textarea class="form-control" name="message" id="message" cols="30" rows="2"></textarea>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="username">Password</label>
-                                <input type="password" name="password" id="password" class="form-control" required>
-                            </div>
-
-                            <div class="form-group col-lg-6">
-                                <label for="username">Confirm Password</label>
-                                <input type="password" name="cpassword" id="confirm-password" class="form-control">
-                            </div>
-                        </div>
+                       
                     </form>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -623,7 +625,45 @@ if(isset($_POST['mark-pending']))
             $('#idset').html('');
             $('#EditDonors').attr('data-id','');
         })  
-      
+
+        $('#datetimepicker55').datetimepicker({
+            icons: {
+                time: "fas fa-clock",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            minDate:new Date(),
+        });
+
+      $(document).ready(function () {
+        $('#donator').change(function (e) { 
+            e.preventDefault();
+            $('#requesters').val(0);
+           var val = $(this).val();
+
+            // var conceptName = $('#requesters').children("option:selected").val($(this).val());
+            // $('$requesters option[value="40"]').addClass('tanga');
+            var components = $("#requesters").children('option').attr("disabled", false).removeClass('disabled');
+            var components = $("#requesters").children('[value="'+ val +'"]').attr("disabled", true).addClass('disabled');
+        });
+        
+        $('#requesters').change(function (e) { 
+            e.preventDefault();
+
+            // var conceptName = $(this).children("option:selected").val($('#donator').val());
+            //     conceptName.addClass('disabled');
+
+            console.log($(this).val());
+
+            if($('#donator').val() == $(this).val()){
+                console.log('match');
+            }else{
+                console.log('not match!');
+              
+            }
+        });
+      });
 
   </script>
 

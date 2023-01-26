@@ -288,7 +288,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <div class="form-group">
                                             <label for="">Select Generate</label>
                                             <select class="form-control form-control-md" id="generate" name="generate">
-                                                <option selected eeeeeeedisabled>SELECT..</option>
+                                                <option selected disabled>SELECT..</option>
                                                 <option value="1">DONORS LIST</option>
                                                 <option value="2">BLOOD GROUP</option>
                                             </select>
