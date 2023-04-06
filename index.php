@@ -7,7 +7,8 @@ include('includes/config.php');
 <html lang="en">
 
 <?php include('includes/header.php'); ?>
-<link rel="manifest" href="manifest.json">
+<!-- <link rel="manifest" href="manifest.json"> -->
+<link rel="manifest" href="path/to/manifest.json">
 
 <body style="padding-top:0px !important">
 
@@ -72,7 +73,7 @@ include('includes/config.php');
 
             <div class="col-lg-4 mb-4">
                 <div class="card">
-                    <h4 class="card-header">Mga Iyong Matulongan</h4>
+                    <h4 class="card-header">Mga Iyong Matutulongan</h4>
 
                     <!-- paragraph -->
                     <?php
@@ -188,7 +189,10 @@ include('includes/config.php');
                 <p><i>For more info. visit:&nbsp;<a href="https://redcross.org.ph/give-blood/" target="_blank">Philipine Red Cross</a></i></p>
             </div>
             <div class="col-lg-6">
-                <img class="img-fluid rounded" src="images/blood-donor (1).jpg" alt="">
+                <!-- <img class="img-fluid rounded" src="images/blood-donor (1).jpg" alt=""> -->
+                <video controls style="border-radius: 1em; background-color: #fff; border: 1px solid rgba(0, 0, 0, 0.125);">
+                    <source src="LIFELINE AI with subtitle.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
         <!-- /.row -->

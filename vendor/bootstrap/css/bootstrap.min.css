@@ -119,7 +119,7 @@ sup {
 
 audio,
 video {
-    display: inline-block
+    display: inline-block;
 }
 
 audio:not([controls]) {
@@ -416,6 +416,16 @@ p.MsoNormal.MsoNoSpacing {
 
 .card.active .more::before {
     content: 'Read Less';
+}
+
+video {
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+video:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
 @-ms-viewport {

@@ -284,9 +284,15 @@ if (!isset($_SESSION['alogin'])) {
           type: "POST",
           url: urls,
           data: {date:date,loc:loc,requester:requester,accepter:accepter},
-          dataType: "dataType",
+          dataType: "json",
           success: function (response) {
-              console.log(response);
+            console.log(response)
+              if(response===0){
+                alert("Appointment Set!")
+                location.reload();
+              }else{
+                alert("Failed")
+              }
           }
         });
       });
