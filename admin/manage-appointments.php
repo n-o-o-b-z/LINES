@@ -15,17 +15,45 @@ if(isset($_GET['del']))
 	$msg="Data Deleted successfully";   
 }
 
-if(isset($_POST['mark-done']))
+if(isset($_GET['mark-done']))
 {
-    $id = $_POST['mark-done'];
+    $id = $_GET['mark-done'];
+    $donated_volume = $_GET['donated_volume'];
     $status = 1;
-    $sql = "UPDATE appointments SET status = :status WHERE id=:id";
+    $sql = "UPDATE appointments SET status = :status, donated_volume = :donated WHERE id=:id";
+
     $query= $dbh -> prepare($sql);
     $query-> bindParam(':id', $id, PDO::PARAM_STR);
     $query-> bindParam(':status', $status, PDO::PARAM_STR);
+    $query-> bindParam(':donated', $donated_volume, PDO::PARAM_STR);
     $query -> execute();
-    $msg="Data Deleted successfully";
-    // header("Refresh:0");
+  
+    if($query->rowCount() > 0)
+    {
+        $msg="Data Updated!";
+        $page = $_SERVER['PHP_SELF'];
+        header("Refresh:0, url=$page");
+
+      
+        // $sql2 = "SELECT * FROM appointments WHERE id=:id";
+        // $query2 = $dbh->prepare($sql2);
+        // $query-> bindParam(':id', $id, PDO::PARAM_STR);
+        // $query2->execute();
+        // $results=$query->fetchAll(PDO::FETCH_OBJ);
+        // $results->requester_id;
+        // $results->accepter_id;
+     
+
+        // $insert_sql="INSERT INTO donation_history(`user_id`,blood_type_id,donation_date,`status`,`created_at`) VALUES(:userid, :bloodtype, :donationDate, :stats, :created_at)";
+        // $insert_query = $dbh->prepare($insert_sql);
+        // $insert_query->bindParam(':userid',$userid,PDO::PARAM_STR);
+        // $insert_query->bindParam(':bloodtype',$bloodtype,PDO::PARAM_STR);
+        // $insert_query->bindParam(':donationDate',$date_true,PDO::PARAM_STR);
+        // $insert_query->bindParam(':stats',$stats,PDO::PARAM_STR);
+        // $insert_query->bindParam(':created_at',$created_at,PDO::PARAM_STR);
+        // $insert_query->execute();
+
+    }
 }
 
 if(isset($_POST['mark-cancelled']))
@@ -121,6 +149,7 @@ if(isset($_POST['mark-pending']))
 							<th>Accepted By</th>
 							<th>Date</th>
 							<th>Location</th>
+							<th>Donated Volume(mL)</th>
 							<th>Status</th>
 							<th>Action </th>
 						
@@ -142,6 +171,16 @@ if(isset($_POST['mark-pending']))
                                     <td><?php echo htmlentities(date_format(date_create($result->date),"M d Y | g:iA")); ?></td>
                                     <td><?php echo htmlentities($result->location); ?></td>
                                   
+
+                                    <td>
+                                        <?php if($result->donated_volume > 0):?>
+                                                <span class=""><?=$result->donated_volume;?> mL</span>
+                                            <?php else:?>
+                                                <span class="badge badge-dark">Pending</span>
+                                        <?php endif ?>
+                                            
+                                    </td>
+
                                     <td>
                                         <?php if($result->status == 0):?>
                                                 <span class="badge badge-dark">Pending</span>
@@ -165,9 +204,14 @@ if(isset($_POST['mark-pending']))
                                                         <button type="submit" class="btn btn-default dropdown-item" name="mark-cancelled" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
                                                                     Mark Cancelled
                                                         </button>
-                                                        <button type="submit" class="btn btn-default dropdown-item" name="mark-done" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                        <!-- <button type="submit" class="btn btn-default dropdown-item" name="mark-done" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
                                                                     Mark Done
+                                                        </button> -->
+
+                                                        <button type="button" class="btn btn-default dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">
+                                                            MARK DONE
                                                         </button>
+
                                                     
                                                     <?php elseif($result->status == 1):?>
                                                         <button type="submit" class="btn btn-default dropdown-item" name="mark-cancelled" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
@@ -413,6 +457,36 @@ if(isset($_POST['mark-pending']))
 		</div>
 	</div>
 
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Volume Donated in mL</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="GET">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" name="donated_volume" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">mL</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        <button type="submit" class="btn btn-default dropdown-item" name="mark-done" value="79" data-id="79">
+                            Mark Done
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 </body>
