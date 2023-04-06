@@ -208,8 +208,8 @@ if(isset($_POST['mark-pending']))
                                                                     Mark Done
                                                         </button> -->
 
-                                                        <button type="button" class="btn btn-default dropdown-item" data-toggle="modal" data-target="#exampleModalCenter">
-                                                            MARK DONE
+                                                        <button type="button" class="btn btn-default dropdown-item" id="btnDone" data-toggle="modal" data-target="#exampleModalCenter" value="<?=$result->id;?>" data-id="<?=$result->id;?>">
+                                                            Mark Done
                                                         </button>
 
                                                     
@@ -479,7 +479,7 @@ if(isset($_POST['mark-pending']))
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                        <button type="submit" class="btn btn-default dropdown-item" name="mark-done" value="79" data-id="79">
+                        <button type="submit" class="btn btn-default dropdown-item" id="btnDoneSubmit" name="mark-done" value="" data-id="">
                             Mark Done
                         </button>
                     </div>
@@ -736,6 +736,16 @@ if(isset($_POST['mark-pending']))
                 console.log('not match!');
               
             }
+        });
+
+       
+        $("div").on("click", "#btnDone", function(){
+
+            var id = $(this).val();
+            var dt = $(this).data('id');
+            
+            $('#btnDoneSubmit').val(id);
+            $('#btnDoneSubmit').attr("data-id", dt);
         });
       });
 
