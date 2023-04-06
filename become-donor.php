@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
             //             timer: 1500
             //         })
             //     </script>";
-            $msg = 'SUCCESSFULLY ADDED';
+            $msg = 'SUCCESSFULLY ADDED, Please wait for a minute the team will verify your account before you gain access into it';
         } else {
             $error = "EMAIL ALREADY TAKEN!";
         }
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
             </li>
             <li class="breadcrumb-item active">Become a Donor</li>
         </ol>
-        <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong style="color:green">SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+        <?php if ($error) { ?><div class="errorWrap"><strong style="color:red; border-left: 5px solid red;">ERROR: <?php echo htmlentities($error); ?></strong> </div><?php } else if ($msg) { ?><div class="succWrap"><strong style="color:green; border-left: 5px solid darkgreen;"> SUCCESS: <?php echo htmlentities($msg); ?></strong> </div><?php } ?>
         <!-- Content Row -->
         <form name="donar" method="post">
             <div class="row">
@@ -275,4 +275,5 @@ if (isset($_POST['submit'])) {
         // console.log(d2-d1);
     });
 </script>
+<script>alert($msg("The Team will verify your account, please wait for a moment"))</script>
 </html>

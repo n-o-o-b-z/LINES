@@ -1,17 +1,43 @@
 {
     "name": "Lifeline BLood Donation",
-    "short_name": "Lifeline",
+    "short_name": "LIFELINE",
     "start_url": "https://lifelinegiveblood.com/",
     "scope": ".",
     "icons": [{
-            "src": "/images/logo 192X192.png",
-            "sizes": "192x192",
-            "type": "image/ico"
+            "src": "path/to/72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
-            "src": "/images/logo 192X192.png",
-            "sizes": "512x512",
-            "type": "image/ico"
+            "src": "path/to/96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "path/to/128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "path/to/144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "path/to/152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "path/to/192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ],
     "theme_color": "#ffd31d",

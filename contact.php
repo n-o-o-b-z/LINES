@@ -151,7 +151,7 @@ if (isset($_POST['send'])) {
                             <br>
                         </p>
                         <p>
-                            <abbr title="Phone">P</abbr>: <?php echo htmlentities($result->ContactNo); ?>
+                            <abbr title="Phone">P</abbr>: <a href="tel:<?php echo htmlentities($result->ContactNo); ?>"><?php echo htmlentities($result->ContactNo); ?></a>
                         </p>
                         <p>
                             <abbr title="Email">E</abbr>: <a href="mailto:name@example.com"><?php echo htmlentities($result->EmailId); ?>

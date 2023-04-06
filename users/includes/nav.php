@@ -195,7 +195,7 @@ if (strlen($_SESSION['user_login']) == 0) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Requesting for Blood</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><span id="requester_name"></span> Requesting for Blood</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -249,6 +249,7 @@ if (strlen($_SESSION['user_login']) == 0) {
         var msgid = $(this).data('id');
           $('#message_id').val(msgid);
           $('#testing').html(msgid);
+          $('#requester_name').html(msgid);
 
           // $('#accept').data('id', msgid);
           // $('#accept').val(msgid);
