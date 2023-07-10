@@ -29,7 +29,8 @@ $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if($lastInsertId)
 {
-    echo $msg="true";
+    // echo $msg="true";
+    echo 0;
 }
 else 
 {

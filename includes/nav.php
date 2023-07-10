@@ -6,7 +6,7 @@ session_start();
 <nav class="navbar navbar-expand-lg bg-light border-bottom">
   <div class="container-fluid">
       <a class="navbar-brand" href="">
-        <img src="/favicon.ico" width="35" height="35" alt="">
+        <img src="./android-chrome-192x192.png" width="35" height="35" alt="">
       </a>
     <!-- <a class="navbar-brand" href="#">LIFELINE</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -22,7 +22,7 @@ if(isset($_SESSION['user_login'])){
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon"/>
+	<link rel="icon" href="img/logo 192X192.png" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/style.css">
 	<!-- icons  -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
@@ -215,7 +215,7 @@ if(isset($_SESSION['user_login'])){
         </form>
 		
 		<div>
-			<a href="/admin"><small>ADMIN LOGIN</small></a>
+			<a href="../admin"><small>ADMIN LOGIN</small></a>
 		</div>
 
 		<span class="">

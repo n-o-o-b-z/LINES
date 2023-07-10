@@ -139,6 +139,16 @@ if(!isset($_POST['alogin'])){
                         </p>
                     </a>
                     </li>
+
+                    <li class="nav-item">
+                    <a href="manage-page.php" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Manage Pages
+                        </p>
+                    </a>
+                    </li>
+
                 <?php } ?>
                 
                 <?php if($_SESSION['role'] !== 'Hospital'){?>

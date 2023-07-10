@@ -18,10 +18,12 @@ if (isset($_POST['submit'])) {
         $blodgroup = $_POST['bloodgroup'];
         $purok = $_POST['purok'];
         $barangay = $_POST['barangay'];
-        $message = $_POST['password'];
+        $message = $_POST['message'];
+        $password = $_POST['password'];
+
         $status = 1;
         $password = md5($_POST['password']);
-        $sql = "INSERT INTO  tblblooddonars(FullName,MobileNumber,EmailId,Age,BirthDay,Gender,BloodGroup,Purok,Barangay,Message,status,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay,:message,:status,:password)";
+        $sql = "INSERT INTO  tblblooddonars(FullName, MobileNumber, EmailId, Age ,BirthDay ,Gender ,BloodGroup ,Purok ,Barangay ,Message ,status ,password) VALUES(:fullname,:mobile,:email,:age,:bday,:gender,:blodgroup,:purok,:barangay, :message, :status, :password)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
         $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
@@ -34,19 +36,22 @@ if (isset($_POST['submit'])) {
         $query->bindParam(':barangay', $barangay, PDO::PARAM_STR);
         $query->bindParam(':message', $message, PDO::PARAM_STR);
         $query->bindParam(':status', $status, PDO::PARAM_STR);
+        $query->bindParam(':password', $password, PDO::PARAM_STR);
+
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
             // $msg = "Your info submitted successfully";
-            echo "<script>
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                </script>";
+            // echo "<script>
+            //         Swal.fire({
+            //             position: 'center',
+            //             icon: 'success',
+            //             title: 'Your work has been saved',
+            //             showConfirmButton: false,
+            //             timer: 1500
+            //         })
+            //     </script>";
+            $msg = 'SUCCESSFULLY ADDED, Please wait for a minute the team will verify your account before you gain access into it';
         } else {
             $error = "EMAIL ALREADY TAKEN!";
         }
@@ -116,7 +121,7 @@ if (isset($_POST['submit'])) {
             </li>
             <li class="breadcrumb-item active">Become a Donor</li>
         </ol>
-        <?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+        <?php if ($error) { ?><div class="errorWrap"><strong style="color:red; border-left: 5px solid red;">ERROR: <?php echo htmlentities($error); ?></strong> </div><?php } else if ($msg) { ?><div class="succWrap"><strong style="color:green; border-left: 5px solid darkgreen;"> SUCCESS: <?php echo htmlentities($msg); ?></strong> </div><?php } ?>
         <!-- Content Row -->
         <form name="donar" method="post">
             <div class="row">
@@ -218,11 +223,11 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="col-lg-8 mb-4">
-					<input checked="" type="checkbox" name="term" value="true" required style="margin-left:10px;">
+					<input type="checkbox" name="term" required style="margin-left:10px;">
 					<span style="margin-left:10px;"><b>I am agree to donate my blood and show my information in Blood donors List</b></span>
 				</div>
 				<div class="col-lg-8 mb-4">
-					<input checked="" type="checkbox" name="term" value="true" required style="margin-left:10px;">
+					<input type="checkbox" name="term" required style="margin-left:10px;">
 					<span style="margin-left:10px;"><b>I have read the eligibility criteria and confirm that i am eligible to donate blood.</b></span>
 				</div>
 				<!--End form-group-->
@@ -270,4 +275,5 @@ if (isset($_POST['submit'])) {
         // console.log(d2-d1);
     });
 </script>
+<script>alert($msg("The Team will verify your account, please wait for a moment"))</script>
 </html>

@@ -8,7 +8,7 @@
     <title>LIFELINE: BLOOD DONORS SITE</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="icon" href="images/26042022123157Bakiad.png" type="image/x-icon" />
+    <link rel="icon" href="images/logo 192X192.png" type="image/x-icon" />
     <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">\
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">

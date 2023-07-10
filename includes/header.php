@@ -5,11 +5,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>LIFELINE: BLOOD DONORS SITE</title>
+    <title>LIFELINE</title>
     <!-- <?php $result->PageName == '' ?  'LIFELINE: BLOOD DONORS SITE' :  htmlentities($result->PageName);?> -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="icon" href="images/26042022123157Bakiad.png" type="image/x-icon" />
+    <link rel="icon" href="images/logo 192X192.png" type="image/x-icon" />
     <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/modern-business.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">

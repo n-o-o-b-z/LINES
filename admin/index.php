@@ -23,7 +23,7 @@ if(isset($_SESSION['alogin'])){
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-	<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon"/>
+	<link rel="icon" href="img/logo 192X192.png" type="image/x-icon"/>
 	<link rel="stylesheet" href="css/style.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.37/dist/sweetalert2.all.min.js"></script>
 </head>

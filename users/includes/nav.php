@@ -195,15 +195,15 @@ if (strlen($_SESSION['user_login']) == 0) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Requesting for Blood</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><span id="requester_name"></span> Requesting for Blood</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <!-- <div class="modal-body">
               <input type="hidden" name="message_id">
               <span id="testing"></span>
-      </div>
+      </div> -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deny" data-id="0">Denied</button>
         <button type="button" class="btn btn-primary" id="accept" data-id="0">Accept</button>
@@ -247,6 +247,16 @@ if (strlen($_SESSION['user_login']) == 0) {
     $(document).ready(function () {
       $(document).on('click','#msg', function () {
         var msgid = $(this).data('id');
+        $.ajax({
+          type: "POST",
+          url: 'xhr/getRequester.php',
+          data: {id:msgid},
+          dataType: "html",
+          success: function (response) {
+            $('#requester_name').html(response);
+          }
+        });
+
           $('#message_id').val(msgid);
           $('#testing').html(msgid);
 

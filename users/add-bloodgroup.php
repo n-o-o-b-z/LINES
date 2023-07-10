@@ -57,7 +57,7 @@ $error="Something went wrong. Please try again";
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="icon" href="img/26042022123157Bakiad.png" type="image/x-icon"/>
+	<link rel="icon" href="img/logo 192X192.png" type="image/x-icon"/>
   <style>
 		.errorWrap {
     padding: 10px;
